@@ -1,28 +1,29 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./Signup.css";
+import "./LoginForm.css";
 
-function Signup({ onLogin }) {
-	const initializedForm = { username: "", password: "", password_confirmation: ""};
+function Login({ onLogin }) {
+	const initializedForm = { username: "", password: ""};
 	const [formData, setFormData] = useState(initializedForm);
 	const [errors, setErrors] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
+
 	const navigate = useNavigate();
+
+	const errorList = errors.map((error) => (
+		<li key={error}>{error}</li>
+	));
 
 	function handleChange(event) {
 		const { name, value } = event.target;
 		setFormData({...formData, [name]: value});
 	}
 
-	const errorList = errors.map((error) => (
-		<li key={error}>{error}</li>
-	));
-
 	function handleSubmit(event) {
 		event.preventDefault();
 		setErrors([]);
 		setIsLoading(true);
-		fetch("/users", {
+		fetch("/login", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -38,15 +39,15 @@ function Signup({ onLogin }) {
 						navigate("/");
 					});
 				} else {
-					res.json().then((data) => setErrors(data.errors));
+					res.json().then((data) => setErrors(data.error));
 				}
 			});
 	}
 
 	return (
-		<div className="signup-container">
-			<form className="signup-form" onSubmit={handleSubmit}>
-				<h1>Signup</h1>
+		<div className="login-container">
+			<form className="login-form" onSubmit={handleSubmit}>
+				<h1>Login</h1>
 				<input
 					type="text"
 					id="username"
@@ -64,17 +65,9 @@ function Signup({ onLogin }) {
 					value={formData.password}
 					onChange={handleChange}
 				/>
-				<input
-					type="password"
-					id="password_confirmation"
-					name="password_confirmation"
-					placeholder="confirm password"
-					value={formData.password_confirmation}
-					onChange={handleChange}
-				/>
-				<input type="submit" value={isLoading ? "Loading..." : "Sign Up"} />
+				<input type="submit" value={isLoading ? "Loading..." : "Sign In"} />
 
-				Already have an account? <Link to="/login">Login</Link>
+				<Link to="/signup">Create Account</Link>
 
 				{errors.length > 0 ? (
 					<ul>{errorList}</ul> 
@@ -85,4 +78,4 @@ function Signup({ onLogin }) {
 	);
 }
 
-export default Signup;
+export default Login;
