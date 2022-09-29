@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import Home from "./components/Home";
+import Home from "./components/Dashboard/Home";
 import NavBar from "./components/NavBar";
-import Signup from "./components/Signup";
-import Login from "./components/Login";
+import SignupForm from "./components/Login/SignupForm";
+import LoginForm from "./components/Login/LoginForm";
 
 function App() {
 	const [user, setUser] = useState(null);
+	const [errors, setErrors] = useState([]);
+	
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -25,16 +27,17 @@ function App() {
 				if (res.ok) {
 					res.json().then((user) => setUser(user));
 				} else {
-					handleLogout();
+					res.json().then((data) => handleLogout(data))
 				}
 			});
 		}
 	}, []);
 
-	function handleLogout() {
+	function handleLogout(data) {
 		localStorage.clear();
 		setUser(null);
 		navigate("/login");
+		console.log(data)
 	}
 
   return (
@@ -42,8 +45,8 @@ function App() {
 			<NavBar onLogoutClick={handleLogout} user={user} />
 
       <Routes>
-				<Route path="/signup" element={<Signup onLogin={setUser} />} />
-				<Route path="/login" element={<Login onLogin={setUser} />} />
+				<Route path="/signup" element={<SignupForm onLogin={setUser} />} />
+				<Route path="/login" element={<LoginForm onLogin={setUser} />} />
 				<Route path="/" exact element={<Home user={user} />} />
 			</Routes>
     </div>
