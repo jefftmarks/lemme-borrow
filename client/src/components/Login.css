@@ -1,0 +1,8 @@
+.login-form {
+	border: 1px solid black;
+	padding: 10px;
+}
+
+.login-form input {
+	display: block;
+}

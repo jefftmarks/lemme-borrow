@@ -1,26 +1,50 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useNavigate } from "react-router-dom";
+import Home from "./components/Home";
+import NavBar from "./components/NavBar";
+import Signup from "./components/Signup";
 import Login from "./components/Login";
-import Home from "./components/Home"
 
 function App() {
-	const [activeUser, setActiveUser] = useState(null);
+	const [user, setUser] = useState(null);
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		fetch("http://localhost:3000/profile")
+		let token = localStorage.getItem("jwt");
+
+		if (!token) navigate("/signup");
+
+		if (token && !user) {
+			fetch("/profile", {
+				headers: {
+					token: token,
+					"Content-Type": "application/json",
+				},
+			})
 			.then((res) => {
 				if (res.ok) {
-					res.json().then((user) => setActiveUser(user))
+					res.json().then((user) => setUser(user));
+				} else {
+					handleLogout();
 				}
-			})
+			});
+		}
 	}, []);
 
-	if (!activeUser) return <Login />;
+	function handleLogout() {
+		localStorage.clear();
+		setUser(null);
+		navigate("/login");
+	}
 
   return (
     <div className="App">
+			<NavBar onLogoutClick={handleLogout} user={user} />
+
       <Routes>
-				<Route path="/" exact element={<Home />} />
+				<Route path="/signup" element={<Signup onLogin={setUser} />} />
+				<Route path="/login" element={<Login onLogin={setUser} />} />
+				<Route path="/" exact element={<Home user={user} />} />
 			</Routes>
     </div>
   );

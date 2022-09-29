@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./Login.css";
+import "./Signup.css";
 
-function Login({ onLogin }) {
-	const initializedForm = { username: "", password: ""};
+function Signup({ onLogin }) {
+	const initializedForm = { username: "", password: "", password_confirmation: ""};
 	const [formData, setFormData] = useState(initializedForm);
 	const [errors, setErrors] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +22,7 @@ function Login({ onLogin }) {
 		event.preventDefault();
 		setErrors([]);
 		setIsLoading(true);
-		fetch("/login", {
+		fetch("/users", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -44,9 +44,9 @@ function Login({ onLogin }) {
 	}
 
 	return (
-		<div className="login-container">
-			<form className="login-form" onSubmit={handleSubmit}>
-				<h1>Login</h1>
+		<div className="signup-container">
+			<form className="signup-form" onSubmit={handleSubmit}>
+				<h1>Signup</h1>
 				<input
 					type="text"
 					id="username"
@@ -64,9 +64,17 @@ function Login({ onLogin }) {
 					value={formData.password}
 					onChange={handleChange}
 				/>
-				<input type="submit" value={isLoading ? "Loading..." : "Sign In"} />
+				<input
+					type="password"
+					id="password_confirmation"
+					name="password_confirmation"
+					placeholder="confirm password"
+					value={formData.password_confirmation}
+					onChange={handleChange}
+				/>
+				<input type="submit" value={isLoading ? "Loading..." : "Sign Up"} />
 
-				<Link to="/signup">Create Account</Link>
+				Already have an account? <Link to="/login">Login</Link>
 
 				{errors.length > 0 ? (
 					<ul>{errorList}</ul> 
@@ -77,4 +85,4 @@ function Login({ onLogin }) {
 	);
 }
 
-export default Login;
+export default Signup;
