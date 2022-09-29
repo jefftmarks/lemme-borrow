@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignupForm.css";
 
-function Signup({ onLogin }) {
+function Signup({ onLogin, setIsAuthorized }) {
 	const initializedForm = { username: "", password: "", password_confirmation: ""};
 	const [formData, setFormData] = useState(initializedForm);
 	const [errors, setErrors] = useState([]);
@@ -13,6 +13,10 @@ function Signup({ onLogin }) {
 	const errorList = errors.map((error) => (
 		<li key={error}>{error}</li>
 	));
+
+	useEffect(() => {
+		setIsAuthorized([]);
+	}, [setIsAuthorized]);
 
 	function handleChange(event) {
 		const { name, value } = event.target;

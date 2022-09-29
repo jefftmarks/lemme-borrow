@@ -7,7 +7,7 @@ import LoginForm from "./components/Login/LoginForm";
 
 function App() {
 	const [user, setUser] = useState(null);
-	const [errors, setErrors] = useState([]);
+	const [isAuthorized, setIsAuthorized] = useState(null);
 	
 	const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ function App() {
 		localStorage.clear();
 		setUser(null);
 		navigate("/login");
-		console.log(data)
+		setIsAuthorized(data.error);
 	}
 
   return (
@@ -45,8 +45,8 @@ function App() {
 			<NavBar onLogoutClick={handleLogout} user={user} />
 
       <Routes>
-				<Route path="/signup" element={<SignupForm onLogin={setUser} />} />
-				<Route path="/login" element={<LoginForm onLogin={setUser} />} />
+				<Route path="/signup" element={<SignupForm onLogin={setUser} setIsAuthorized={setIsAuthorized} />} />
+				<Route path="/login" element={<LoginForm onLogin={setUser} isAuthorized={isAuthorized} />} />
 				<Route path="/" exact element={<Home user={user} />} />
 			</Routes>
     </div>
