@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginForm.css";
 
-function Login({ onLogin }) {
+function Login({ onLogin, isAuthorized }) {
 	const initializedForm = { username: "", password: ""};
 	const [formData, setFormData] = useState(initializedForm);
 	const [errors, setErrors] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (isAuthorized) {
+			setErrors(isAuthorized);
+		}
+	}, [isAuthorized]);
 
 	const errorList = errors.map((error) => (
 		<li key={error}>{error}</li>
