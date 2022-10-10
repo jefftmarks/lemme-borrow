@@ -7,8 +7,8 @@ class FriendshipsController < ApplicationController
 
 		# Create a second friendship with reverse attributes and link to first friendship
 		friendship_two = Friendship.create!(
-			user_id: friendship_params[:friend_id],
-			friend_id: friendship_params[:user_id],
+			user_id: params[:friend_id],
+			friend_id: params[:user_id],
 			corresponding_friendship_id: friendship_one.id
 		)
 
@@ -17,8 +17,8 @@ class FriendshipsController < ApplicationController
 
 		# Destroy corresponding friend request
 		friend_request = FriendRequest.find_by(
-			receiver_id: friendship_params[:user_id],
-			requester_id: friendship_params[:friend_id]
+			receiver_id: params[:user_id],
+			requester_id: params[:friend_id]
 		)
 		friend_request.destroy
 
