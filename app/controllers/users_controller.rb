@@ -10,15 +10,16 @@ class UsersController < ApplicationController
 		render json: @user, status: :accepted
 	end
 
+	def destroy
+		@user.destroy
+		head :no_content
+	end
+
+	# For signup
 	def create
 		user = User.create!(user_params)
 		token = generate_token(user.id)
 		render json: { user: UserSerializer.new(user), token: token }, status: :created
-	end
-
-	def destroy
-		@user.destroy
-		head :no_content
 	end
 
 	def login
