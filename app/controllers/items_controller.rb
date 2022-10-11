@@ -38,7 +38,7 @@ class ItemsController < ApplicationController
 	private
 
 	def item_params
-		params.permit(:name, :description, :image, :category, :owner_id, :borrower_id, book_info_attributes: [ :author, :year ], clothes_info_attributes: [ :size ])
+		params.permit(:name, :status, :description, :image, :category, :owner_id, :borrower_id, book_info_attributes: [ :author, :year, :genre ], clothes_info_attributes: [ :size ])
 	end
 
 	def set_item

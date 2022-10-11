@@ -26,6 +26,11 @@ class FriendshipsController < ApplicationController
 		render json: {created: FriendshipSerializer.new(friendship_one), destroyed: FriendRequestSerializer.new(friend_request) }, status: :created
 	end
 
+	def my_friends
+		user = User.find(params[:user_id])
+		render json: user.friends
+	end
+
 	def friend_status
 		# Send back message depending on whether 1. they haven't responded to your friend request or 2. you haven't responded to them
 		# Check whether or not friends
