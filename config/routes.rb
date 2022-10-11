@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  # resources :clothes_infos
+  # resources :book_infos
   resources :items, only: [:index, :show, :update, :create, :destroy]
   resources :friend_requests, only: [:create, :destroy]
   resources :friendships, only: [:create]
