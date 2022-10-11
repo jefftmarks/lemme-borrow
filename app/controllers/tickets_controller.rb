@@ -23,12 +23,13 @@ class TicketsController < ApplicationController
 	def my_tickets
 		user = User.find(params[:user_id])
 		tickets = Ticket.where("owner_id = ? or borrower_id = ?", user.id, user.id).order(:created_at)
+		render json: tickets
 	end
 
 	private
 
 	def ticket_params
-		params.permit(:owner_id, :borrower_id, :item_id, :status)
+		params.permit(:owner_id, :borrower_id, :item_id, :status, :delivery_date, :return_date)
 	end
 
 	def set_ticket

@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="GixmWMwX_nylo4apT2Ep" name="Page-1">
-        <mxGraphModel dx="3204" dy="1700" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0">
+        <mxGraphModel dx="3820" dy="1813" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -159,9 +159,6 @@
                 <mxCell id="53" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;startArrow=block;startFill=1;endArrow=ERmany;endFill=0;strokeColor=#000000;" parent="1" source="3" target="37" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="55" value="- A User has many Friendships&lt;br&gt;- A User has many Friends through Friendship&lt;br&gt;- A Friendship belongs to one User and one Friend&lt;br&gt;- Friend will serve as alias for User&lt;br&gt;- friend_id will correspond to a user_id&lt;br&gt;- Will create TWO FRIENDSHIPS for every relationship, that way both users can access their &quot;friends&quot;&lt;br&gt;- corresponding_friendship will keep track of the reverse relationship, making it easer to delete friendships, etc." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#FF0000;" parent="1" vertex="1">
-                    <mxGeometry x="-1385" y="-605" width="284" height="186.75" as="geometry"/>
-                </mxCell>
                 <mxCell id="56" value="Friend_Request" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;strokeWidth=1;strokeColor=#6F0000;fillColor=#a20025;fontColor=#ffffff;" parent="1" vertex="1">
                     <mxGeometry x="-1354" y="-162" width="162.39096507806903" height="128.51" as="geometry"/>
                 </mxCell>
@@ -219,9 +216,6 @@
                             <mxPoint x="-1128" y="-88"/>
                         </Array>
                     </mxGeometry>
-                </mxCell>
-                <mxCell id="77" value="- A Friend_Request belongs to a requester (alias for User) and a receiver (alias for User)&lt;br&gt;- A User has many incoming_friend_requests (for user alias receiver)&lt;br&gt;- A User has many outgoing_friend_requests (for user alias requester)&lt;br&gt;- When a Friend Request is accept, it creates a new Friendship" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#FF0000;" parent="1" vertex="1">
-                    <mxGeometry x="-1362" y="-16" width="284" height="132" as="geometry"/>
                 </mxCell>
                 <mxCell id="78" value="Item" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;strokeWidth=1;strokeColor=#432D57;fillColor=#76608a;fontColor=#ffffff;" parent="1" vertex="1">
                     <mxGeometry x="-729" y="-102" width="163.15983951453006" height="257.13928985595703" as="geometry"/>
@@ -329,11 +323,8 @@
                         <mxPoint x="-708" y="82.99999999999977" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="102" value="- An Item belongs to an Owner (alias for User) and (optionally) a Borrower (alias for User)&lt;br&gt;- A User has many belongings (for user alias Owner)&lt;br&gt;- A User has many borrowed_items (for user alias Borrower)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#FF0000;" parent="1" vertex="1">
-                    <mxGeometry x="-868" y="186.14" width="260" height="118" as="geometry"/>
-                </mxCell>
                 <mxCell id="103" value="Book_Info" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;strokeWidth=1;strokeColor=#2D7600;fillColor=#60a917;fontColor=#ffffff;" parent="1" vertex="1">
-                    <mxGeometry x="-465" y="-7" width="163.15983951453006" height="193.13928985595703" as="geometry"/>
+                    <mxGeometry x="-427" y="-242" width="163.15983951453006" height="193.13928985595703" as="geometry"/>
                 </mxCell>
                 <mxCell id="104" value="" style="shape=partialRectangle;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=0;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="103" vertex="1">
                     <mxGeometry y="30" width="163.15983951453006" height="35" as="geometry"/>
@@ -401,7 +392,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="126" value="Clothes_Info" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;strokeWidth=1;strokeColor=#6D1F00;fillColor=#a0522d;fontColor=#ffffff;" parent="1" vertex="1">
-                    <mxGeometry x="-465" y="215" width="163.15983951453006" height="129.13928985595703" as="geometry"/>
+                    <mxGeometry x="-427" y="-15" width="163.15983951453006" height="129.13928985595703" as="geometry"/>
                 </mxCell>
                 <mxCell id="127" value="" style="shape=partialRectangle;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=0;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="126" vertex="1">
                     <mxGeometry y="30" width="163.15983951453006" height="35" as="geometry"/>
@@ -447,9 +438,6 @@
                 </mxCell>
                 <mxCell id="146" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;startArrow=block;startFill=1;endArrow=block;endFill=1;strokeColor=#000000;" parent="1" source="127" target="79" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="147" value="- An Item (may) have one Book Info and (may) have one Clothes Info&lt;br&gt;- A Book Info belongs to an Item and a Clothes Info belongs to an Item&lt;br&gt;- Make use of &quot;accepts_nested_attributes_for&quot; method so that Book Info or Clothes Info can be updated by updating Item params" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#FF0000;" parent="1" vertex="1">
-                    <mxGeometry x="-268" y="120.13999999999999" width="215" height="224" as="geometry"/>
                 </mxCell>
                 <mxCell id="148" value="Ticket" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;strokeWidth=1;strokeColor=#BD7000;fillColor=#f0a30a;fontColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="-782" y="-439" width="150.2773099379108" height="257.13928985595703" as="geometry"/>
@@ -653,9 +641,6 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="188" value="- A Ticket belongs to an owner (alias for User) and a borrower (alias for User)&lt;br&gt;- A User has many lending_tickets (for user alias owner)&lt;br&gt;- A User has many borrowing_tickets (for user alias borrower)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#FF0000;" parent="1" vertex="1">
-                    <mxGeometry x="-608" y="-421" width="195" height="138" as="geometry"/>
-                </mxCell>
                 <mxCell id="198" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;" parent="1" source="190" target="3" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
@@ -673,9 +658,6 @@
                             <mxPoint x="-833" y="-89"/>
                         </Array>
                     </mxGeometry>
-                </mxCell>
-                <mxCell id="200" value="- A Message belongs to a sender (alias for User) and a receiver (alias for User)&lt;br&gt;- I'm not sure it's necessary to establish a has many relationship between user and messages, because user will only interact with messages through ticket" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#FF0000;" parent="1" vertex="1">
-                    <mxGeometry x="-1068" y="-483" width="266" height="103" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

@@ -9,10 +9,16 @@ class ItemsController < ApplicationController
 		render json: @item
 	end
 
-	def my_items
-		items = Item.where(owner_id: params[:user_id])
+	def my_belongings
+		user = User.find(params[:user_id])
+		render json: user.belongings
 	end
 
+	def my_borrowed_items
+		user = User.find(params[:user_id])
+		render json: user.borrowed_items
+	end
+	
 	# This in theory should be able to handle all requests to change owner or person currently borrowing item
 	def update
 		@item.update!(item_params)

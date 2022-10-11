@@ -3,5 +3,4 @@ class ItemSerializer < ActiveModel::Serializer
 
 	has_one :book_info
 	has_one :clothes_info
-
 end

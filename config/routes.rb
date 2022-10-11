@@ -23,7 +23,8 @@ Rails.application.routes.draw do
 	delete "/friendships/user/:user_id/friend/:friend_id", to: "friendships#destroy"
 
 	# Items
-	get "/items/user/:user_id", to: "items#my_items"
+	get "/items/belongings/:user_id", to: "items#my_belongings"
+	get "/items/borrowed/:user_id", to: "items#my_borrowed_items"
 	get "/items/recent", to: "items#recently_uploaded"
 
 	# Tickets
