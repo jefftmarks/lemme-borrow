@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_10_200556) do
+ActiveRecord::Schema.define(version: 2022_10_11_041510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "book_infos", force: :cascade do |t|
+    t.string "author"
+    t.integer "year"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "item_id"
+    t.string "genre"
+  end
+
+  create_table "clothes_infos", force: :cascade do |t|
+    t.integer "item_id"
+    t.string "size"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "friend_requests", force: :cascade do |t|
     t.bigint "requester_id"
@@ -42,8 +58,33 @@ ActiveRecord::Schema.define(version: 2022_10_10_200556) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "category"
     t.string "condition"
+    t.string "status"
     t.index ["borrower_id"], name: "index_items_on_borrower_id"
     t.index ["owner_id"], name: "index_items_on_owner_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "text"
+    t.integer "ticket_id"
+    t.bigint "sender_id"
+    t.bigint "receiver_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["receiver_id"], name: "index_messages_on_receiver_id"
+    t.index ["sender_id"], name: "index_messages_on_sender_id"
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.string "status"
+    t.integer "item_id"
+    t.bigint "owner_id"
+    t.bigint "borrower_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "delivery_date"
+    t.string "return_date"
+    t.index ["borrower_id"], name: "index_tickets_on_borrower_id"
+    t.index ["owner_id"], name: "index_tickets_on_owner_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -61,4 +102,8 @@ ActiveRecord::Schema.define(version: 2022_10_10_200556) do
   add_foreign_key "friend_requests", "users", column: "requester_id"
   add_foreign_key "items", "users", column: "borrower_id"
   add_foreign_key "items", "users", column: "owner_id"
+  add_foreign_key "messages", "users", column: "receiver_id"
+  add_foreign_key "messages", "users", column: "sender_id"
+  add_foreign_key "tickets", "users", column: "borrower_id"
+  add_foreign_key "tickets", "users", column: "owner_id"
 end

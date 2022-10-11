@@ -10,7 +10,17 @@ class User < ApplicationRecord
 	has_many :borrowed_items, class_name: "Item", foreign_key: "borrower_id"
 	# Will need to ask user to return all borrowed items before user is destroyed... so dependent destroy in theory shouldn't be necessary on borrowed_items
 
+	# Tickets
+	has_many :lending_tickets, class_name: "Ticket", foreign_key: "owner_id", dependent: :destroy
+	has_many :borrowing_tickets, class_name: "Ticket", foreign_key: "borrower_id", dependent: :destroy
+	# Again... need to figure out what happens when user deletes account what happens to any open tickets
+
 	has_secure_password
 
 	validates :username, uniqueness: { case_sensitive: false }, presence: true
+
+	# Method to determine whether active user and other user are friends
+	def is_friends_with?(user)
+		Friendship.find_by(user_id: self.id, friend_id: user.id)
+	end
 end
