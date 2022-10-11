@@ -4,5 +4,5 @@ class Friendship < ApplicationRecord
 	has_one :corresponding_friendship, :class_name => "Friendship", :foreign_key => "corresponding_friendship_id"
 
 	validates :user_id, presence: true
-	validates :friend_id, presence: true, uniqueness: { scope: :user_id }
+	validates :friend_id, presence: true, uniqueness: { scope: :user_id, message: "already exists" }
 end

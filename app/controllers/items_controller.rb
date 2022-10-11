@@ -14,6 +14,11 @@ class ItemsController < ApplicationController
 		render json: user.belongings
 	end
 
+	def my_loans
+		user = User.find(params[:user_id])
+		loans = user.belongings.where("status = ?", "on loan")
+	end
+
 	def my_borrowed_items
 		user = User.find(params[:user_id])
 		render json: user.borrowed_items
