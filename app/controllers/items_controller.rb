@@ -1,114 +1,133 @@
 class ItemsController < ApplicationController
 	before_action :set_item, only: [:show, :update, :destroy]
+	before_action :set_user, only: [:my_belongings, :recently_uploaded]
+	before_action :validate_tags, only: [:create, :update]
 
 	def index
 		render json: Item.all
 	end
 
 	def show
-		render json: @item
+		render json: @item, serializer: ItemWithFullDetailsSerializer
 	end
 
-	def my_belongings
-		user = User.find(params[:user_id])
-		render json: user.belongings
-	end
+	def create
+		item = Item.create!(item_params)
 
-	def my_loans
-		user = User.find(params[:user_id])
-		loans = user.belongings.where("status = ?", "on loan")
-	end
-
-	def my_borrowed_items
-		user = User.find(params[:user_id])
-		render json: user.borrowed_items
-	end
-	
-	# This in theory should be able to handle all requests to change owner or person currently borrowing item
-	def update
-		@item.update!(item_params)
-		if @item.category == "clothing"
-			@item.clothes_info.update!(clothes_params)
-		elsif @item.category == "book"
-			@item.book_info.update!(book_params)
+		# # If item belongs to special category of clothing or book, create new instance of ClothesInfo or BookInfo and link to item (or destroy item if errors raised)
+		# if item.category == "clothing"
+		# 	clothes_info = ClothesInfo.create(**clothes_params, item: item)
+		# 	if !clothes_info.valid?
+		# 		item.destroy
+		# 		render json: { error: clothes_info.errors.full_messages } and return
+		# 	end
+		# elsif item.category == "book"
+		# 	book_info = ClothesInfo.create(**book_params, item: item)
+		# 	if !book_info.valid?
+		# 		item.destroy
+		# 		render json: { error: book_info.errors.full_messages } and return
+		# 	end
+		# end
+		
+		tags = tags_params[:tags]
+		
+		# If tags present, check whether tag already exists. If it does, create new ItemTag and link Item with Tag. If tag doesn't exit, create new tag first, then create the new Item Tag.
+		if tags.size > 0
+			tags.each do |tag|
+				existing_tag = Tag.find_by(name: tag.downcase)
+				if existing_tag
+					ItemTag.create(item: item, tag: existing_tag)
+				else
+					ItemTag.create(item: item, tag: Tag.create!(name: tag.downcase))
+				end
+			end
 		end
+
+		render json: item , status: :created
+	end
+
+	def update
+		# Item can't be update if it's in stage of borrowing process? But need to be able to update certain parameters...
+		@item.update(item_params)
 
 		tags = tags_params[:tags]
 
 		if tags.size > 0
 			@item.item_tags.destroy_all
 			tags.each do |tag|
-				existing_tag = Tag.find_by(name: tag[:name])
+				existing_tag = Tag.find_by(name: tag.downcase)
 				if existing_tag
-					@item.tags << existing_tag
+					ItemTag.create!(item: @item, tag: existing_tag)
 				else
-					@item.tags << Tag.create!(name: tag[:name]) 
+					ItemTag.create!(item: @item, tag: Tag.create!(name: tag.downcase))
 				end
 			end
 		end
 
 		item = Item.find(@item.id)
-
-		render json: item, status: :accepted
-
-	end
-
-	# Recently uploaded items for feed... eventually will update to something different and need to confirm whether where.not operator works
-	def recently_uploaded
-		items = Item.where.not(owner_id: params[:user_id])
-	end
-
-	def create
-		item = Item.create!(item_params)
-
-		if item.category == "clothing"
-			clothes_info = ClothesInfo.create!(**clothes_params, item: item)
-		elsif item.category == "book"
-			book_info = BookInfo.create!(**book_params, item: item)
-		end
-
-		tags = tags_params[:tags]
-
-		if tags.size > 0
-			tags.each do |tag|
-				existing_tag = Tag.find_by(name: tag[:name])
-				if existing_tag
-					item.tags << existing_tag
-				else
-					item.tags << Tag.create!(name: tag[:name]) 
-				end
-			end
-		end
-
-		render json: item, status: :created
+		render json: item , status: :created
 	end
 
 	def destroy
-		# Necessary to error handle if item is currently being borrowed?
+		# You can't delete item if it is in borrowing process
+		if @item.status == "requested"
+			render json: { error: "This item has been requested by #{@item.borrower.first_name}. Please close the ticket before deleting" } and return
+		elsif @item.status == "on loan"
+			render json: { error: "#{@item.borrower.first_name} is currently borrowing this item. Gift the item to #{@item.borrower.first_name} or wait until the item has been returned" } and return
+		end
+
 		@item.destroy
 		render json: @item
+	end
+
+	def my_belongings
+		render json: @user.belongings
+	end
+
+	def recently_uploaded
+		items = Item.where.not(owner: @user).order(created_at: :desc)
+
+		# load 20 items at a time depending on count
+		start = count_params[:count].to_i
+		finish = start + 19
+
+		render json: items[start..finish]
 	end
 
 	private
 
 	def item_params
-		params.permit(:name, :status, :description, :image, :category, :owner_id, :borrower_id)
-	end
-
-	def clothes_params
-		params.permit(:size)
-	end
-
-	def book_params
-		params.permit(:author, :year, :genre)
-	end
-
-	def tags_params
-		params.permit(:tags => [:name])
+		params.permit(:name, :status, :description, :image, :owner_id, :borrower_id)
 	end
 
 	def set_item
 		@item = Item.find(params[:id])
+	end
+
+	def set_user
+		@user = User.find(params[:user_id])
+	end
+
+	def count_params
+		params.permit(:count)
+	end
+
+	# def clothes_params
+	# 	params.permit(:size)
+	# end
+
+	# def book_params
+	# 	params.permit(:author, :year, :genre)
+	# end
+
+	def tags_params
+		params.permit(:tags => [])
+	end
+
+	def validate_tags
+		if tags_params[:tags].size > 5
+			render json: { error: "Maximum five tags" }
+		end
 	end
 
 end

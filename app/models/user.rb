@@ -7,8 +7,13 @@ class User < ApplicationRecord
 
 	# Items
 	has_many :belongings, class_name: "Item", foreign_key: "owner_id", dependent: :destroy
+	# Will need to ask user to return all borrowed items before user is destroyed... so dependent destroy shouldn't be option on borrowed_items to prevent that from happening
 	has_many :borrowed_items, class_name: "Item", foreign_key: "borrower_id"
-	# Will need to ask user to return all borrowed items before user is destroyed... so dependent destroy in theory shouldn't be necessary on borrowed_items
+	
+	#custom method to see which of your items are being borrowed
+	def items_on_loan
+		self.belongings.where(status: "on loan")
+	end
 
 	# Tickets
 	has_many :lending_tickets, class_name: "Ticket", foreign_key: "owner_id", dependent: :destroy
