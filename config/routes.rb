@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :friend_requests, only: [:create, :destroy]
   resources :friendships, only: [:create, :destroy]
 	resources :items, only: [:index, :show, :update, :create, :destroy]
+	resources :tags, only: [:index]
 	resources :tickets, only: [:create, :show, :update, :destroy]
 
 	# Auth
@@ -23,9 +24,7 @@ Rails.application.routes.draw do
 
 	# Items
 	get "/items/belongings/:user_id", to: "items#my_belongings"
-	get "/items/loans/:user_id", to: "items#my_loans"
-	get "/items/borrowed/:user_id", to: "items#my_borrowed_items"
-	get "/items/recent", to: "items#recently_uploaded"
+	get "/items/recent/:user_id/count/:count", to: "items#recently_uploaded"
 
 	# Tickets
 	get "/tickets/user/:user_id", to: "tickets#my_tickets"

@@ -12,13 +12,11 @@ class Item < ApplicationRecord
 	# Item cannot be destroyed if ticket open
 
 	# Additional Info for Books, Clothes
-	has_one :book_info, dependent: :destroy
-	has_one :clothes_info, dependent: :destroy
+	# has_one :book_info, dependent: :destroy
+	# has_one :clothes_info, dependent: :destroy
 
 	validates :name, presence: true
-	# validates :description, presence: true
 	validates :owner_id, presence: true
-	validates :category, inclusion: { in: ["book", "clothing", "other"] }
-	validates :status, presence: true, inclusion: { in: ["home", "requested", "promised", "on loan"] }
-	validates :tags, length: { maximum: 5, message: "cannot exceed five" }
+	# validates :category, inclusion: { in: ["book", "clothing", "other"] }
+	validates :status, presence: true, inclusion: { in: ["home", "requested", "on loan"] }
 end
