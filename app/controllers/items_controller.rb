@@ -27,7 +27,30 @@ class ItemsController < ApplicationController
 	# This in theory should be able to handle all requests to change owner or person currently borrowing item
 	def update
 		@item.update!(item_params)
-		render json: @item, status: :accepted
+		if @item.category == "clothing"
+			@item.clothes_info.update!(clothes_params)
+		elsif @item.category == "book"
+			@item.book_info.update!(book_params)
+		end
+
+		tags = tags_params[:tags]
+
+		if tags.size > 0
+			@item.item_tags.destroy_all
+			tags.each do |tag|
+				existing_tag = Tag.find_by(name: tag[:name])
+				if existing_tag
+					@item.tags << existing_tag
+				else
+					@item.tags << Tag.create!(name: tag[:name]) 
+				end
+			end
+		end
+
+		item = Item.find(@item.id)
+
+		render json: item, status: :accepted
+
 	end
 
 	# Recently uploaded items for feed... eventually will update to something different and need to confirm whether where.not operator works
@@ -37,11 +60,31 @@ class ItemsController < ApplicationController
 
 	def create
 		item = Item.create!(item_params)
+
+		if item.category == "clothing"
+			clothes_info = ClothesInfo.create!(**clothes_params, item: item)
+		elsif item.category == "book"
+			book_info = BookInfo.create!(**book_params, item: item)
+		end
+
+		tags = tags_params[:tags]
+
+		if tags.size > 0
+			tags.each do |tag|
+				existing_tag = Tag.find_by(name: tag[:name])
+				if existing_tag
+					item.tags << existing_tag
+				else
+					item.tags << Tag.create!(name: tag[:name]) 
+				end
+			end
+		end
+
 		render json: item, status: :created
 	end
 
 	def destroy
-		# Necessary to error handle if item is currently being borrow?
+		# Necessary to error handle if item is currently being borrowed?
 		@item.destroy
 		render json: @item
 	end
@@ -49,7 +92,19 @@ class ItemsController < ApplicationController
 	private
 
 	def item_params
-		params.permit(:name, :status, :description, :image, :category, :owner_id, :borrower_id, book_info_attributes: [ :author, :year, :genre ], clothes_info_attributes: [ :size ])
+		params.permit(:name, :status, :description, :image, :category, :owner_id, :borrower_id)
+	end
+
+	def clothes_params
+		params.permit(:size)
+	end
+
+	def book_params
+		params.permit(:author, :year, :genre)
+	end
+
+	def tags_params
+		params.permit(:tags => [:name])
 	end
 
 	def set_item
