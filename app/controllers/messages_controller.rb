@@ -3,8 +3,9 @@ class MessagesController < ApplicationController
 	before_action :set_sender_and_receiver, only: [:create]
 
 	def create
+		messages = @ticket.messages
 		# If tickets messages length is 1 (or under), that means that owner hasn't responded to intiail message yet, and so borrower cannot create message
-		if @ticket.messages.size <= 1 && @sender.id == @ticket.borrower.id
+		if message_params[:sender_id] == @ticket.borrower_id && (messages.size < 1 || (messages.size == 1 && messages.first.sender_id == @ticket.borrower_id))
 			render json: { error: "Waiting for #{@receiver.first_name} to reply"} and return
 		end
 		message = Message.create!(message_params)

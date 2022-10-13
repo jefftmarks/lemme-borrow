@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
-	before_action :set_item, only: [:show, :update, :destroy]
-	before_action :set_user, only: [:my_belongings, :recently_uploaded]
+	before_action :set_item, only: [:show, :update, :destroy, :gift_item]
+	before_action :set_user, only: [:my_belongings, :recently_uploaded, :gift_item]
 	before_action :validate_tags, only: [:create, :update]
+	before_action :set_new_owner, only: [:gift_item]
 
 	def index
 		render json: Item.all
@@ -47,7 +48,10 @@ class ItemsController < ApplicationController
 	end
 
 	def update
-		# Item can't be update if it's in stage of borrowing process? But need to be able to update certain parameters...
+		if @item.tickets.size > 0
+			render json: { error: "This item is associated with an open ticket. It cannot be edited until the ticket has been deleted" } and return
+		end
+
 		@item.update(item_params)
 
 		tags = tags_params[:tags]
@@ -66,6 +70,22 @@ class ItemsController < ApplicationController
 
 		item = Item.find(@item.id)
 		render json: item , status: :created
+	end
+
+	def gift_item
+		if @item.owner_id != @user.id
+		render json: { error: "This is not your item to gift" } and return
+		elsif @user.id == @new_owner.id
+		render json: { error: "You cannot gift the item to yourself" } and return
+		elsif !@user.friends.include?(@new_owner)
+			render json: { error: "You cannot gift an item to someone you're not friends with" } and return
+		elsif @item.tickets.size > 0
+			render json: { error: "This item is associated with an open ticket. It cannot be edited until the ticket has been deleted" } and return
+		end
+
+		@item.update(owner: @new_owner)
+
+		render json: @item, status: :accepted
 	end
 
 	def destroy
@@ -106,6 +126,10 @@ class ItemsController < ApplicationController
 
 	def set_user
 		@user = User.find(params[:user_id])
+	end
+
+	def set_new_owner
+		@new_owner = User.find(params[:new_owner_id])
 	end
 
 	def count_params
