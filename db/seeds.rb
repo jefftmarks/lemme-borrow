@@ -13,7 +13,7 @@ jeff= User.create!(
 	username: "jeffsworld",
 	first_name: "Jeff",
 	last_name: "Marks",
-	password_digest: "1111",
+	password: "1111",
 	email: "jeff@jeff.com"
 )
 
@@ -21,7 +21,7 @@ mischa = User.create!(
 	username: "planet_mischa",
 	first_name: "Mischa",
 	last_name: "Aletta",
-	password_digest: "1111",
+	password: "1111",
 	email: "mischa@mischa.com"
 )
 
@@ -29,7 +29,7 @@ will = User.create!(
 	username: "dub_k",
 	first_name: "Will",
 	last_name: "Kempner",
-	password_digest: "1111",
+	password: "1111",
 	email: "will@will.com"
 )
 

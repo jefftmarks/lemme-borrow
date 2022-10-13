@@ -1,0 +1,16 @@
+header {
+  padding: 1rem;
+	background-color: var(--dark-red);
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
+/* #header * {
+  margin: 0 0.5rem;
+} */
+
+#navbar {
+	border: 1px solid white;
+}
+

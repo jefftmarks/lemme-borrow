@@ -23,12 +23,12 @@ class UsersController < ApplicationController
 	end
 
 	def login
-		user = User.find_by(username: params[:username])
-		if user&.authenticate(params[:password])
+		user = User.find_by(username: user_params[:username])
+		if user&.authenticate(user_params[:password])
 			token = generate_token(user.id)
 			render json: { user: UserSerializer.new(user), token: token }, status: :created
 		else
-			render json: { error: ["Invalid username or password"] }, status: :unauthorized
+			render json: { error: "Invalid username or password" }, status: :unauthorized
 		end
 	end
 
@@ -49,6 +49,6 @@ class UsersController < ApplicationController
 	end
 
 	def user_params
-		params.permit(:username, :password, :password_confirmation)
+		params.permit(:first_name, :last_name, :email, :username, :avatar, :password, :password_confirmation)
 	end
 end

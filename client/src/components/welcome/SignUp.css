@@ -1,0 +1,46 @@
+#signup {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#signup-form {
+	background-color: var(--dark-red);
+	width: 500px;
+	/* display: flex;
+	flex-direction: column; */
+	padding: 1rem;
+}
+
+#signup-header {
+	display: flex;
+	justify-content: space-between;
+}
+
+#signup-header span:hover {
+	cursor: pointer;
+}
+
+#signup-header h2 {
+	margin-bottom: 1rem;
+}
+
+#signup-form label {
+	display: flex;
+	justify-content: space-between;
+	
+}
+
+#signup-form label:not(:last-child) {
+	margin-bottom: 1rem;
+}
+
+#signup-form button:hover {
+	cursor: pointer;
+}
