@@ -1,8 +1,8 @@
 class TicketSerializer < ActiveModel::Serializer
-  attributes :id, :status, :delivery_date, :return_date
+  attributes :id, :owner_id, :borrower_id, :item_id
 
-	belongs_to :owner
-	belongs_to :borrower
-	belongs_to :item
-	has_many :messages
+	# belongs_to :owner
+	# belongs_to :borrower
+	# belongs_to :item
+	# has_many :messages
 end

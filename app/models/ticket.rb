@@ -8,6 +8,6 @@ class Ticket < ApplicationRecord
 
 	validates :owner_id, presence: true
 	validates :borrower_id, presence: true
-	validates :item_id, presence: true, uniqueness: true
+	validates :item_id, presence: true, uniqueness: { scope: :borrower_id }
 	validates :status, presence: true, inclusion: { in: ["requested", "approved", "on loan", "returned"]}
 end
