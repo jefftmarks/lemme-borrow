@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+	has_secure_password
+
 	# Friending
 	has_many :friendships, dependent: :destroy
 	has_many :friends, through: :friendships
@@ -20,9 +22,8 @@ class User < ApplicationRecord
 	has_many :borrowing_tickets, class_name: "Ticket", foreign_key: "borrower_id", dependent: :destroy
 	# Again... need to figure out what happens when user deletes account what happens to any open tickets
 
-	has_secure_password
-
-	validates :username, uniqueness: { case_sensitive: false }, presence: true
+	validates :first_name, :last_name, :email, :username, :password_digest, presence: true
+	validates :username, uniqueness: { case_sensitive: false }
 
 	# Method to determine whether active user and other user are friends
 	def is_friends_with?(user)

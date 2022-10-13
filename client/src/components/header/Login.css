@@ -1,0 +1,22 @@
+#login {
+	height: 100%;
+	padding: 0.5rem;
+	display: flex;
+	align-items: center;
+}
+
+#login-form *, #login span {
+	margin: 0 0.5rem;
+}
+
+#login span {
+	text-decoration: underline;
+}
+
+#login-form button:hover {
+	cursor: pointer;
+}
+
+#login span:hover {
+	cursor: pointer;
+}

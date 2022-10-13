@@ -1,11 +1,8 @@
 {
-  "name": "client",
+  "name": "react-rails-api-project-template-client",
   "version": "0.1.0",
   "private": true,
-	"proxy": "http://localhost:3000",
-	"engines": {
-    "node": "16.x"
-  },
+  "proxy": "http://localhost:3000",
   "dependencies": {
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
