@@ -70,7 +70,7 @@ class ItemsController < ApplicationController
 
 	def destroy
 		# You can't delete item if it is in borrowing process
-		if @item.status == "requested"
+		if @item.requested
 			render json: { error: "This item has been requested by #{@item.borrower.first_name}. Please close the ticket before deleting" } and return
 		elsif @item.status == "on loan"
 			render json: { error: "#{@item.borrower.first_name} is currently borrowing this item. Gift the item to #{@item.borrower.first_name} or wait until the item has been returned" } and return
@@ -97,7 +97,7 @@ class ItemsController < ApplicationController
 	private
 
 	def item_params
-		params.permit(:name, :status, :description, :image, :owner_id, :borrower_id)
+		params.permit(:name, :requested, :status, :description, :image, :owner_id, :borrower_id)
 	end
 
 	def set_item

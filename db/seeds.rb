@@ -40,6 +40,7 @@ FriendRequest.create!(requester: jeff, receiver: will)
 
 Item.create!(
 	name: "Bouncy Ball",
+	requested: false,
 	status: "home",
 	description: "Bounces VERY high!",
 	owner: jeff,
@@ -48,6 +49,7 @@ Item.create!(
 
 Item.create!(
 	name: "Winter Coat",
+	requested: false,
 	status: "on loan",
 	description: "Fluffy",
 	owner: mischa,

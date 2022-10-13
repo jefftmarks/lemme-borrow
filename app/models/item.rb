@@ -18,5 +18,5 @@ class Item < ApplicationRecord
 	validates :name, presence: true
 	validates :owner_id, presence: true
 	# validates :category, inclusion: { in: ["book", "clothing", "other"] }
-	validates :status, presence: true, inclusion: { in: ["home", "requested", "on loan"] }
+	validates :status, presence: true, inclusion: { in: ["home", "on loan"] }
 end
