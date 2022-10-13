@@ -1,5 +1,5 @@
 class TicketsWithFullDetailsSerializer < ActiveModel::Serializer
-  attributes :id, :status, :return_date
+  attributes :id, :status, :return_date, :overdue
 
 	belongs_to :owner
 	belongs_to :borrower
