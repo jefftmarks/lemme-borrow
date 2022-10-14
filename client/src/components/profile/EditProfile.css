@@ -1,0 +1,58 @@
+#edit-profile {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#edit-profile-form {
+	background-color: var(--dark-red);
+	width: 500px;
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+}
+
+#edit-profile-header {
+	display: flex;
+	justify-content: space-between;
+}
+
+#edit-profile-header p:hover {
+	cursor: pointer;
+}
+
+#edit-profile-header h2 {
+	margin-bottom: 1rem;
+}
+
+#edit-profile-form label {
+	display: flex;
+	justify-content: space-between;
+}
+
+#edit-profile-form *:not(:last-child) {
+	margin-bottom: 1rem;
+}
+
+/* #edit-profile-form span {
+	text-decoration: underline;
+} */
+
+#edit-profile-form button:hover, span:hover, p:hover {
+	cursor: pointer;
+}
+
+#edit-profile-form span {
+	text-decoration: underline;
+}
+
+#new-password {
+	border-top: 1px solid white;
+	padding-top: 1rem;
+}

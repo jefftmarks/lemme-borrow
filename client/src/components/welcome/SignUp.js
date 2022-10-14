@@ -14,11 +14,6 @@ const initialState = {
 function SignUp({ showSignup, setShowSignup, setUser }) {
 	const [formData, setFormData] = useState(initialState)
 
-	// Conditionally render signup modal
-	if (!showSignup) {
-		return null;
-	}
-
 	function handleChange(e) {
 		const { name, value } = e.target;
 		setFormData({...formData, [name]: value});
@@ -44,6 +39,11 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 					res.json().then((data) => console.log(data));
 				}
 			})
+	}
+
+	// Conditionally render signup modal
+	if (!showSignup) {
+		return null;
 	}
 
 	return (

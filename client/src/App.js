@@ -34,17 +34,7 @@ function App() {
 
 	// Render element for home path depending on whether or not user is logged in
 	function renderElement() {
-		if (user) {
-			return (
-				<Home
-					user={user}
-				/>
-			);
-		} else {
-			return (
-				<Welcome />
-			);
-		}
+		return user ? <Home user={user}/> : <Welcome />;
 	}
 
   return (
@@ -62,7 +52,7 @@ function App() {
 			<Routes>
 				<Route
 					path="/user/:user_id"
-					element={<Profile activeUser={user} />}
+					element={user ? <Profile activeUser={user} setActiveUser={setUser} /> : null}
 				/>
 				<Route exact path="/" element={renderElement()}
 				/>
