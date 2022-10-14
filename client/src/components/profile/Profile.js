@@ -6,25 +6,30 @@ import "./Profile.css";
 function Profile({ activeUser, setActiveUser }) {
 	const [profile, setProfile ] = useState(null);
 	const [isActiveUser, setIsActiveuser] = useState(false);
+	const [friendStatus, setFriendStatus] = useState({});
 
 	const params = useParams();
 
 	// Use the URL params to grab user whose profile it is
 	useEffect(() => {
-		fetch(`/users/${params.user_id}`)
-		.then((res) => {
-			if (res.ok) {
-				res.json().then((profile) => {
-					setProfile(profile);
-					if (profile.id === activeUser.id) {
-						setIsActiveuser(true);
-					}
-				});
-			} else {
-				res.json().then((data) => console.log(data));
-			}
-		});
-	}, []);
+		if (activeUser.id === parseInt(params.user_id)) {
+			setProfile(activeUser);
+			setIsActiveuser(true);
+		} else {
+			// Custom route that returns friend status plus the user data
+			fetch(`/friend_statuses/user/${activeUser.id}/friend/${params.user_id}`)
+			.then((res) => {
+				if (res.ok) {
+					res.json().then((data) => {
+						setFriendStatus(data.status)
+						setProfile(data.user);
+					});
+				} else {
+					res.json().then((data) => console.log(data));
+				}
+			});
+		}
+	}, [params, activeUser]);
 
 	if (!profile) {
 		return null;
@@ -41,6 +46,8 @@ function Profile({ activeUser, setActiveUser }) {
 							activeUser={activeUser}
 							setActiveUser={setActiveUser}
 							isActiveUser={isActiveUser}
+							friendStatus={friendStatus}
+							setFriendStatus={setFriendStatus}
 						/>
 					</div>
 					<div id="cupboard-search-container"></div>

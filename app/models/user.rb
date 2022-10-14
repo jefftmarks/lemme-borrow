@@ -26,7 +26,7 @@ class User < ApplicationRecord
 	validates :username, uniqueness: { case_sensitive: false }
 
 	# Method to determine whether active user and other user are friends
-	def is_friends_with?(user)
-		Friendship.find_by(user_id: self.id, friend_id: user.id)
-	end
+	# def is_friends_with?(user)
+	# 	Friendship.find_by(user_id: self.id, friend_id: user.id)
+	# end
 end

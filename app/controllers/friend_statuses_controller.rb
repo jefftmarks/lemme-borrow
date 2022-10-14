@@ -1,24 +1,25 @@
 class FriendStatusesController < ApplicationController
 
+	# Check whether or not friends. Send back message depending on whether 1. they haven't responded to your friend request or 2. you haven't responded to them
+
 	def status
-		# Check whether or not friends. Send back message depending on whether 1. they haven't responded to your friend request or 2. you haven't responded to them
 		user = User.find(status_params[:user_id])
 		friend = User.find(status_params[:friend_id])
-		# You've already requested friend but they haven't responded
-		requesting_friendship = FriendRequest.find_by(requester: user, receiver: friend)
-		# Friend has already requested you but you haven't responded
-		requested_friendship = FriendRequest.find_by(requester: friend, receiver: user)
+
+		# Determine whether friends
+		friendship = Friendship.find_by(user: user, friend: friend)
 		
-		# Render Friendship or FriendRequest instance when relevant so that action can be easily taken on front end (e.g. to delete friendship or accept/decline friend request)
-		if user.is_friends_with?(friend)
-			friendship = Friendship.find_by(user: user, friend: friend)
-			render json: { status: "Friends", data: FriendshipSerializer.new(friendship) }
-		elsif requesting_friendship
-			render json: { status: "Pending Response" }
-		elsif requested_friendship
-			render json: { status: "Pending Action", data: FriendRequestSerializer.new(requested_friendship) }
+		# Check friend status and return a boolean plus status to trigger actions on front end plus return instance of the friend for rendering on front end
+		if friendship
+			render json: { status: { is_friends: friendship.id, mode: "Friends" }, user: UserSerializer.new(friend) }
+		# You've already requested friend but they haven't responded
+		elsif FriendRequest.find_by(requester: user, receiver: friend)
+			render json: { status: { is_friends: false, mode: "Pending Response" }, user: UserSerializer.new(friend) }
+		# Friend has already requested you but you haven't responded
+		elsif FriendRequest.find_by(requester: friend, receiver: user)
+			render json: { status: { is_friends: false, mode: "Pending Action" }, user: UserSerializer.new(friend) }
 		else
-			render json: { status: "Not Friends" }
+			render json: { status: { is_friends: false, mode: "Not Friends" }, user: UserSerializer.new(friend) }
 		end
 	end
 

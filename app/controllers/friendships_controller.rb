@@ -1,5 +1,5 @@
 class FriendshipsController < ApplicationController
-	before_action :set_friendship, only: [:friend_status, :destroy]
+	before_action :set_friendship, only: [:destroy]
 
 	# For when a user clicks ACCEPT on a friend request, create new friendship
 	def create
@@ -25,7 +25,7 @@ class FriendshipsController < ApplicationController
 			friend_request.destroy
 
 			# Render JSON
-			render json: { created: FriendshipSerializer.new(friendship_one), destroyed: FriendRequestSerializer.new(friend_request) }, status: :created
+			render json: { is_friends: friendship_one.id, mode: "Friends" }, status: :created
 		end
 	end
 
@@ -35,10 +35,11 @@ class FriendshipsController < ApplicationController
 	end
 
 	def destroy
-		# Delete corresponding friendship
+		# Delete corresponding friendship and then primary friendship
 		@friendship.corresponding_friendship.destroy
 		@friendship.destroy
-		render json: @friendship
+		# Send back payload for re-rendering page
+		render json: { is_friends: false, mode: "Not Friends" }
 	end
 
 	private

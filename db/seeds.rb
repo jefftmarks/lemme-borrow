@@ -38,12 +38,17 @@ will = User.create!(
 	avatar: Faker::Avatar.image
 )
 
-Friendship.create!(user: jeff, friend: mischa)
-Friendship.create!(user: mischa, friend: jeff)
-Friendship.create!(user: jeff, friend: will)
-Friendship.create!(user: will, friend: jeff)
-Friendship.create!(user: mischa, friend: will)
-Friendship.create!(user: will, friend: mischa)
+friendship_1a = Friendship.create!(user: jeff, friend: mischa)
+friendship_1b = Friendship.create!(user: mischa, friend: jeff, corresponding_friendship: friendship_1a)
+friendship_1a.update!(corresponding_friendship: friendship_1b )
+
+friendship_2a = Friendship.create!(user: jeff, friend: will)
+friendship_2b = Friendship.create!(user: will, friend: jeff, corresponding_friendship: friendship_2a)
+friendship_2a.update!(corresponding_friendship: friendship_2b )
+
+friendship_3a = Friendship.create!(user: will, friend: mischa)
+friendship_3b = Friendship.create!(user: mischa, friend: will, corresponding_friendship: friendship_3a)
+friendship_3a.update!(corresponding_friendship: friendship_3b )
 
 10.times do |i|
 	User.create!(
