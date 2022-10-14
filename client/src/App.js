@@ -4,6 +4,7 @@ import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import Welcome from "./components/welcome/Welcome";
 import SignUp from "./components/welcome/SignUp";
+import Profile from "./components/profile/Profile";
 
 function App() {
 	const [user, setUser] = useState(null);
@@ -33,17 +34,7 @@ function App() {
 
 	// Render element for home path depending on whether or not user is logged in
 	function renderElement() {
-		if (user) {
-			return (
-				<Home
-					user={user}
-				/>
-			);
-		} else {
-			return (
-				<Welcome />
-			);
-		}
+		return user ? <Home user={user}/> : <Welcome />;
 	}
 
   return (
@@ -59,7 +50,12 @@ function App() {
 				setShowSignup={setShowSignup}
 			/>
 			<Routes>
-				<Route exact path="/" element={renderElement()} />
+				<Route
+					path="/user/:user_id"
+					element={user ? <Profile activeUser={user} setActiveUser={setUser} /> : null}
+				/>
+				<Route exact path="/" element={renderElement()}
+				/>
 			</Routes>
     </div>
   );

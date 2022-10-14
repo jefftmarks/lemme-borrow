@@ -5,6 +5,14 @@
 	align-items: center;
 }
 
-#nav button:hover {
+#nav * {
+	margin: 0 0.5rem;
+}
+
+#nav a {
+	color: white;
+}
+
+#nav button:hover, #nav a:hover {
 	cursor: pointer;
 }
