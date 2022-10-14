@@ -4,7 +4,7 @@ import "./Login.css";
 
 const initialState = { username: "", password: "" };
 
-function Login({ setUser, setIsLoading, setShowSignup }) {
+function Login({ setUser, setShowSignup }) {
 	const [formData, setFormData] = useState(initialState);
 
 	function handleChange(e) {
@@ -14,7 +14,6 @@ function Login({ setUser, setIsLoading, setShowSignup }) {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		setIsLoading(true);
 		// setErrors([]);
 		fetch("/login", {
 			method: "POST",
@@ -25,7 +24,6 @@ function Login({ setUser, setIsLoading, setShowSignup }) {
 		})
 			.then((res) => {
 				setFormData(initialState);
-				setIsLoading(false);
 				if (res.ok) {
 					res.json().then((data) => {
 						localStorage.setItem("jwt", data.token);

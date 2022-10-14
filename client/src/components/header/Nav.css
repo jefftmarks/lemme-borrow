@@ -4,3 +4,7 @@
 	display: flex;
 	align-items: center;
 }
+
+#nav button:hover {
+	cursor: pointer;
+}

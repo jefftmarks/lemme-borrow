@@ -3,7 +3,7 @@ import Login from "./Login";
 import Nav from "./Nav";
 import "./Header.css";
 
-function Header({ user, setUser, setIsLoading, setShowSignup }) {
+function Header({ user, setUser, setShowSignup }) {
 
 	function renderNavbar() {
 		if (user) {
@@ -16,7 +16,6 @@ function Header({ user, setUser, setIsLoading, setShowSignup }) {
 			return (
 				<Login
 					setUser={setUser}
-					setIsLoading={setIsLoading}
 					setShowSignup={setShowSignup}
 				/>
 			)
