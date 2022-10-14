@@ -1,3 +1,5 @@
+require 'faker'
+
 class UsersController < ApplicationController
 	before_action :set_user, only: [:show, :destroy]
 
@@ -17,7 +19,7 @@ class UsersController < ApplicationController
 
 	# For signup
 	def create
-		user = User.create!(user_params)
+		user = User.create!(**user_params, avatar: Faker::Avatar.image)
 		token = generate_token(user.id)
 		render json: { user: UserSerializer.new(user), token: token }, status: :created
 	end

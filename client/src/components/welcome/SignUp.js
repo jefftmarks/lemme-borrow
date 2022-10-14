@@ -89,14 +89,6 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 						value={formData.username}
 						/>
 					</label>
-					<label>Avatar:
-						<input
-						type="text"
-						name="avatar"
-						onChange={handleChange}
-						value={formData.avatar}
-						/>
-					</label>
 					<label>Password:
 						<input
 						required
