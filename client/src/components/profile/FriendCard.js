@@ -1,10 +1,20 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./FriendCard.css";
 
-function FriendCard({ friend }) {
+function FriendCard({ friend, setShowFriends }) {
 	return (
 		<div id="friend-card">
-			<h2>{friend.first_name}</h2>
+			<Link to={`/user/${friend.id}`}>
+				<img
+					src={friend.avatar}
+					alt="avatar"
+					onClick={() => setShowFriends(false)}
+				/>
+			</Link>
+			<div id="friend-card-info">
+				<h2>{friend.first_name}</h2>
+			</div>
 		</div>
 	);
 }

@@ -7,11 +7,17 @@ function Profile({ activeUser, setActiveUser }) {
 	const [profile, setProfile ] = useState(null);
 	const [isActiveUser, setIsActiveuser] = useState(false);
 	const [friendStatus, setFriendStatus] = useState({});
+	const [friends, setFriends] = useState([]);
+
+	// Double check before you unfriend
+	const [isUnfriending, setIsUnfriending] = useState(false);
 
 	const params = useParams();
 
 	// Use the URL params to grab user whose profile it is
 	useEffect(() => {
+		setIsUnfriending(false);
+		setFriends([]);
 		if (activeUser.id === parseInt(params.user_id)) {
 			setProfile(activeUser);
 			setIsActiveuser(true);
@@ -21,6 +27,7 @@ function Profile({ activeUser, setActiveUser }) {
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((data) => {
+						setIsActiveuser(false);
 						setFriendStatus(data.status)
 						setProfile(data.user);
 					});
@@ -48,6 +55,10 @@ function Profile({ activeUser, setActiveUser }) {
 							isActiveUser={isActiveUser}
 							friendStatus={friendStatus}
 							setFriendStatus={setFriendStatus}
+							isUnfriending={isUnfriending}
+							setIsUnfriending={setIsUnfriending}
+							friends={friends}
+							setFriends={setFriends}
 						/>
 					</div>
 					<div id="cupboard-search-container"></div>

@@ -1,20 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import FriendCard from "./FriendCard";
 import "./MyFriends.css";
 
-function MyFriends({ activeUser, showFriends, setShowFriends }) {
-	const [friends, setFriends] = useState([]);
-
-	useEffect(() => {
-		fetch(`/friendships/user/${activeUser.id}`)
-			.then((res) => {
-				if (res.ok) {
-					res.json().then((friends) => setFriends(friends));
-				} else {
-					res.json().then((data) => console.log(data));
-				}
-			});
-	}, []);
+function MyFriends({ friends, showFriends, setShowFriends, isActiveUser, profile }) {
 
 	// Conditionally render edit profile modal
 	if (!showFriends) {
@@ -25,7 +13,7 @@ function MyFriends({ activeUser, showFriends, setShowFriends }) {
 		<div id="my-friends">
 			<div id="friends-container">
 				<div id="my-friends-header">
-					<h2>My Friends</h2>
+					<h2>{isActiveUser ? "My Friends" : `${profile.first_name}'s Friends`}</h2>
 					<p onClick={() => setShowFriends(false)}>X</p>
 				</div>
 				<div id="friends-list">
@@ -33,6 +21,7 @@ function MyFriends({ activeUser, showFriends, setShowFriends }) {
 						<FriendCard 
 							key={friend.id}
 							friend={friend}
+							setShowFriends={setShowFriends}
 						/>
 					))}
 				</div>

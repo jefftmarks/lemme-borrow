@@ -1,0 +1,13 @@
+#friend-card {
+	display: flex;
+}
+
+#friend-card img {
+	height: 120px;
+}
+
+#friend-card-info {
+	border: 1px solid white;
+	padding: 1rem;
+	flex-grow: 1;
+}

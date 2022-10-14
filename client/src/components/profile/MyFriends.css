@@ -12,18 +12,27 @@
 
 #friends-container {
 	background-color: var(--dark-red);
-	width: 500px;
-	/* display: flex;
-	flex-direction: column; */
 	padding: 1rem;
+	width: 500px;
+	height: 550px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 #my-friends-header {
+	flex-grow: 1;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
 
 #friends-list {
 	margin-top: 1rem;
-	border-top: 1px solid white;
+	padding: 2rem 1rem;
+	/* border-top: 1px solid white; */
+	background-color: var(--darkest-red);
+	overflow-y: scroll;
+	display: block;
+	height: 90%;
 }

@@ -1,8 +1,8 @@
 #user-info {
+	flex-grow: 1;
 	border-top: 1px solid white;
 	border-left: 1px solid white;
 	border-bottom: 1px solid white;
-	width: 66%;
 	display: flex;
 	flex-direction: column;
 }
@@ -21,7 +21,7 @@
 	justify-content: space-evenly;
 }
 
-#user-actions button {
+#user-btn {
 	color: white;
 	background: var(--bright-red);
 	border: 1px solid white;
@@ -30,4 +30,40 @@
 
 #user-actions button:hover {
 	cursor: pointer;
+}
+
+#unfriend-container {
+	display: flex;
+	height: 20%;
+	border: 1px solid white;
+}
+
+#unfriend-container div {
+	color: black;
+	width: 60%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--basic-gray);
+}
+
+#unfriend-container button {
+	color: white;
+	background-color: var(--dark-red);
+	width: 20%;
+}
+
+#unfriend-container button:hover {
+	background-color: var(--bright-red);
+}
+
+#unfriend-yes {
+	border: 1px solid white;
+}
+
+#unfriend-no {
+	border-top: 1px solid white;
+	border-bottom: 1px solid white;
+	border-right: 1px solid white;
+	border-left: none;
 }

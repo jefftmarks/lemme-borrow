@@ -11,22 +11,21 @@
 
 #profile-header {
 	display: flex;
+	flex-wrap: wrap;
 }
 
 #user-card {
-	/* border: 1px solid blue; */
-	width: 40%;
 	display: flex;
-	justify-content: space-between;
+	min-width: 450px;
 }
 
 #user-card img {
 	border-radius: 50%;
 	border: 1px solid white;
-	width: 30%;
+	max-height: 200px;
 }
 
 #cupboard-search-container {
-	width: 60%;
+	flex-grow: 1;
 	border: 1px solid white;
 }
