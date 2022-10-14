@@ -1,0 +1,32 @@
+#profile {
+	display: flex;
+	justify-content: center;
+}
+
+#profile-container {
+	border: 1px solid white;
+	width: 85%;
+	padding: 1rem;
+}
+
+#profile-header {
+	display: flex;
+}
+
+#user-card {
+	/* border: 1px solid blue; */
+	width: 40%;
+	display: flex;
+	justify-content: space-between;
+}
+
+#user-card img {
+	border-radius: 50%;
+	border: 1px solid white;
+	width: 30%;
+}
+
+#cupboard-search-container {
+	width: 60%;
+	border: 1px solid white;
+}

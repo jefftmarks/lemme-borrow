@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		render json: @user, status: :accepted
+		render json: @user, serializer: UserWithFullDetailsSerializer, status: :accepted
 	end
 
 	def destroy

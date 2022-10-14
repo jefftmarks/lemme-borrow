@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Login from "./Login";
 import Nav from "./Nav";
 import "./Header.css";
@@ -9,6 +10,7 @@ function Header({ user, setUser, setShowSignup }) {
 		if (user) {
 			return (
 				<Nav
+					user={user}
 					setUser={setUser}
 				/>
 			)
@@ -24,9 +26,7 @@ function Header({ user, setUser, setShowSignup }) {
 
 	return (
 		<header id="header">
-			<div style={{border: "1px solid white"}}>
-				<h1>Logo</h1>
-			</div>
+			<Link to="/"><h1>Logo</h1></Link>
 			<div id="navbar">
 				{renderNavbar()}
 			</div>

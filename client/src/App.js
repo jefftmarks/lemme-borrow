@@ -4,6 +4,7 @@ import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import Welcome from "./components/welcome/Welcome";
 import SignUp from "./components/welcome/SignUp";
+import Profile from "./components/profile/Profile";
 
 function App() {
 	const [user, setUser] = useState(null);
@@ -59,7 +60,12 @@ function App() {
 				setShowSignup={setShowSignup}
 			/>
 			<Routes>
-				<Route exact path="/" element={renderElement()} />
+				<Route
+					path="/user/:user_id"
+					element={<Profile activeUser={user} />}
+				/>
+				<Route exact path="/" element={renderElement()}
+				/>
 			</Routes>
     </div>
   );

@@ -1,9 +1,17 @@
-header {
+#header {
   padding: 1rem;
 	background-color: var(--dark-red);
   display: flex;
   justify-content: space-between;
   align-content: center;
+}
+
+#header a {
+	color: white;
+}
+
+#header a:hover {
+	cursor: pointer;
 }
 
 /* #header * {
