@@ -59,7 +59,8 @@ class UsersController < ApplicationController
 		token = request.headers["token"]
 		user_id = decode_token(token)
 		if user_id
-			render json: User.find(user_id)
+			user = User.find(user_id)
+			render json: user, serializer: UserWithFullDetailsSerializer
 		else
 			render json: { error: "Unauthorized" }, status: :unauthorized
 		end

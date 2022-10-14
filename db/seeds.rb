@@ -38,6 +38,24 @@ will = User.create!(
 	avatar: Faker::Avatar.image
 )
 
+Friendship.create!(user: jeff, friend: mischa)
+Friendship.create!(user: mischa, friend: jeff)
+Friendship.create!(user: jeff, friend: will)
+Friendship.create!(user: will, friend: jeff)
+Friendship.create!(user: mischa, friend: will)
+Friendship.create!(user: will, friend: mischa)
+
+10.times do |i|
+	User.create!(
+		username: Faker::Internet.username,
+		first_name: Faker::Name.first_name,
+		last_name: Faker::Name.last_name,
+		password: "1111",
+		email: Faker::Internet.email,
+		avatar: Faker::Avatar.image
+	)
+end
+
 10.times do |i|
 	Item.create(
 		name: Faker::Commerce.product_name,

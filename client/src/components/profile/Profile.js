@@ -4,7 +4,7 @@ import UserInfo from "./UserInfo";
 import "./Profile.css";
 
 function Profile({ activeUser, setActiveUser }) {
-	const [user, setUser ] = useState(null);
+	const [profile, setProfile ] = useState(null);
 	const [isActiveUser, setIsActiveuser] = useState(false);
 
 	const params = useParams();
@@ -14,9 +14,9 @@ function Profile({ activeUser, setActiveUser }) {
 		fetch(`/users/${params.user_id}`)
 		.then((res) => {
 			if (res.ok) {
-				res.json().then((user) => {
-					setUser(user);
-					if (user.id === activeUser.id) {
+				res.json().then((profile) => {
+					setProfile(profile);
+					if (profile.id === activeUser.id) {
 						setIsActiveuser(true);
 					}
 				});
@@ -26,7 +26,7 @@ function Profile({ activeUser, setActiveUser }) {
 		});
 	}, []);
 
-	if (!user) {
+	if (!profile) {
 		return null;
 	}
 
@@ -35,10 +35,10 @@ function Profile({ activeUser, setActiveUser }) {
 			<div id="profile-container">
 				<div id="profile-header">
 					<div id="user-card">
-						<img src={user.avatar} alt="avatar" />
+						<img src={profile.avatar} alt="avatar" />
 						<UserInfo
-							user={user}
-							setProfile={setUser}
+							profile={profile}
+							activeUser={activeUser}
 							setActiveUser={setActiveUser}
 							isActiveUser={isActiveUser}
 						/>

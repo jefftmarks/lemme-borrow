@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./EditProfile.css";
 
-function EditProfile({ showEditProfile, setShowEditProfile, setProfile, activeUser, setActiveUser }) {
+function EditProfile({ showEditProfile, setShowEditProfile, activeUser, setActiveUser }) {
 	
 	const initialState = {
 		first_name: activeUser.first_name,
@@ -44,7 +44,6 @@ function EditProfile({ showEditProfile, setShowEditProfile, setProfile, activeUs
 				if (res.ok) {
 					res.json().then((user) => {
 						setShowEditProfile(false);
-						setProfile(user);
 						setActiveUser(user);
 					});
 				} else {

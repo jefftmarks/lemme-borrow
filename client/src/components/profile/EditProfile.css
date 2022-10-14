@@ -44,7 +44,7 @@
 	text-decoration: underline;
 } */
 
-#edit-profile-form button:hover, span:hover, p:hover {
+#edit-profile-form button:hover, span:hover {
 	cursor: pointer;
 }
 
