@@ -5,19 +5,10 @@
 	background-color: var(--bright-red);
 }
 
-#friend-card a {
-	width: 20%;
-	height: 100%;
-	display: flex;
-	padding: 0.3rem;
-	background-color: var(--light-gray);
-	
-}
 
 #friend-card img {
-	border-radius: 50%;
 	background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
-	width: 100%;
+	width: 20%;
 }
 
 #friend-card-info {

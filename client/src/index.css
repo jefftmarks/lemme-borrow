@@ -3,11 +3,15 @@
   --dark-red: #890D0D;
   --primary-red: #9c0f0f;
   --bright-red: #e21111;
-	--light-red: #ffcaca;
-	--pink: #ffa5d3;
+	--light-red: #ffabab;
+
 	--dark-gray: #a9a8a8;
 	--basic-gray: #D9D9D9;
 	--light-gray: #F5F5F5;
+
+	--light-purple: #cdaefd;
+	--light-yellow: #f9cd5e;
+	--light-green: #88d860;
 }
 
 * {

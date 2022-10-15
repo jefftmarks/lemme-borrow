@@ -38,31 +38,26 @@
 }
 
 #unfriend-container div {
-	color: black;
 	width: 60%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: var(--basic-gray);
+	background-color: var(--dark-gray);
 }
 
 #unfriend-container button {
-	background: var(--primary-red);
-	border: none;
+	color: black;
+	background: var(--basic-gray);
 	width: 20%;
 }
 
-#unfriend-container button:hover {
-	background-color: var(--bright-red);
-}
-
 #unfriend-yes {
-	border: 1px solid white;
+	border-right: 1px solid var(--dark-gray);
+	border-top: none;
+	border-bottom: none;
+	border-left: none;
 }
 
 #unfriend-no {
-	border-top: 1px solid white;
-	border-bottom: 1px solid white;
-	border-right: 1px solid white;
-	border-left: none;
+	border: none;
 }

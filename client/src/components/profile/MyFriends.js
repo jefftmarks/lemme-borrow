@@ -1,8 +1,9 @@
 import React from "react";
 import FriendCard from "./FriendCard";
+import { Link } from "react-router-dom";
 import "./MyFriends.css";
 
-function MyFriends({ friends, showFriends, setShowFriends, isActiveUser, profile }) {
+function MyFriends({ friends, showFriends, setShowFriends, profile }) {
 
 	// Conditionally render edit profile modal
 	if (!showFriends) {
@@ -13,16 +14,18 @@ function MyFriends({ friends, showFriends, setShowFriends, isActiveUser, profile
 		<div id="my-friends">
 			<div id="friends-container">
 				<div id="my-friends-header">
-					<h2>{isActiveUser ? "My Friends" : `${profile.first_name}'s Friends`}</h2>
-					<p onClick={() => setShowFriends(false)}>X</p>
+					<h2>{profile.is_active ? "My Friends" : `${profile.user.first_name}'s Friends`}</h2>
+					<span onClick={() => setShowFriends(false)}>X</span>
 				</div>
 				<div id="friends-list">
 					{friends.map((friend) => (
-						<FriendCard 
+						<Link
 							key={friend.id}
-							friend={friend}
-							setShowFriends={setShowFriends}
-						/>
+							to={`/user/${friend.id}`}
+							onClick={() => setShowFriends(false)}
+						>
+							<FriendCard friend={friend}/>
+						</Link>
 					))}
 				</div>
 			</div>

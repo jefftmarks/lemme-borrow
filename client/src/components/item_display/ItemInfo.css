@@ -1,0 +1,90 @@
+#item-info {
+	margin-top: 1rem;
+	color: black;
+	background-color: var(--light-gray);
+	padding: 0.5rem;
+}
+
+#item-status-bar {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 0.5rem;
+}
+
+#item-status, #tag-display #tag-card {
+	color: white;
+	padding: 0.5rem;
+}
+
+#item-status {
+	flex-grow: 1;
+	background-color: var(--bright-red);
+}
+
+#status-btn {
+	color: black;
+	padding: 0.5rem;
+	border: none;
+	background-color: var(--basic-gray);
+}
+
+#item-status-bar button:nth-child(2) {
+	border-right: 1px solid var(--dark-gray);
+}
+
+#status-btn:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+#item-image-container {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 0.5rem;
+}
+
+#item-front-image {
+	z-index: 1000;
+	position: absolute;
+}
+
+#item-info img {
+	width: auto;
+	max-height: 300px;
+}
+
+#item-image-blur {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	opacity: 0.5;
+}
+
+#item-info #tag-display {
+	margin-top: 0.5rem;
+	display: flex;
+	column-gap: 0.5rem;
+}
+
+#tag-display #tag-card:nth-child(1n+0) {
+	background-color: var(--dark-gray);
+}
+
+#tag-display #tag-card:nth-child(4n+1) {
+	background-color: var(--light-purple);
+}
+
+#tag-display #tag-card:nth-child(4n+2) {
+	background-color: var(--light-red);
+}
+
+#tag-display #tag-card:nth-child(4n+3) {
+	background-color: var(--light-yellow);
+}
+
+#tag-display #tag-display #tag-card:hover {
+	cursor: pointer;
+}

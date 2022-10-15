@@ -4,10 +4,9 @@ import UserInfo from "./UserInfo";
 import Cupboard from "./Cupboard";
 import "./Profile.css";
 
-function Profile({ activeUser, setActiveUser }) {
+function Profile({ activeUser, setActiveUser, onClickItem }) {
+	// Profile will keep track of user, whether user is active user, and if not, what friend status is between active user and this user
 	const [profile, setProfile ] = useState(null);
-	const [isActiveUser, setIsActiveuser] = useState(false);
-	const [friendStatus, setFriendStatus] = useState({});
 	const [friends, setFriends] = useState([]);
 
 	// Double check before you unfriend
@@ -15,22 +14,29 @@ function Profile({ activeUser, setActiveUser }) {
 
 	const params = useParams();
 
+	// ---------- Render User ----------
+
 	// Use the URL params to grab user whose profile it is
 	useEffect(() => {
 		setIsUnfriending(false);
 		setFriends([]);
+		// If on user's own page
 		if (activeUser.id === parseInt(params.user_id)) {
-			setProfile(activeUser);
-			setIsActiveuser(true);
+			setProfile({
+				user: activeUser,
+				is_active: true,
+			});
 		} else {
 			// Custom route that returns friend status plus the user data
 			fetch(`/friend_statuses/user/${activeUser.id}/friend/${params.user_id}`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((data) => {
-						setIsActiveuser(false);
-						setFriendStatus(data.status)
-						setProfile(data.user);
+						setProfile({
+							user: data.user,
+							is_active: false,
+							friend_status: data.status,
+						});
 					});
 				} else {
 					res.json().then((data) => console.log(data));
@@ -48,14 +54,12 @@ function Profile({ activeUser, setActiveUser }) {
 			<div id="profile-container">
 				<div id="profile-header">
 					<div id="user-card">
-						<img id="profile-pic" src={profile.avatar} alt="avatar" />
+						<img id="profile-pic" src={profile.user.avatar} alt="avatar" />
 						<UserInfo
 							profile={profile}
+							setProfile={setProfile}
 							activeUser={activeUser}
 							setActiveUser={setActiveUser}
-							isActiveUser={isActiveUser}
-							friendStatus={friendStatus}
-							setFriendStatus={setFriendStatus}
 							isUnfriending={isUnfriending}
 							setIsUnfriending={setIsUnfriending}
 							friends={friends}
@@ -66,6 +70,7 @@ function Profile({ activeUser, setActiveUser }) {
 				</div>
 				<Cupboard
 					profile={profile}
+					onClickItem={onClickItem}
 				/>
 			</div>
 		</div>
