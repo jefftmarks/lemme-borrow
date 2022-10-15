@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import UserInfo from "./UserInfo";
+import Cupboard from "./Cupboard";
 import "./Profile.css";
 
 function Profile({ activeUser, setActiveUser }) {
@@ -47,7 +48,7 @@ function Profile({ activeUser, setActiveUser }) {
 			<div id="profile-container">
 				<div id="profile-header">
 					<div id="user-card">
-						<img src={profile.avatar} alt="avatar" />
+						<img id="profile-pic" src={profile.avatar} alt="avatar" />
 						<UserInfo
 							profile={profile}
 							activeUser={activeUser}
@@ -63,6 +64,9 @@ function Profile({ activeUser, setActiveUser }) {
 					</div>
 					<div id="cupboard-search-container"></div>
 				</div>
+				<Cupboard
+					profile={profile}
+				/>
 			</div>
 		</div>
 	);

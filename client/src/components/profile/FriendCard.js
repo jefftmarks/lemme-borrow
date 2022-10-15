@@ -14,6 +14,7 @@ function FriendCard({ friend, setShowFriends }) {
 			</Link>
 			<div id="friend-card-info">
 				<h2>{friend.first_name}</h2>
+				<div id="friend-card-details"></div>
 			</div>
 		</div>
 	);

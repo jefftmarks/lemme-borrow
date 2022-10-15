@@ -1,13 +1,12 @@
 #user-info {
 	flex-grow: 1;
-	border-top: 1px solid white;
-	border-left: 1px solid white;
-	border-bottom: 1px solid white;
+	background-color: var(--light-gray);
 	display: flex;
 	flex-direction: column;
 }
 
 #user-info h3 {
+	background-color: var(--bright-red);
 	border-bottom: 1px solid white;
 	padding: 0.5rem;
 	text-align: center;
@@ -23,8 +22,8 @@
 
 #user-btn {
 	color: white;
-	background: var(--bright-red);
-	border: 1px solid white;
+	background: var(--dark-gray);
+	border: none;
 	height: 20%;
 }
 
@@ -48,8 +47,8 @@
 }
 
 #unfriend-container button {
-	color: white;
-	background-color: var(--dark-red);
+	background: var(--primary-red);
+	border: none;
 	width: 20%;
 }
 

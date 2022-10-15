@@ -21,18 +21,15 @@
 }
 
 #my-friends-header {
-	flex-grow: 1;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
 #friends-list {
-	margin-top: 1rem;
 	padding: 2rem 1rem;
-	/* border-top: 1px solid white; */
 	background-color: var(--darkest-red);
 	overflow-y: scroll;
 	display: block;
-	height: 90%;
+	height: 91%;
 }
