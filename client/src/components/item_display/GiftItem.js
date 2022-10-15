@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import GiftFriendCard from "./GiftFriendCard";
+import GiftItemCard from "./GiftItemCard";
 import "./GiftItem.css";
 
 function GiftItem({ item, setItem, setMode, activeUser }) {
@@ -49,7 +49,7 @@ function GiftItem({ item, setItem, setMode, activeUser }) {
 			</div>
 			<div id="friends-list">
 				{friends.map((friend) => (
-					<GiftFriendCard 
+					<GiftItemCard 
 						key={friend.id}
 						friend={friend}
 						item={item}

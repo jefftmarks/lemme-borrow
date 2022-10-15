@@ -11,7 +11,7 @@
 	margin-bottom: 0.5rem;
 }
 
-#item-status, #status-btn, #tag-card {
+#item-status, #tag-display #tag-card {
 	color: white;
 	padding: 0.5rem;
 }
@@ -22,8 +22,14 @@
 }
 
 #status-btn {
+	color: black;
+	padding: 0.5rem;
 	border: none;
-	background-color: var(--primary-red);
+	background-color: var(--basic-gray);
+}
+
+#item-status-bar button:nth-child(2) {
+	border-right: 1px solid var(--dark-gray);
 }
 
 #status-btn:hover {
@@ -31,8 +37,30 @@
 	text-decoration: underline;
 }
 
+#item-image-container {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 0.5rem;
+}
+
+#item-front-image {
+	z-index: 1000;
+	position: absolute;
+}
+
 #item-info img {
+	width: auto;
+	max-height: 300px;
+}
+
+#item-image-blur {
 	width: 100%;
+	display: flex;
+	justify-content: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	opacity: 0.5;
 }
 
 #item-info #tag-display {
@@ -41,22 +69,22 @@
 	column-gap: 0.5rem;
 }
 
-#tag-card:nth-child(1n+0) {
+#tag-display #tag-card:nth-child(1n+0) {
 	background-color: var(--dark-gray);
 }
 
-#tag-card:nth-child(4n+1) {
+#tag-display #tag-card:nth-child(4n+1) {
 	background-color: var(--light-purple);
 }
 
-#tag-card:nth-child(4n+2) {
+#tag-display #tag-card:nth-child(4n+2) {
 	background-color: var(--light-red);
 }
 
-#tag-card:nth-child(4n+3) {
+#tag-display #tag-card:nth-child(4n+3) {
 	background-color: var(--light-yellow);
 }
 
-#tag-card:hover {
+#tag-display #tag-display #tag-card:hover {
 	cursor: pointer;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ItemInfo.css";
 
 function ItemInfo({ item, setMode, activeUser }) {
@@ -14,7 +14,10 @@ function ItemInfo({ item, setMode, activeUser }) {
 				if (!borrower_id) {
 					return (
 						<div id="item-status-bar">
-							<p id="item-status">Item is in Your Cupboard</p>
+							<p id="item-status">Item is Currently in Your Cupboard</p>
+							<button id="status-btn" onClick={() => setMode("edit")}>
+								Edit Item?
+							</button>
 							<button id="status-btn" onClick={() => setMode("gift")}>
 								Gift Item?
 							</button>
@@ -30,7 +33,12 @@ function ItemInfo({ item, setMode, activeUser }) {
 	return (
 		<div id="item-info">
 			{renderStatusBar()}
-			<img src={image} alt={name} />
+			<div id="item-image-container">
+				<img id="item-front-image" src={image} alt={name} />
+				<div id="item-image-blur" style={{backgroundImage: `url("${item.image}")`}}>
+					<img src={image} alt={name} />
+				</div>
+			</div>
 			<p>{description}</p>
 			<div id="tag-display">
 				{tags.map((tag) => (

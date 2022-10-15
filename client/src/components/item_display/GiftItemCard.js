@@ -1,7 +1,7 @@
 import React from "react";
-import "./GiftFriendCard.css";
+import "./GiftItemCard.css";
 
-function GiftFriendCard({ friend, item, onClickGiftItem }) {
+function GiftItemCard({ friend, item, onClickGiftItem }) {
 	return (
 		<div id="gift-friend-card">
 			<img src={friend.avatar} alt="avatar" />
@@ -16,4 +16,4 @@ function GiftFriendCard({ friend, item, onClickGiftItem }) {
 	);
 }
 
-export default GiftFriendCard;
+export default GiftItemCard;

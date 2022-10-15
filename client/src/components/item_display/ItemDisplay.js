@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ItemInfo from "./ItemInfo";
 import GiftItem from "./GiftItem";
+import EditItem from "./EditItem";
 import "./ItemDisplay.css";
 
 function ItemDisplay({ item, setItem, activeUser }) {
@@ -22,6 +23,13 @@ function ItemDisplay({ item, setItem, activeUser }) {
 						activeUser={activeUser}
 					/>
 				);
+			case "edit":
+				return (
+					<EditItem
+						item={item}
+						setItem={setItem}
+					/>
+				)
 			default:
 				return (
 					<ItemInfo
@@ -32,13 +40,18 @@ function ItemDisplay({ item, setItem, activeUser }) {
 				);
 		}
 	}
+	
+	function onClickEx() {
+		setMode("");
+		setItem(false);
+	}
 
 	return (
 		<div id="item-display">
 			<div id="item-display-container">
 				<div id="item-display-header">
 					<h2>{item.name}</h2>
-					<span onClick={() => setItem(false)}>X</span>
+					<span onClick={onClickEx}>X</span>
 				</div>
 				{renderDisplay()}
 			</div>

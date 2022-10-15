@@ -69,7 +69,7 @@ class ItemsController < ApplicationController
 		end
 
 		item = Item.find(@item.id)
-		render json: item , status: :created
+		render json: item, serializer: ItemWithFullDetailsSerializer, status: :created
 	end
 
 	def gift_item
