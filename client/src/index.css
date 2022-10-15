@@ -1,9 +1,13 @@
 :root {
+	--darkest-red: #630b0b;
   --dark-red: #890D0D;
   --primary-red: #9c0f0f;
   --bright-red: #e21111;
 	--light-red: #ffcaca;
+	--pink: #ffa5d3;
+	--dark-gray: #a9a8a8;
 	--basic-gray: #D9D9D9;
+	--light-gray: #F5F5F5;
 }
 
 * {

@@ -1,6 +1,7 @@
 #profile {
 	display: flex;
 	justify-content: center;
+	margin-top: 1rem;
 }
 
 #profile-container {
@@ -11,22 +12,23 @@
 
 #profile-header {
 	display: flex;
+	/* flex-wrap: wrap; */
 }
 
 #user-card {
-	/* border: 1px solid blue; */
-	width: 40%;
 	display: flex;
-	justify-content: space-between;
+	width: 40%;
 }
 
-#user-card img {
+#profile-pic {
 	border-radius: 50%;
-	border: 1px solid white;
-	width: 30%;
+	background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+	;
+	margin-right: 0.5rem;
+	width: 40%;
 }
 
 #cupboard-search-container {
-	width: 60%;
-	border: 1px solid white;
+	flex-grow: 1;
+	background-color: var(--basic-gray) ;
 }

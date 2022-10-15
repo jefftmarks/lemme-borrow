@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		render json: @user, serializer: UserWithFullDetailsSerializer
+		render json: @user
 	end
 
 	def update
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
 					avatar: user_params[:avatar],
 				)
 			end
-			render json: @user, serializer: UserWithFullDetailsSerializer, status: :accepted
+			render json: @user, status: :accepted
 		else
 			render json: { error: "Invalid username or password" }, status: :unauthorized
 		end
@@ -59,7 +59,8 @@ class UsersController < ApplicationController
 		token = request.headers["token"]
 		user_id = decode_token(token)
 		if user_id
-			render json: User.find(user_id)
+			user = User.find(user_id)
+			render json: user
 		else
 			render json: { error: "Unauthorized" }, status: :unauthorized
 		end
