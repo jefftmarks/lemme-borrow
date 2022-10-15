@@ -61,6 +61,10 @@ friendship_3a.update!(corresponding_friendship: friendship_3b )
 	)
 end
 
+tag_list = ["book", "clothing", "red", "orange", "yellow", "green", "blue", "purple", "toy", "game", "tool", "dvd", "appliance", "kitchen", "halloween", "shirt", "food", "sci-fi", "garden", "formal", "casual", "dress", "school", "art", "car", "pet", "kids", "backyard", "furniture", "cleaning", "literature", "new", "used", "party"]
+
+tag_list.each { |tag| Tag.create!(name: tag) }
+
 10.times do |i|
 	Item.create(
 		name: Faker::Commerce.product_name,
@@ -92,6 +96,13 @@ end
 		owner: will,
 		image: "https://cdn11.bigcommerce.com/s-uem5l16ozh/images/stencil/original/x/49mm_bouncy_balls%20category%20thumbnail__63591.original.jpg"
 	)
+end
+
+Item.all.each do |item|
+	tags = Tag.all.sample(3)
+	ItemTag.create!(item: item, tag: tags[0])
+	ItemTag.create!(item: item, tag: tags[1])
+	ItemTag.create!(item: item, tag: tags[2])
 end
 
 puts "seeding done"

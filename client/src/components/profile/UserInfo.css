@@ -38,15 +38,15 @@
 }
 
 #unfriend-container div {
-	color: black;
 	width: 60%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: var(--basic-gray);
+	background-color: var(--dark-gray);
 }
 
 #unfriend-container button {
+	color: white;
 	background: var(--primary-red);
 	border: none;
 	width: 20%;

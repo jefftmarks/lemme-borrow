@@ -1,10 +1,11 @@
 import React from "react";
 import "./CupboardCard.css";
 
-function CupboardCard({ item }) {
+function CupboardCard({ item, onClickItem }) {
 
 	return (
 		<div id="cupboard-card"
+			onClick={() => onClickItem(item.id)}
 		>
 			<div id="cupboard-image"
 				style={{backgroundImage: `url("${item.image}")`}}

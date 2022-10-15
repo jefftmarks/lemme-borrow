@@ -4,14 +4,18 @@ import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import Welcome from "./components/welcome/Welcome";
 import SignUp from "./components/welcome/SignUp";
+import ItemDisplay from "./components/item_display/ItemDisplay";
 import Profile from "./components/profile/Profile";
 
 function App() {
 	const [user, setUser] = useState(null);
 	const [showSignup, setShowSignup] = useState(false);
+	const [item, setItem] = useState(null);
 
-	// Grab active user on reload via JWT token stored in local storage
+	// ---------- Render Active User on Reload ----------
+
 	useEffect(() => {
+		// Grab active via JWT token stored in local storage
 		let token = localStorage.getItem("jwt");
 		if (token && !user) {
 			fetch("/profile", {
@@ -37,8 +41,26 @@ function App() {
 		return user ? <Home user={user}/> : <Welcome />;
 	}
 
+	// ---------- Render Display Item ----------
+
+	function handleClickItem(id) {
+		fetch(`/items/${id}`)
+			.then((res) => {
+				if (res.ok) {
+					res.json().then((item) => setItem(item));
+				} else {
+					res.json().then((data) => console.log(data));
+				}
+			});
+	}
+
   return (
     <div className="App">
+			<ItemDisplay
+				item={item}
+				setItem={setItem}
+				activeUser={user}
+			/>
 			<SignUp
 				showSignup={showSignup}
 				setShowSignup={setShowSignup}
@@ -52,7 +74,13 @@ function App() {
 			<Routes>
 				<Route
 					path="/user/:user_id"
-					element={user ? <Profile activeUser={user} setActiveUser={setUser} /> : null}
+					element={user ? (
+						<Profile
+							activeUser={user}
+							setActiveUser={setUser}
+							onClickItem={handleClickItem}
+						/>
+					) : null}
 				/>
 				<Route exact path="/" element={renderElement()}
 				/>

@@ -11,15 +11,15 @@ class FriendStatusesController < ApplicationController
 		
 		# Check friend status and return a boolean plus status to trigger actions on front end plus return instance of the friend for rendering on front end
 		if friendship
-			render json: { status: { is_friends: friendship.id, mode: "Friends" }, user: UserSerializer.new(friend) }
+			render json: { status: { id: friendship.id, mode: "Friends" }, user: UserSerializer.new(friend) }
 		# You've already requested friend but they haven't responded
 		elsif FriendRequest.find_by(requester: user, receiver: friend)
-			render json: { status: { is_friends: false, mode: "Pending Response" }, user: UserSerializer.new(friend) }
+			render json: { status: { mode: "Pending Response" }, user: UserSerializer.new(friend) }
 		# Friend has already requested you but you haven't responded
 		elsif FriendRequest.find_by(requester: friend, receiver: user)
-			render json: { status: { is_friends: false, mode: "Pending Action" }, user: UserSerializer.new(friend) }
+			render json: { status: { mode: "Pending Action" }, user: UserSerializer.new(friend) }
 		else
-			render json: { status: { is_friends: false, mode: "Not Friends" }, user: UserSerializer.new(friend) }
+			render json: { status: { mode: "Not Friends" }, user: UserSerializer.new(friend) }
 		end
 	end
 

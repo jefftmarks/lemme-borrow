@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import CupboardCard from "./CupboardCard";
 import "./Cupboard.css";
 
-function Cupboard({ profile }) {
+function Cupboard({ profile, onClickItem }) {
 	const [items, setItems] = useState([]);
 
 	useEffect(() => {
-		fetch(`/items/belongings/${profile.id}"`)
+		fetch(`/items/belongings/${profile.user.id}"`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((items) => setItems(items));
@@ -22,6 +22,7 @@ function Cupboard({ profile }) {
 				<CupboardCard
 					key={item.id}
 					item={item}
+					onClickItem={onClickItem}
 				/>
 			))}
 		</div>
