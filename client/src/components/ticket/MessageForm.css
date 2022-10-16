@@ -1,0 +1,15 @@
+#message-form {
+	background-color: var(--bright-red);
+	padding: 1rem;
+	display: flex;
+}
+
+#message-form textarea {
+	flex-grow: 1;
+	resize: none;
+	padding: 0.5rem;
+}
+
+#message-form button:hover {
+	cursor: pointer;
+}

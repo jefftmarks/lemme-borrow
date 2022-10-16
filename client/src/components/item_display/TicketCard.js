@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./TicketCard.css"
 
-function TicketCard({ ticket, activeUser }) {
+function TicketCard({ ticket, activeUser, setItem }) {
 
 	function renderMessage() {
 		// If not your item
@@ -33,7 +33,9 @@ function TicketCard({ ticket, activeUser }) {
 	return (
 		<div className="ticket-card">
 			<p>{renderMessage()}</p>
-			<button>View Ticket</button>
+			<Link to={`/ticket/${ticket.id}`} onClick={() => setItem(null)}>
+				<button>View Ticket</button>
+			</Link>
 		</div>
 	);
 }

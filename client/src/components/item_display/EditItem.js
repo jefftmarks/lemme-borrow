@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./EditItem.css";
 
-function EditItem({ item, setItem }) {
+function EditItem({ item, setItem, setMode }) {
 
 	// ---------- Form Handling ----------
 
@@ -23,6 +23,7 @@ function EditItem({ item, setItem }) {
 	// ---------- Render Tag Cards to Confirm Correct Format ----------
 
 	useEffect(() => {
+		// Use setTimeout so there isn't "typewriter" effect
 		const updateTagCards = setTimeout(() => {
 		// remove semi-colons
 		const arr = formData.tags.split(/\s*;\s*/gm);
@@ -63,7 +64,8 @@ function EditItem({ item, setItem }) {
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((item) => {
-						setItem({data: item, mode: ""});
+						setItem(item);
+						setMode("");
 						setFormData(initialState);
 					})
 				} else {
@@ -76,7 +78,7 @@ function EditItem({ item, setItem }) {
 
 	function onClickBack(e) {
 		e.preventDefault();
-		setItem({data: item, mode: ""});
+		setMode("");
 	}
 
 	return (

@@ -6,11 +6,13 @@ import Welcome from "./components/welcome/Welcome";
 import SignUp from "./components/welcome/SignUp";
 import ItemDisplay from "./components/item_display/ItemDisplay";
 import Profile from "./components/profile/Profile";
+import Ticket from "./components/ticket/Ticket";
 
 function App() {
 	const [user, setUser] = useState(null);
 	const [showSignup, setShowSignup] = useState(false);
 	const [item, setItem] = useState(null);
+	const [mode, setMode] = useState("");
 
 	// ---------- Render Active User on Reload ----------
 
@@ -47,7 +49,10 @@ function App() {
 		fetch(`/items/${id}`)
 			.then((res) => {
 				if (res.ok) {
-					res.json().then((item) => setItem({data: item, mode: ""}));
+					res.json().then((item) => {
+						setItem(item);
+						setMode("");
+					});
 				} else {
 					res.json().then((data) => console.log(data));
 				}
@@ -59,6 +64,8 @@ function App() {
 			<ItemDisplay
 				item={item}
 				setItem={setItem}
+				mode={mode}
+				setMode={setMode}
 				activeUser={user}
 			/>
 			<SignUp
@@ -82,6 +89,14 @@ function App() {
 							onClickAddItem={() => setItem({mode: "add"})}
 						/>
 					) : null}
+				/>
+				<Route
+					path="/ticket/:ticket_id"
+					element={
+						<Ticket
+							activeUser={user}
+						/>
+					}
 				/>
 				<Route exact path="/" element={renderElement()}
 				/>

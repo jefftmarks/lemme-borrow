@@ -9,18 +9,7 @@ class ItemsController < ApplicationController
 	end
 
 	def show
-		render json: @item, serializer: ItemWithFullDetailsSerializer
-	end
-
-	def status
-		# Item is yours
-		if @item.owner == @user
-			render json: @item.tickets
-		# Item is not yours but you've either requested or are borrowing it
-		else
-			tickets = @item.tickets.where(borrower: @user)
-			render json: tickets
-		end
+		render json: @item
 	end
 
 	def create
@@ -40,7 +29,7 @@ class ItemsController < ApplicationController
 			end
 		end
 
-		render json: item ,serializer: ItemWithFullDetailsSerializer, status: :created
+		render json: item, status: :created
 	end
 
 	def update
@@ -65,7 +54,7 @@ class ItemsController < ApplicationController
 		end
 
 		item = Item.find(@item.id)
-		render json: item, serializer: ItemWithFullDetailsSerializer, status: :created
+		render json: item, status: :created
 	end
 
 	def gift_item

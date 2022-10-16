@@ -1,7 +1,7 @@
 import React from "react";
 import "./GiftItemCard.css";
 
-function GiftItemCard({ friend, item, onClickGiftItem }) {
+function GiftItemCard({ friend, onClickGiftItem }) {
 	return (
 		<div id="gift-friend-card">
 			<img src={friend.avatar} alt="avatar" />

@@ -1,0 +1,35 @@
+#messenger {
+	background-color: var(--light-gray);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+#messenger-header {
+	background-color: var(--bright-red);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5rem;
+}
+
+#messenger-header img {
+	width: 12%;
+	border-radius: 50%;
+	background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+}
+
+#messenger-header img:hover {
+	cursor: pointer;
+}
+
+#message-list {
+	padding: 1rem;
+	height: 400px;
+	display: block;
+	overflow-y: scroll;
+	display: flex;
+	flex-direction: column;
+	flex-direction: column-reverse;
+	row-gap: 1rem;;
+}

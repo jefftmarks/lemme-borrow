@@ -20,6 +20,7 @@ function CreateItem({ setItem, activeUser }) {
 	// ---------- Render Tag Cards to Confirm Correct Format ----------
 
 	useEffect(() => {
+		// Use setTimeout so there isn't "typewriter" effect
 		const updateTagCards = setTimeout(() => {
 		// remove semi-colons
 		const arr = formData.tags.split(/\s*;\s*/gm);
@@ -55,7 +56,7 @@ function CreateItem({ setItem, activeUser }) {
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((item) => {
-						setItem({data: item, mode: ""});
+						setItem({...item, mode: ""});
 						setFormData(initialState);
 					})
 				} else {

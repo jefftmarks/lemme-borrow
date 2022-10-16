@@ -1,5 +1,10 @@
 class ItemSerializer < ActiveModel::Serializer
-  attributes :id, :name, :requested, :status, :image, :owner_id, :borrower_id
+  attributes :id, :name, :status, :description, :image, :tags
 
-	# No category for now
+	belongs_to :owner
+	belongs_to :borrower
+	
+	def tags
+		self.object.tags.map { |tag| tag[:name] }
+	end
 end
