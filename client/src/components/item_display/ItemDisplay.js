@@ -7,18 +7,20 @@ import CreateItem from "./CreateItem";
 import ItemTickets from "./ItemTickets";
 import "./ItemDisplay.css";
 
-function ItemDisplay({ item, setItem, activeUser, mode, setMode }) {
+function ItemDisplay({ showItem, setShowItem, activeUser}) {
 	const [isLoading, setIsLoading] = useState(true)
 	const [tickets, setTickets] = useState([]);
+	
+	const { item, mode } = showItem;
 
 	const navigate = useNavigate();
 
 	// ---------- Fetch Pending Tickets Depending on User/Item Relationship ----------
 
 	useEffect(() => {
-		setIsLoading(true);
 		setTickets([]);
-		if (activeUser && item) {
+		setIsLoading(true);
+		if (activeUser && item && item !== "add") {
 			fetch(`/pending_tickets/item/${item.id}/user/${activeUser.id}}`)
 			.then((res) => {
 				if (res.ok) {
@@ -52,7 +54,7 @@ function ItemDisplay({ item, setItem, activeUser, mode, setMode }) {
 				if (res.ok) {
 					res.json().then((ticket) => {
 						navigate(`/ticket/${ticket.id}`);
-						setItem(null);
+						setShowItem({item: null, mode: ""});
 					});
 				} else {
 					res.json().then((data) => console.log(data));
@@ -68,8 +70,7 @@ function ItemDisplay({ item, setItem, activeUser, mode, setMode }) {
 				return (
 					<GiftItem
 						item={item}
-						setItem={setItem}
-						setMode={setMode}
+						setShowItem={setShowItem}
 						activeUser={activeUser}
 					/>
 				);
@@ -77,24 +78,21 @@ function ItemDisplay({ item, setItem, activeUser, mode, setMode }) {
 				return (
 					<EditItem
 						item={item}
-						setItem={setItem}
-						setMode={setMode}
+						setShowItem={setShowItem}
 					/>
-				)
+				);
 			case "add":
 				return (
 					<CreateItem
-						setItem={setItem}
-						setMode={setMode}
+						setShowItem={setShowItem}
 						activeUser={activeUser}
 					/>
-				)
+				);
 			default:
 				return (
 					<ItemInfo
 						item={item}
-						setItem={setItem}
-						setMode={setMode}
+						setShowItem={setShowItem}
 						activeUser={activeUser}
 						tickets={tickets}
 					/>
@@ -102,19 +100,17 @@ function ItemDisplay({ item, setItem, activeUser, mode, setMode }) {
 		}
 	}
 
-	function onClickEx() {
-		setItem(false);
-	}
-
 	// ---------- Conditionally Render Associated Tickets ----------
 
 	function renderBorrowActions() {
-		if (tickets.length > 0) {
+		if (mode === "add") {
+			return null;
+		} else if (tickets.length > 0) {
 			return (
 				<ItemTickets
 					tickets={tickets}
 					activeUser={activeUser}
-					setItem={setItem}
+					setShowItem={setShowItem}
 				/>
 			);
 			// If no tickets and not your item, allow user to borrow
@@ -138,14 +134,18 @@ function ItemDisplay({ item, setItem, activeUser, mode, setMode }) {
 
 	return (
 		<div id="item-display">
-			<div id="item-display-container">
+			{isLoading ? null : (
+				<div id="item-display-container">
 				<div id="item-display-header">
 					<h2>{mode === "add" ? "Add a New Item to Your Cupboard" : item.name}</h2>
-					<span onClick={onClickEx}>X</span>
+					<span onClick={() => setShowItem({item: null, mode: ""})}>
+						X
+					</span>
 				</div>
-				{isLoading ? null : renderDisplay()}
-				{isLoading ? null : renderBorrowActions()}
+				{renderDisplay()}
+				{renderBorrowActions()}
 			</div>
+			)}
 		</div>
 	);
 }

@@ -68,7 +68,6 @@ tag_list.each { |tag| Tag.create!(name: tag) }
 10.times do |i|
 	Item.create(
 		name: Faker::Commerce.product_name,
-		requested: false,
 		status: "home",
 		description: Faker::Lorem.sentence(word_count: 10),
 		owner: jeff,
@@ -79,7 +78,6 @@ end
 10.times do |i|
 	Item.create(
 		name: Faker::Commerce.product_name,
-		requested: false,
 		status: "home",
 		description: Faker::Lorem.sentence(word_count: 10),
 		owner: mischa,
@@ -90,7 +88,6 @@ end
 10.times do |i|
 	Item.create(
 		name: Faker::Commerce.product_name,
-		requested: false,
 		status: "home",
 		description: Faker::Lorem.sentence(word_count: 10),
 		owner: will,

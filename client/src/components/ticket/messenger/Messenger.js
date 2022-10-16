@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import TicketStatus from "./TicketStatus";
 import MessageForm from "./MessageForm";
 import Message from "./Message";
 import "./Messenger.css";
 
-function Messenger({ ticket, isOwner, activeUser }) {
-	const [messages, setMessages] = useState([]);
+function Messenger({ ticket, messages, setMessages, isOwner, activeUser }) {
 	const [left, setLeft] = useState({});
 	const [right, setRight] = useState({});
 
@@ -22,17 +20,6 @@ function Messenger({ ticket, isOwner, activeUser }) {
 		}
 	}, [ticket, isOwner]);
 
-	useEffect(() => {
-		fetch(`/messages/ticket/${ticket.id}`)
-			.then((res) => {
-				if (res.ok) {
-					res.json().then((messages) => setMessages(messages));
-				} else {
-					res.json().then((data) => console.log(data));
-				}
-			})
-	}, [ticket]);
-
 	function handleUpdateMessages(message) {
 		setMessages([message, ...messages]);
 	}
@@ -40,21 +27,22 @@ function Messenger({ ticket, isOwner, activeUser }) {
 	return (
 		<div id="messenger">
 			<div id="messenger-header">
-				<img
-					src={left.avatar}
-					alt="avatar"
-					onClick={() => navigate(`/user/${left.id}`)}
-				/>
-				<TicketStatus
-					ticket={ticket}
-					left={left}
-					right={right}
-				/>
-				<img
-					src={right.avatar}
-					alt="avatar"
-					onClick={() => navigate(`/user/${right.id}`)}
-				/>
+				<div className="ticket-avatar">
+					<img
+						src={left.avatar}
+						alt="avatar"
+						onClick={() => navigate(`/user/${left.id}`)}
+					/>
+					{left.first_name}
+				</div>
+				<div className="ticket-avatar">
+					<img
+						src={right.avatar}
+						alt="avatar"
+						onClick={() => navigate(`/user/${right.id}`)}
+					/>
+					{right.first_name}
+				</div>
 			</div>
 			<div id="message-list">
 				{messages.map((message) => (

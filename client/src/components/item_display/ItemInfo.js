@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ItemInfo.css";
 
-function ItemInfo({ item, setItem, activeUser, setMode, tickets }) {
+function ItemInfo({ item, setShowItem, activeUser, tickets }) {
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	const { id, name, description, image, status, tags, owner, borrower} = item;
@@ -18,13 +18,13 @@ function ItemInfo({ item, setItem, activeUser, setMode, tickets }) {
 						<p id="item-status">Item is Currently in Your Cupboard</p>
 						<button
 							id="status-btn"
-							onClick={() => setMode("edit")}
+							onClick={() => setShowItem({item: item, mode: "edit"})}
 						>
 							Edit Item
 						</button>
 						<button
 							id="status-btn"
-							onClick={() => setMode("gift")}
+							onClick={() => setShowItem({item: item, mode: "gift"})}
 						>
 							Gift Item
 						</button>
@@ -50,7 +50,7 @@ function ItemInfo({ item, setItem, activeUser, setMode, tickets }) {
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((item) => {
-						setItem(null);
+						setShowItem({item: null, mode: ""})
 					})
 				} else {
 					res.json().then((data) => console.log(data));

@@ -13,8 +13,16 @@
 	padding: 0.5rem;
 }
 
-#messenger-header img {
+#messenger-header .ticket-avatar {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 0.5rem;
 	width: 12%;
+}
+
+#messenger-header img {
+	width: 100%;
 	border-radius: 50%;
 	background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
 }

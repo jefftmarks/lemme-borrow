@@ -8,7 +8,7 @@ const initialState = {
 	tags: "",
 }
 
-function CreateItem({ setItem, activeUser }) {
+function CreateItem({ setShowItem, activeUser, setMode }) {
 	const [formData, setFormData] = useState(initialState);
 	const [tagCards, setTagCards] = useState([]);
 
@@ -56,7 +56,7 @@ function CreateItem({ setItem, activeUser }) {
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((item) => {
-						setItem({...item, mode: ""});
+						setShowItem({item: item, mode: ""});
 						setFormData(initialState);
 					})
 				} else {
@@ -69,7 +69,7 @@ function CreateItem({ setItem, activeUser }) {
 
 	function onClickBack(e) {
 		e.preventDefault();
-		setItem(null);
+		setShowItem({item: null, mode: ""});
 	}
 
 	return (

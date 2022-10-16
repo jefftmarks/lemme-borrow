@@ -17,6 +17,8 @@ class TicketsController < ApplicationController
 
 		ticket = Ticket.create!(**ticket_params, status: "requested")
 
+		Message.create!(ticket: ticket, automated: true, text: "Automated Message: #{borrower.first_name} requests to borrow #{owner.first_name}'s belonging: #{item.name}. Waiting for #{owner.first_name} to approve the request. In the meantime, you can message one another to go over the details of the request.")
+
 		render json: ticket, status: :created
 	end
 
@@ -45,20 +47,33 @@ class TicketsController < ApplicationController
 		@ticket.update!(status: "approved")
 		# Update item's borrower
 		@ticket.item.update!(borrower: @ticket.borrower)
-		render json: @ticket, status: :accepted
-	end
 
-	# Close a ticket
-	def complete 
-		@ticket.update!(status: "completed", return_date: nil, overdue: false)
-		@ticket.item.update!(borrower: nil, status: "home")
-		render json: @ticket, status: :accepted
+		owner = @ticket.owner
+		borrower = @ticket.borrower
+
+		message = Message.create!(ticket: @ticket, automated: true, text: "Automated Message: #{owner.first_name} has promised to lend their belonging to #{borrower.first_name}. Awesome! #{borrower.first_name}, let #{owner.first_name} know when you have received the item.")
+
+		render json: {ticket: TicketSerializer.new(@ticket), message: message }, status: :accepted
 	end
 
 	# Update ticket and item when it has been received by borrower
 	def receive_item
 		@ticket.update!(status: "on loan")
 		@ticket.item.update!(status: "on loan")
+
+		owner = @ticket.owner
+		borrower = @ticket.borrower
+		item = @ticket.item
+
+		message = Message.create!(ticket: @ticket, automated: true, text: "Automated Message: #{borrower.first_name} has received #{owner.first_name}'s belonging: #{item.name}. Take good care of it! #{owner.first_name} may now set an optional due date to make sure the item is returned in time.")
+
+		render json: {ticket: TicketSerializer.new(@ticket), message: message }, status: :accepted
+	end
+
+	# Close a ticket
+	def complete 
+		@ticket.update!(status: "completed", return_date: nil, overdue: false)
+		@ticket.item.update!(borrower: nil, status: "home")
 		render json: @ticket, status: :accepted
 	end
 
@@ -85,13 +100,13 @@ class TicketsController < ApplicationController
 	end
 
 	def close
-		if ["approved", "on loan"].include?(@ticket.status)
-			if @user == @ticket.borrower
-			render json: { error: "Only the item's owner can delete the ticket" } and return
-			elsif @user == @ticket.user
-			render json: { error: "You cannot delete the ticket unless the item has been returned or you unapprove the ticket request" } and return
-			end
-		end
+		# if ["approved", "on loan"].include?(@ticket.status)
+		# 	if @user == @ticket.borrower
+		# 	render json: { error: "Only the item's owner can delete the ticket" } and return
+		# 	elsif @user == @ticket.user
+		# 	render json: { error: "You cannot delete the ticket unless the item has been returned or you unapprove the ticket request" } and return
+		# 	end
+		# end
 		@ticket.destroy
 		render json: @ticket
 	end
