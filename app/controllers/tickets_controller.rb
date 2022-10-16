@@ -1,36 +1,31 @@
 class TicketsController < ApplicationController
-	before_action :set_ticket, only: [:show, :update, :decline, :approve, :complete, :receive_item, :destroy]
-	before_action :set_user, only: [:my_requests, :active_loans, :active_borrows]
+	before_action :set_ticket, only: [:show, :update, :decline, :approve, :complete, :receive_item, :close]
+	before_action :set_user, only: [:my_requests, :active_loans, :active_borrows, :close]
 
 	def create
 		owner = User.find(params[:owner_id])
 		borrower = User.find(params[:borrower_id])
 		item = Item.find(params[:item_id])
 
-		# Error handling so you can't borrow your own item or borrow from someone not your friends
+		# Error handling
 		if borrower.belongings.include?(item)
 			render json: { error: "You can't borrow from your own item" } and return
 		elsif !borrower.friends.include?(owner)
 			render json: { error: "You can't borrow from someone you're not friends with" } and return
 		end
+		# Ticket model also validates uniqueness so that same user cannot request to borrow an item they've already requested/are already borrowing
 
-		ticket = Ticket.create!(ticket_params)
-
-		# Introductory message submitted with request
-		message = message_params[:message]
-		if message
-			Message.create!(text: message, ticket: ticket, sender: borrower, receiver: owner)
-		end
-
-		# Update item status
-		item.update!(requested: true)
+		ticket = Ticket.create!(**ticket_params, status: "requested")
 
 		render json: ticket, status: :created
 	end
 
 	def show
-		@ticket.update!(overdue: @ticket.is_overdue(@ticket.return_date))
-		render json: @ticket, status: :ok
+		# Update overdue status if a return date is present
+		if @ticket.return_date
+			@ticket.update!(overdue: @ticket.is_overdue(@ticket.return_date))
+		end
+		render json: @ticket
 	end
  
 	def update
@@ -45,17 +40,11 @@ class TicketsController < ApplicationController
 		render json: ticket_requests
 	end
 
-	# Decline ticket request and set item request status back to false
-	def decline
-		@ticket.item.update!(requested: false)
-		@ticket.destroy
-		render json: @ticket
-	end
-
 	# Approve a ticket request (or reopen ticket after it was closed)
 	def approve
 		@ticket.update!(status: "approved")
-		@ticket.item.update!(requested: false, borrower: @ticket.borrower)
+		# Update item's borrower
+		@ticket.item.update!(borrower: @ticket.borrower)
 		render json: @ticket, status: :accepted
 	end
 
@@ -95,9 +84,13 @@ class TicketsController < ApplicationController
 		render json: tickets
 	end
 
-	def destroy
-		if @ticket.status != "completed"
-			render json: { error: "You cannot delete the ticket until the item has been returned or gifted" } and return
+	def close
+		if ["approved", "on loan"].include?(@ticket.status)
+			if @user == @ticket.borrower
+			render json: { error: "Only the item's owner can delete the ticket" } and return
+			elsif @user == @ticket.user
+			render json: { error: "You cannot delete the ticket unless the item has been returned or you unapprove the ticket request" } and return
+			end
 		end
 		@ticket.destroy
 		render json: @ticket

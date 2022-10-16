@@ -1,0 +1,19 @@
+#command {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 2.7rem;
+}
+
+#command-header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 1rem;
+	width: 100%;
+}
+
+#command img {
+	width: 60%;
+}

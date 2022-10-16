@@ -1,12 +1,12 @@
 #profile {
 	display: flex;
 	justify-content: center;
-	margin-top: 1rem;
+	margin-top: 2rem;
+	border: 1px solid white;
 }
 
 #profile-container {
 	width: 85%;
-	padding: 1rem;
 }
 
 #profile-header {

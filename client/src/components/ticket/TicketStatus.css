@@ -1,0 +1,18 @@
+#ticket-status {
+	flex-grow: 1;
+	/* border: 1px solid white; */
+}
+
+#owner-borrower {
+	display: flex;
+	justify-content: space-between;
+	background-color: var(--light-blue);
+	padding: 0.5rem;
+}
+
+#status-message {
+	color: black;
+	background-color: var(--light-gray);
+	padding: 0.5rem;
+	text-align: center;
+}

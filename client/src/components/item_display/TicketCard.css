@@ -11,3 +11,7 @@
 	border: none;
 	padding: 0.5rem;
 }
+
+.ticket-card button:hover {
+	cursor: pointer;
+}

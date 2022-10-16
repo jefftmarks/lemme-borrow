@@ -1,32 +1,42 @@
 import React, { useState } from "react";
 import "./ItemInfo.css";
 
-function ItemInfo({ item, setItem, activeUser }) {
+function ItemInfo({ item, setItem, activeUser, setMode, tickets }) {
 	const [isDeleting, setIsDeleting] = useState(false);
 
-	const { id, name, description, image, status, tags, requested, owner, borrower} = item;
+	const { id, name, description, image, status, tags, owner, borrower} = item;
 
-	// ---------- If Your Item, Render CRUD Options ----------
+	// ---------- If Your Belonging, Render CRUD Options ----------
 
 	function renderStatusBar() {
 		// Item is yours
 		if (activeUser.id === owner.id) {
-			// Item is in your possession and no ticket request pending
-			if (status === "home" && !requested) {
-				// And you haven't promised it to lend it to anyone
-				if (!borrower) {
-					return (
-						<div id="item-status-bar">
-							<p id="item-status">Item is Currently in Your Cupboard</p>
-							<button id="status-btn" onClick={() => setItem({data: item, mode: "edit"})}>
-								Edit Item
-							</button>
-							<button id="status-btn" onClick={() => setItem({data: item, mode: "gift"})}>
-								Gift Item
-							</button>
-						</div>
-					)
-				}
+			// If item has no active tickets
+			if (tickets.length < 1) {
+				return (
+					<div id="item-status-bar">
+						<p id="item-status">Item is Currently in Your Cupboard</p>
+						<button
+							id="status-btn"
+							onClick={() => setMode("edit")}
+						>
+							Edit Item
+						</button>
+						<button
+							id="status-btn"
+							onClick={() => setMode("gift")}
+						>
+							Gift Item
+						</button>
+					</div>
+				)
+			} else {
+				const message = status === "home" ? "in Your Cupboard" : `Being Borrowed by ${borrower.first_name}`
+				return (
+					<div id="item-status-bar">
+						<p id="item-status">Item is Currently {message}</p>
+					</div>
+				);
 			}
 		}
 	}
@@ -50,18 +60,33 @@ function ItemInfo({ item, setItem, activeUser }) {
 	// ---------- Only Render Delete Button if Your Own Item ----------
 
 	function renderDeleteButton() {
+		// Item is yours and no pending tickets
 		if (activeUser.id === owner.id) {
-			return (
-				<div id="delete-item">
-					{isDeleting ? (
-						<button id="delete-item-2" onClick={handleDelete}>
-							Confirm Delete
-						</button>
-					) : (
-						<button id="delete-item-1" onClick={() => setIsDeleting(true)}>Delete Item?</button>
-					)}
-				</div>	
-			);
+			// And no active tikets
+			if (tickets.length < 1) {
+				return (
+					<div id="delete-item">
+						{isDeleting ? (
+							<button id="delete-item-2" onClick={handleDelete}>
+								Confirm Delete
+							</button>
+						) : (
+							<button
+								id="delete-item-1"
+								onClick={() => setIsDeleting(true)}
+							>
+								Delete Item?
+							</button>
+						)}
+					</div>	
+				);
+			} else {
+				return (
+					<div id="delete-item">
+						<p id="delete-item-1">You Cannot Edit or Delete Item with Pending Tickets</p>
+					</div>
+				);
+			}
 		}
 	}
 
