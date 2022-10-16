@@ -1,32 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ItemInfo.css";
 
-function ItemInfo({ item, setMode, activeUser }) {
+function ItemInfo({ item, setItem, activeUser }) {
+	const [isDeleting, setIsDeleting] = useState(false);
 
-	const {name, description, image, status, tags, requested, borrower_id, owner_id} = item;
+	const { id, name, description, image, status, tags, requested, owner, borrower} = item;
+
+	// ---------- If Your Item, Render CRUD Options ----------
 
 	function renderStatusBar() {
 		// Item is yours
-		if (activeUser.id === owner_id) {
+		if (activeUser.id === owner.id) {
 			// Item is in your possession and no ticket request pending
 			if (status === "home" && !requested) {
 				// And you haven't promised it to lend it to anyone
-				if (!borrower_id) {
+				if (!borrower) {
 					return (
 						<div id="item-status-bar">
 							<p id="item-status">Item is Currently in Your Cupboard</p>
-							<button id="status-btn" onClick={() => setMode("edit")}>
-								Edit Item?
+							<button id="status-btn" onClick={() => setItem({data: item, mode: "edit"})}>
+								Edit Item
 							</button>
-							<button id="status-btn" onClick={() => setMode("gift")}>
-								Gift Item?
+							<button id="status-btn" onClick={() => setItem({data: item, mode: "gift"})}>
+								Gift Item
 							</button>
 						</div>
 					)
 				}
 			}
-		} else {
-			return <h1>not yours</h1>
+		}
+	}
+
+	// ---------- Delete Item ----------
+
+	function handleDelete() {
+		fetch(`/items/${id}`, {
+			method: "DELETE",
+		})
+			.then((res) => {
+				if (res.ok) {
+					res.json().then((item) => {
+						setItem(null);
+					})
+				} else {
+					res.json().then((data) => console.log(data));
+				}
+			})
+	}
+	// ---------- Only Render Delete Button if Your Own Item ----------
+
+	function renderDeleteButton() {
+		if (activeUser.id === owner.id) {
+			return (
+				<div id="delete-item">
+					{isDeleting ? (
+						<button id="delete-item-2" onClick={handleDelete}>
+							Confirm Delete
+						</button>
+					) : (
+						<button id="delete-item-1" onClick={() => setIsDeleting(true)}>Delete Item?</button>
+					)}
+				</div>	
+			);
 		}
 	}
 
@@ -35,7 +70,7 @@ function ItemInfo({ item, setMode, activeUser }) {
 			{renderStatusBar()}
 			<div id="item-image-container">
 				<img id="item-front-image" src={image} alt={name} />
-				<div id="item-image-blur" style={{backgroundImage: `url("${item.image}")`}}>
+				<div id="item-image-blur" style={{backgroundImage: `url("${image}")`}}>
 					<img src={image} alt={name} />
 				</div>
 			</div>
@@ -47,6 +82,7 @@ function ItemInfo({ item, setMode, activeUser }) {
 					</div>
 				))}
 			</div>
+			{renderDeleteButton()}
 		</div>
 	);
 }

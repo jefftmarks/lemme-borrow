@@ -1,0 +1,17 @@
+#tickets-container {
+	margin-top: 1rem;
+	background-color: var(--light-gray);
+}
+
+#tickets-container h3 {
+	background-color: var(--light-blue);
+	padding: 0.5rem;
+}
+
+#tickets-list {
+	padding: 0.5rem;
+}
+
+#tickets-list div:not(:first-child) {
+	border-top: 1px solid black;
+}

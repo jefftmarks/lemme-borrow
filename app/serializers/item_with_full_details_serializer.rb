@@ -1,6 +1,9 @@
 class ItemWithFullDetailsSerializer < ActiveModel::Serializer
-	attributes :id, :name, :status, :requested, :description, :image, :owner_id, :borrower_id, :tags
+	attributes :id, :name, :status, :requested, :description, :image, :tags
 
+	belongs_to :owner
+	belongs_to :borrower
+	
 	def tags
 		self.object.tags.map { |tag| tag[:name] }
 	end

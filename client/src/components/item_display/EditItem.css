@@ -1,70 +1,74 @@
-#edit-item {
+.edit-item {
 	margin-top: 1rem;
 	background-color: var(--light-gray);
 	padding: 0.5rem;
 }
 
-#edit-item-header {
+.edit-item button:hover {
+	cursor: pointer;
+}
+
+.edit-item-header {
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 0.5rem;
 }
 
-#edit-item-header p {
+.edit-item-header p {
 	flex-grow: 1;
 	background-color: var(--bright-red);
 	padding: 0.5rem;
 }
 
-#edit-item-header button {
+.edit-item-header button {
 	color: white;
 	padding: 0.5rem;
 	border: none;
 	background-color: var(--primary-red);
 }
 
-#edit-item-form {
+.edit-item-form {
 	display: flex;
 	flex-direction: column;
 	padding: 1rem;
 	background-color: var(--darkest-red);
 }
 
-#edit-item-form label {
+.edit-item-form label {
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 1rem;
 }
 
-#edit-item-form input {
+.edit-item-form input {
 	width: 61%;
 }
 
-#edit-item-form textarea {
+.edit-item-form textarea {
 	padding: 0.3rem;
 }
 
-#edit-tags {
+.edit-tags {
 	display: flex;
 	flex-direction: column;
 }
 
-#edit-tags small {
+.edit-tags small {
 	margin-bottom: 0.3rem;
 }
 
-#edit-tags textarea {
+.edit-tags textarea {
 	margin-top: 0.5rem;
 }
 
-#edit-tag-display {
+.edit-tag-display {
 	display: flex;
 	justify-content: flex-end;
 	column-gap: 0.5rem;
 	margin-bottom: 1rem;
 }
 
-#edit-tag-display #tag-card {
+.edit-tag-display .tag-card {
 	background-color: var(--bright-red);
 	padding: 0.3rem;
 }

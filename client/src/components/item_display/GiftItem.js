@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import GiftItemCard from "./GiftItemCard";
 import "./GiftItem.css";
 
-function GiftItem({ item, setItem, setMode, activeUser }) {
+function GiftItem({ item, setItem, activeUser }) {
 	const [friends, setFriends] = useState([]);
 
 	// ---------- Render Friends ----------
@@ -31,7 +31,6 @@ function GiftItem({ item, setItem, setMode, activeUser }) {
 				if (res.ok) {
 					res.json().then((data) => {
 						setItem(null);
-						setMode("");
 					});
 				} else {
 					res.json().then((data) => console.log(data));
@@ -43,7 +42,7 @@ function GiftItem({ item, setItem, setMode, activeUser }) {
 		<div id="gift-item">
 			<div id="gift-item-header">
 				<p>Gift Item to . . .</p>
-				<button onClick={() => setMode("")}>
+				<button onClick={() => setItem({data: item, mode: ""})}>
 					Back
 				</button>
 			</div>

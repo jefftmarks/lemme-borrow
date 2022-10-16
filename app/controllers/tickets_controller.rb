@@ -30,7 +30,7 @@ class TicketsController < ApplicationController
 
 	def show
 		@ticket.update!(overdue: @ticket.is_overdue(@ticket.return_date))
-		render json: @ticket, status: :ok, serializer: TicketsWithFullDetailsSerializer
+		render json: @ticket, status: :ok
 	end
  
 	def update

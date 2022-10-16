@@ -3,7 +3,7 @@ import EditProfile from "./EditProfile";
 import MyFriends from "./MyFriends";
 import "./UserInfo.css";
 
-function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriending, setIsUnfriending, friends, setFriends }) {
+function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriending, setIsUnfriending, friends, setFriends, onClickAddItem }) {
 	const [showEditProfile, setShowEditProfile] = useState(false);
 	const [showFriends, setShowFriends] = useState(false);
 
@@ -93,7 +93,9 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 		if (profile.is_active) {
 			return (
 				<div id="user-actions">
-					<button id="user-btn">Add Item</button>
+					<button id="user-btn" onClick={onClickAddItem}>
+						Add Item
+					</button>
 					<button id="user-btn" onClick={() => setShowEditProfile(true)}>
 						Edit My Profile
 					</button>

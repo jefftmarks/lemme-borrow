@@ -20,3 +20,17 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+#lemme-borrow-button {
+	margin-top: 1rem;
+	width: 100%;
+	background-color: var(--bright-red);
+	border: none;
+	color: white;
+	padding: 0.5rem;
+	font-size: 1.3rem;
+}
+
+#lemme-borrow-button:hover {
+	cursor: pointer;
+}

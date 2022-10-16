@@ -34,7 +34,7 @@ function App() {
 				}
 			});
 		}
-	}, []);
+	}, [user]);
 
 	// Render element for home path depending on whether or not user is logged in
 	function renderElement() {
@@ -47,7 +47,7 @@ function App() {
 		fetch(`/items/${id}`)
 			.then((res) => {
 				if (res.ok) {
-					res.json().then((item) => setItem(item));
+					res.json().then((item) => setItem({data: item, mode: ""}));
 				} else {
 					res.json().then((data) => console.log(data));
 				}
@@ -79,6 +79,7 @@ function App() {
 							activeUser={user}
 							setActiveUser={setUser}
 							onClickItem={handleClickItem}
+							onClickAddItem={() => setItem({mode: "add"})}
 						/>
 					) : null}
 				/>
