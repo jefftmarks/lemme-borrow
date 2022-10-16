@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
-import "./EditItem.css";
+import React, { useState, useEffect } from "react";
+import "./CreateItem.css";
 
-function EditItem({ item, setItem }) {
+const initialState = {
+	name: "",
+	image: "",
+	description: "",
+	tags: "",
+}
 
-	// ---------- Form Handling ----------
-
-	const initialState = {
-		name: item.name,
-		image: item.image,
-		description: item.description,
-		tags: item.tags.join("; ") + ";"
-	}
-
+function CreateItem({ setItem, activeUser }) {
 	const [formData, setFormData] = useState(initialState);
 	const [tagCards, setTagCards] = useState([]);
 
@@ -44,20 +41,15 @@ function EditItem({ item, setItem }) {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-
-		// If image left blank, use most current image
-		if (formData.image === "") {
-			setFormData({...formData, image: item.image});
-		}
-
-		fetch(`/items/${item.id}`, {
-			method: "PATCH",
+		fetch("/items/", {
+			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
 				...formData,
 				tags: tagCards,
+				owner_id: activeUser.id,
 			}),
 		})
 			.then((res) => {
@@ -76,13 +68,13 @@ function EditItem({ item, setItem }) {
 
 	function onClickBack(e) {
 		e.preventDefault();
-		setItem({data: item, mode: ""});
+		setItem(null);
 	}
 
 	return (
 		<div className="edit-item">
 			<div className="edit-item-header">
-				<p>Edit Item</p>
+				<p>Create Item</p>
 				<button onClick={onClickBack}>
 					Back
 				</button>
@@ -99,6 +91,7 @@ function EditItem({ item, setItem }) {
 				</label>
 				<label>Image:
 					<input
+					required
 					type="text"
 					name="image"
 					onChange={handleChange}
@@ -135,10 +128,10 @@ function EditItem({ item, setItem }) {
 						<div className="tag-card" key={tag}>{tag}</div>
 					))}
 				</div>
-				<button>Update Item</button>
+				<button>Create Item</button>
 			</form>
 		</div>
 	);
 }
 
-export default EditItem;
+export default CreateItem;

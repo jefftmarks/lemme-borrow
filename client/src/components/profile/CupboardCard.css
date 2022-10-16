@@ -3,24 +3,8 @@
 	flex-basis: 18%;
 	display: flex;
 	flex-direction: column;
+	background-color: var(--bright-red);
 }
-
-#cupboard-card:nth-child(4n+0) {
-	background-color: var(--light-purple);
-}
-
-#cupboard-card:nth-child(4n+1) {
-	background-color: var(--light-red);
-}
-
-#cupboard-card:nth-child(4n+2) {
-	background-color: var(--light-yellow);
-}
-
-#cupboard-card:nth-child(4n+3) {
-	background-color: var(--light-green);
-}
-
 
 #cupboard-card:hover {
 	cursor: pointer;

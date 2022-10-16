@@ -4,7 +4,7 @@ import UserInfo from "./UserInfo";
 import Cupboard from "./Cupboard";
 import "./Profile.css";
 
-function Profile({ activeUser, setActiveUser, onClickItem }) {
+function Profile({ activeUser, setActiveUser, onClickItem, onClickAddItem }) {
 	// Profile will keep track of user, whether user is active user, and if not, what friend status is between active user and this user
 	const [profile, setProfile ] = useState(null);
 	const [friends, setFriends] = useState([]);
@@ -64,6 +64,7 @@ function Profile({ activeUser, setActiveUser, onClickItem }) {
 							setIsUnfriending={setIsUnfriending}
 							friends={friends}
 							setFriends={setFriends}
+							onClickAddItem={onClickAddItem}
 						/>
 					</div>
 					<div id="cupboard-search-container"></div>

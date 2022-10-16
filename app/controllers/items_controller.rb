@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
-	before_action :set_item, only: [:show, :update, :destroy, :gift_item]
-	before_action :set_user, only: [:my_belongings, :recently_uploaded, :gift_item]
+	before_action :set_item, only: [:show, :status, :update, :destroy, :gift_item]
+	before_action :set_user, only: [:status, :my_belongings, :recently_uploaded, :gift_item, :destroy]
 	before_action :validate_tags, only: [:create, :update]
 	before_action :set_new_owner, only: [:gift_item]
 
@@ -12,23 +12,19 @@ class ItemsController < ApplicationController
 		render json: @item, serializer: ItemWithFullDetailsSerializer
 	end
 
-	def create
-		item = Item.create!(item_params)
+	def status
+		# Item is yours
+		if @item.owner == @user
+			render json: @item.tickets
+		# Item is not yours but you've either requested or are borrowing it
+		else
+			tickets = @item.tickets.where(borrower: @user)
+			render json: tickets
+		end
+	end
 
-		# # If item belongs to special category of clothing or book, create new instance of ClothesInfo or BookInfo and link to item (or destroy item if errors raised)
-		# if item.category == "clothing"
-		# 	clothes_info = ClothesInfo.create(**clothes_params, item: item)
-		# 	if !clothes_info.valid?
-		# 		item.destroy
-		# 		render json: { error: clothes_info.errors.full_messages } and return
-		# 	end
-		# elsif item.category == "book"
-		# 	book_info = ClothesInfo.create(**book_params, item: item)
-		# 	if !book_info.valid?
-		# 		item.destroy
-		# 		render json: { error: book_info.errors.full_messages } and return
-		# 	end
-		# end
+	def create
+		item = Item.create!(**item_params, status: "home")
 		
 		tags = tags_params[:tags]
 		
@@ -44,7 +40,7 @@ class ItemsController < ApplicationController
 			end
 		end
 
-		render json: item , status: :created
+		render json: item ,serializer: ItemWithFullDetailsSerializer, status: :created
 	end
 
 	def update
@@ -90,8 +86,8 @@ class ItemsController < ApplicationController
 
 	def destroy
 		# You can't delete item if it is in borrowing process
-		if @item.requested
-			render json: { error: "This item has been requested by #{@item.borrower.first_name}. Please close the ticket before deleting" } and return
+		if @item.owner == @user && @item.tickets.where(status: "requested").size > 0
+			render json: { error: "This item has been requested. Please close any pending tickets before deleting" } and return
 		elsif @item.status == "on loan"
 			render json: { error: "#{@item.borrower.first_name} is currently borrowing this item. Gift the item to #{@item.borrower.first_name} or wait until the item has been returned" } and return
 		end
@@ -101,7 +97,7 @@ class ItemsController < ApplicationController
 	end
 
 	def my_belongings
-		render json: @user.belongings
+		render json: @user.belongings.order(created_at: :desc)
 	end
 
 	def recently_uploaded
@@ -117,7 +113,7 @@ class ItemsController < ApplicationController
 	private
 
 	def item_params
-		params.permit(:name, :requested, :status, :description, :image, :owner_id, :borrower_id)
+		params.permit(:name, :status, :description, :image, :owner_id, :borrower_id)
 	end
 
 	def set_item
@@ -136,14 +132,6 @@ class ItemsController < ApplicationController
 		params.permit(:count)
 	end
 
-	# def clothes_params
-	# 	params.permit(:size)
-	# end
-
-	# def book_params
-	# 	params.permit(:author, :year, :genre)
-	# end
-
 	def tags_params
 		params.permit(:tags => [])
 	end
@@ -155,3 +143,26 @@ class ItemsController < ApplicationController
 	end
 
 end
+
+# def clothes_params
+	# 	params.permit(:size)
+	# end
+
+	# def book_params
+	# 	params.permit(:author, :year, :genre)
+	# end
+
+# # If item belongs to special category of clothing or book, create new instance of ClothesInfo or BookInfo and link to item (or destroy item if errors raised)
+		# if item.category == "clothing"
+		# 	clothes_info = ClothesInfo.create(**clothes_params, item: item)
+		# 	if !clothes_info.valid?
+		# 		item.destroy
+		# 		render json: { error: clothes_info.errors.full_messages } and return
+		# 	end
+		# elsif item.category == "book"
+		# 	book_info = ClothesInfo.create(**book_params, item: item)
+		# 	if !book_info.valid?
+		# 		item.destroy
+		# 		render json: { error: book_info.errors.full_messages } and return
+		# 	end
+		# end

@@ -1,0 +1,13 @@
+.ticket-card {
+	color: black;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.ticket-card button {
+	color: white;
+	background-color: var(--bright-red);
+	border: none;
+	padding: 0.5rem;
+}

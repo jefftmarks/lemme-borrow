@@ -2,13 +2,16 @@
 	margin-top: 1rem;
 	color: black;
 	background-color: var(--light-gray);
-	padding: 0.5rem;
+	padding: 1rem;
+}
+
+#item-info > *:not(:last-child) {
+	margin-bottom: 1rem;
 }
 
 #item-status-bar {
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 0.5rem;
 }
 
 #item-status, #tag-display #tag-card {
@@ -40,7 +43,6 @@
 #item-image-container {
 	display: flex;
 	justify-content: center;
-	margin-bottom: 0.5rem;
 }
 
 #item-front-image {
@@ -60,17 +62,20 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
-	opacity: 0.5;
+	opacity: 0.2;
 }
 
 #item-info #tag-display {
-	margin-top: 0.5rem;
 	display: flex;
 	column-gap: 0.5rem;
 }
 
+#tag-display #tag-card:hover {
+	cursor: pointer;
+}
+
 #tag-display #tag-card:nth-child(1n+0) {
-	background-color: var(--dark-gray);
+	background-color: var(--light-green);
 }
 
 #tag-display #tag-card:nth-child(4n+1) {
@@ -87,4 +92,30 @@
 
 #tag-display #tag-display #tag-card:hover {
 	cursor: pointer;
+}
+
+#delete-item {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+}
+
+#delete-item button {
+	border: none;
+	padding: 0.5rem;
+}
+
+#delete-item button:hover {
+	cursor: pointer;
+}
+
+#delete-item-1 {
+	color: var(--bright-red);
+	background-color: var(--light-gray)
+	
+}
+
+#delete-item-2 {
+	color: white;
+	background-color: var(--bright-red);
 }
