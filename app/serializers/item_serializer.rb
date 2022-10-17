@@ -1,10 +1,7 @@
 class ItemSerializer < ActiveModel::Serializer
-  attributes :id, :name, :status, :description, :image, :tags
+  attributes :id, :name, :image, :owner_first_name
 
-	belongs_to :owner
-	belongs_to :borrower
-	
-	def tags
-		self.object.tags.map { |tag| tag[:name] }
+	def owner_first_name
+		self.object.owner.first_name
 	end
 end

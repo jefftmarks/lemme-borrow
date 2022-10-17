@@ -1,12 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Controls from "./Controls";
 import { useNavigate } from "react-router-dom";
 import "./CommandCenter.css"
 
 function CommandCenter({ ticket, setTicket, isOwner, activeUser, messages, setMessages }) {
 	const [date, setDate] = useState(ticket.return_date);
+	const [item, setItem] = useState(null);
 
-	const { item, owner, return_date, id } = ticket;
+	useEffect(() => {
+		if (ticket) {
+			fetch(`/items/${ticket.item.id}`)
+			.then((res) => {
+				if (res.ok) {
+					res.json().then((item) => setItem(item));
+				} else {
+					res.json().then((data) => console.log(data));
+				}
+			})
+		}
+	}, [ticket])
+
+	const { owner, return_date, id } = ticket;
 
 	const navigate = useNavigate();
 
@@ -120,26 +134,9 @@ function CommandCenter({ ticket, setTicket, isOwner, activeUser, messages, setMe
 			}));
 	}
 
-		// ---------- Complete Request ----------
-
-		// function handleCompleteTicket() {
-		// 	fetch(`/tickets/complete/${ticket.id}`, {
-		// 		method: "PATCH",
-		// 		headers: {
-		// 			"Content-Type": "application/json",
-		// 		},
-		// 	})
-		// 		.then((res => {
-		// 			if (res.ok) {
-		// 				res.json().then((payload) => {
-		// 					setTicket(payload.ticket);
-		// 					setMessages([payload.message, ...messages])
-		// 				});
-		// 			} else {
-		// 				res.json().then((data) => console.log(data));
-		// 			}
-		// 		}));
-		// }
+	if (!item) {
+		return null;
+	}
 
 	return (
 		<div id="command">

@@ -1,0 +1,37 @@
+#feed {
+	border: 1px solid blue;
+	width: 60%;
+	/* display: flex;
+	flex-direction: column;
+	justify-content: center; */
+}
+
+#feed-header {
+	background-color: var(--bright-red);
+	display: flex;
+	justify-content: space-between;
+	border: 1px solid white;
+}
+
+#feed-header button {
+	background-color: var(--light-gray);
+	border: none;
+	padding: 0.5rem;
+}
+
+button:disabled,
+button[disabled]{
+  border: none;
+  background: none;
+}
+
+#feed-list {
+	border: 1px solid red;
+	margin-top: 2rem;
+	display: flex;
+	flex-direction: row;
+	align-content: flex-start;
+	flex-wrap: wrap;
+	row-gap: 2rem;
+	column-gap: 2rem;;
+}

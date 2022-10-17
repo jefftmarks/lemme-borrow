@@ -1,11 +1,18 @@
 import React from "react";
+import Feed from "./feed/Feed";
+import Dashboard from "./Dashboard";
+import "./Home.css";
 
 function Home({ user }) {
 	return (
 		<div id="home">
-			<h1>Home</h1>
-			<p>Hi {user.first_name}</p>
-		</div>
+			<div id="home-container">
+				<Dashboard />
+				<Feed
+					activeUser={user}
+				/>
+			</div>
+	</div>
 	);
 }
 
