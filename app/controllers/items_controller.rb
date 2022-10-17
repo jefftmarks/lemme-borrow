@@ -9,7 +9,7 @@ class ItemsController < ApplicationController
 	end
 
 	def show
-		render json: @item
+		render json: @item, serializer: ItemWithFullDetailsSerializer
 	end
 
 	def create
@@ -29,7 +29,7 @@ class ItemsController < ApplicationController
 			end
 		end
 
-		render json: item, status: :created
+		render json: item, status: :created, serializer: ItemWithFullDetailsSerializer
 	end
 
 	def update
@@ -54,23 +54,7 @@ class ItemsController < ApplicationController
 		end
 
 		item = Item.find(@item.id)
-		render json: item, status: :created
-	end
-
-	def gift_item
-		if @item.owner_id != @user.id
-		render json: { error: "This is not your item to gift" } and return
-		elsif @user.id == @new_owner.id
-		render json: { error: "You cannot gift the item to yourself" } and return
-		elsif !@user.friends.include?(@new_owner)
-			render json: { error: "You cannot gift an item to someone you're not friends with" } and return
-		elsif @item.tickets.size > 0
-			render json: { error: "This item is associated with an open ticket. It cannot be edited until the ticket has been deleted" } and return
-		end
-
-		@item.update(owner: @new_owner)
-
-		render json: @item, status: :accepted
+		render json: item, status: :created, serializer: ItemWithFullDetailsSerializer
 	end
 
 	def destroy
@@ -78,7 +62,7 @@ class ItemsController < ApplicationController
 		if @item.owner == @user && @item.tickets.where(status: "requested").size > 0
 			render json: { error: "This item has been requested. Please close any pending tickets before deleting" } and return
 		elsif @item.status == "on loan"
-			render json: { error: "#{@item.borrower.first_name} is currently borrowing this item. Gift the item to #{@item.borrower.first_name} or wait until the item has been returned" } and return
+			render json: { error: "#{@item.borrower.first_name} is currently borrowing this item. You cannot delete until the item has been returned" } and return
 		end
 
 		@item.destroy
@@ -154,4 +138,20 @@ end
 		# 		item.destroy
 		# 		render json: { error: book_info.errors.full_messages } and return
 		# 	end
+		# end
+
+		# def gift_item
+		# 	if @item.owner_id != @user.id
+		# 	render json: { error: "This is not your item to gift" } and return
+		# 	elsif @user.id == @new_owner.id
+		# 	render json: { error: "You cannot gift the item to yourself" } and return
+		# 	elsif !@user.friends.include?(@new_owner)
+		# 		render json: { error: "You cannot gift an item to someone you're not friends with" } and return
+		# 	elsif @item.tickets.size > 0
+		# 		render json: { error: "This item is associated with an open ticket. It cannot be edited until the ticket has been deleted" } and return
+		# 	end
+	
+		# 	@item.update(owner: @new_owner)
+	
+		# 	render json: @item, status: :accepted
 		# end

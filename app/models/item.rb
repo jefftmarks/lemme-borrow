@@ -19,4 +19,8 @@ class Item < ApplicationRecord
 	validates :owner_id, presence: true
 	# validates :category, inclusion: { in: ["book", "clothing", "other"] }
 	validates :status, presence: true, inclusion: { in: ["home", "on loan"] }
+
+	def tags_array
+		self.tags.map { |tag| tag[:name] }
+	end
 end

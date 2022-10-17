@@ -14,6 +14,7 @@ function Nav({ user, setUser }) {
 
 	return (
 		<div id="nav">
+			<Link to={"/"}>Dashboard</Link>
 			<Link to={`/user/${user.id}`}>Profile</Link>
 			<button onClick={handleLogout}>Sign Out</button>
 		</div>

@@ -12,8 +12,6 @@ function ItemDisplay({ showItem, setShowItem, activeUser}) {
 	
 	const { item, mode } = showItem;
 
-	console.log(isLoading);
-
 	const navigate = useNavigate();
 
 	// ---------- Fetch Pending Tickets Depending on User/Item Relationship ----------
