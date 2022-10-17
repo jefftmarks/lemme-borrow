@@ -146,11 +146,21 @@ function CommandCenter({ ticket, setTicket, isOwner, activeUser, messages, setMe
 			<h2>{item.name}</h2>
 			<div id="command-header">
 				<img src={item.image} alt={item.name} />
+
+				<div className="tag-display">
+					{item.tags.map((tag) => (
+						<div className="tag-card" key={tag}>
+							{tag}
+						</div>
+					))}
+				</div>
+			
 				<p>"{item.description}"</p>
 
 				<div id="command-info">
 					<p>Owner: {isOwner ? "You" : owner.first_name}</p>
 					<p>Return Date: {return_date ? formattedDate : "None"}</p>
+					
 				</div>
 
 				{ticket.overdue ? <p>This Item is Overdue!!!</p> : null}

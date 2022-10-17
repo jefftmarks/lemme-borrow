@@ -94,9 +94,9 @@ function ItemInfo({ item, setShowItem, activeUser, tickets }) {
 				</div>
 			</div>
 			<p>{description}</p>
-			<div id="tag-display">
+			<div className="tag-display">
 				{tags.map((tag) => (
-					<div id="tag-card" key={tag}>
+					<div className="tag-card" key={tag}>
 						{tag}
 					</div>
 				))}

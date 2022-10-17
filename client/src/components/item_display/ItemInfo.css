@@ -14,7 +14,7 @@
 	justify-content: space-between;
 }
 
-#item-status, #tag-display #tag-card {
+#item-status, .tag-display .tag-card {
 	color: white;
 	padding: 0.5rem;
 }
@@ -61,32 +61,32 @@
 	opacity: 0.2;
 }
 
-#item-info #tag-display {
+#item-info .tag-display {
 	display: flex;
 	column-gap: 0.5rem;
 }
 
-#tag-display #tag-card:hover {
+.tag-display .tag-card:hover {
 	cursor: pointer;
 }
 
-#tag-display #tag-card:nth-child(1n+0) {
+.tag-display .tag-card:nth-child(1n+0) {
 	background-color: var(--light-green);
 }
 
-#tag-display #tag-card:nth-child(4n+1) {
+.tag-display .tag-card:nth-child(4n+1) {
 	background-color: var(--light-purple);
 }
 
-#tag-display #tag-card:nth-child(4n+2) {
+.tag-display .tag-card:nth-child(4n+2) {
 	background-color: var(--light-red);
 }
 
-#tag-display #tag-card:nth-child(4n+3) {
+.tag-display .tag-card:nth-child(4n+3) {
 	background-color: var(--light-yellow);
 }
 
-#tag-display #tag-display #tag-card:hover {
+.tag-display .tag-display .tag-card:hover {
 	cursor: pointer;
 }
 

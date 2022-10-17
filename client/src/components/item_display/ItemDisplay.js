@@ -12,6 +12,8 @@ function ItemDisplay({ showItem, setShowItem, activeUser}) {
 	
 	const { item, mode } = showItem;
 
+	console.log(isLoading);
+
 	const navigate = useNavigate();
 
 	// ---------- Fetch Pending Tickets Depending on User/Item Relationship ----------
@@ -19,7 +21,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser}) {
 	useEffect(() => {
 		setTickets([]);
 		setIsLoading(true);
-		if (activeUser && item && item !== "add") {
+		if (activeUser && item && mode !== "add") {
 			fetch(`/pending_tickets/item/${item.id}/user/${activeUser.id}}`)
 			.then((res) => {
 				if (res.ok) {
@@ -33,7 +35,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser}) {
 			})
 		}
 	
-	}, [activeUser, item])
+	}, [activeUser, item, mode])
 
 	// ---------- Create New Ticket upon Borrow Request ----------
 
@@ -125,7 +127,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser}) {
 
 	return (
 		<div id="item-display">
-			{isLoading ? null : (
+			{isLoading && mode !== "add" ? null : (
 				<div id="item-display-container">
 				<div id="item-display-header">
 					<h2>{mode === "add" ? "Add a New Item to Your Cupboard" : item.name}</h2>
