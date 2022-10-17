@@ -8,7 +8,7 @@ class MessagesController < ApplicationController
 		# if message_params[:sender_id] == @ticket.borrower_id && (messages.size < 1 || (messages.size == 1 && messages.first.sender_id == @ticket.borrower_id))
 		# 	render json: { error: "Waiting for #{@receiver.first_name} to reply"} and return
 		# end
-		message = Message.create!(message_params)
+		message = Message.create!(**message_params, automated: false)
 		render json: message, status: :created
 	end
 

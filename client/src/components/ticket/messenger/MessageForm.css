@@ -4,9 +4,14 @@
 	display: flex;
 }
 
-#message-form textarea {
+#message-form input {
 	flex-grow: 1;
-	resize: none;
+	padding: 0.5rem;
+	border: none;
+}
+
+#message-form button {
+	border: none;
 	padding: 0.5rem;
 }
 

@@ -25,7 +25,7 @@ function Login({ setUser, setShowSignup }) {
 				setFormData(initialState);
 				if (res.ok) {
 					res.json().then((data) => {
-						localStorage.setItem("jwt", data.token);
+						sessionStorage.setItem("jwt", data.token);
 						setUser(data.user);
 					});
 				} else {

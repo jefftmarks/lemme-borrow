@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./EditItem.css";
 
-function EditItem({ item, setItem, setMode }) {
+function EditItem({ item, setShowItem }) {
 
 	// ---------- Form Handling ----------
 
@@ -64,8 +64,7 @@ function EditItem({ item, setItem, setMode }) {
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((item) => {
-						setItem(item);
-						setMode("");
+						setShowItem({item: item, mode: ""});
 						setFormData(initialState);
 					})
 				} else {
@@ -78,7 +77,7 @@ function EditItem({ item, setItem, setMode }) {
 
 	function onClickBack(e) {
 		e.preventDefault();
-		setMode("");
+		setShowItem({item: item, mode: ""});
 	}
 
 	return (

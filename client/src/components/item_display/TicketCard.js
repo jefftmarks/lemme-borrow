@@ -4,13 +4,15 @@ import "./TicketCard.css"
 
 function TicketCard({ ticket, activeUser, setItem }) {
 
+	const { borrower, owner } = ticket;
+ 
 	function renderMessage() {
 		// If not your item
-		if (ticket.borrower.id === activeUser.id) {
+		if (borrower.id === activeUser.id) {
 			if (ticket.status === "requested") {
 				return "You've requested to borrow this item"
 			} else if (ticket.status === "approved") {
-				return `${activeUser.first_name} has promised to lend you this item!`
+				return `${owner.first_name} has promised to lend you this item!`
 			} else if (ticket.overdue) {
 				return "You're currently borrowing this item, and it's overdue!"
 			} else {
@@ -19,13 +21,13 @@ function TicketCard({ ticket, activeUser, setItem }) {
 		// If your item
 		} else {
 			if (ticket.status === "requested") {
-				return `${ticket.borrower.first_name} has requested to borrow this item`
+				return `${borrower.first_name} has requested to borrow this item`
 			} else if (ticket.status === "approved") {
-				return `You've promised to lend this item to ${ticket.borrower.first_name}`
+				return `You've promised to lend this item to ${borrower.first_name}`
 			} else if (ticket.overdue) {
-				return `${ticket.borrower.first_name} was supposed to return this item on ${ticket.return_date}!`
+				return `${borrower.first_name} was supposed to return this item on ${ticket.return_date}!`
 			} else {
-				return `${ticket.borrower.first_name} is currently borrowing this item`
+				return `${borrower.first_name} is currently borrowing this item`
 			}
 		}
 	}

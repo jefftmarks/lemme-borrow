@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"
 import CommandCenter from "./CommandCenter";
-import Messenger from "./Messenger";
+import Messenger from "./messenger/Messenger";
 import "./Ticket.css";
 
 function Ticket({ activeUser }) {
 	const [isAuthorized, setIsAuthorized] = useState(false);
-	const [ticket, setTicket] = useState({});
+	const [ticket, setTicket] = useState(null);
 	const [isOwner, setIsOwner] = useState(false);
+	const [messages, setMessages] = useState([]);
 
 	const params = useParams();
+
+	// ---------- Render Ticket ----------
 
 	useEffect(() => {
 		if (activeUser) {
@@ -32,6 +35,25 @@ function Ticket({ activeUser }) {
 		}
 	}, [activeUser, params]);
 
+	// ---------- Render Messages ----------
+
+	useEffect(() => {
+		if(ticket) {
+			fetch(`/messages/ticket/${ticket.id}`)
+			.then((res) => {
+				if (res.ok) {
+					res.json().then((messages) => setMessages(messages));
+				} else {
+					res.json().then((data) => console.log(data));
+				}
+			})
+		}
+	}, [ticket]);
+
+	if (!ticket) {
+		return <h1>Loading . . .</h1>
+	}
+
 	if (!isAuthorized) {
 		return <h1>Page Not Found</h1>
 	}
@@ -42,12 +64,17 @@ function Ticket({ activeUser }) {
 				<div id="item-panel">
 					<CommandCenter
 						ticket={ticket}
+						setTicket={setTicket}
 						activeUser={activeUser}
 						isOwner={isOwner}
+						messages={messages}
+						setMessages={setMessages}
 					/>
 				</div>
 				<div id="message-panel">
 					<Messenger
+						messages={messages}
+						setMessages={setMessages}
 						ticket={ticket}
 						isOwner={isOwner}
 						activeUser={activeUser}

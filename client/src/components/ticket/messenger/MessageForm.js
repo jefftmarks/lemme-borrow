@@ -32,14 +32,13 @@ function MessageForm({ sender, receiver, ticket, onSendMessage}) {
 
 	return (
 		<form id="message-form" onSubmit={handleSubmit}>
-			<textarea
+			<input
 				required
+				type="text"
 				name="text"
-				rows="3"
 				onChange={(e) => setMessage(e.target.value)}
 				value={message}
-			>			
-			</textarea>
+			/>
 			<button>SEND</button>
 		</form>
 	);

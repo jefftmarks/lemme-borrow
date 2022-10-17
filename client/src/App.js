@@ -11,14 +11,13 @@ import Ticket from "./components/ticket/Ticket";
 function App() {
 	const [user, setUser] = useState(null);
 	const [showSignup, setShowSignup] = useState(false);
-	const [item, setItem] = useState(null);
-	const [mode, setMode] = useState("");
+	const [showItem, setShowItem] = useState(false);
 
 	// ---------- Render Active User on Reload ----------
 
 	useEffect(() => {
 		// Grab active via JWT token stored in local storage
-		let token = localStorage.getItem("jwt");
+		let token = sessionStorage.getItem("jwt");
 		if (token && !user) {
 			fetch("/profile", {
 				headers: {
@@ -46,12 +45,15 @@ function App() {
 	// ---------- Render Display Item ----------
 
 	function handleClickItem(id) {
+		setShowItem(true);
 		fetch(`/items/${id}`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((item) => {
-						setItem(item);
-						setMode("");
+						setShowItem({
+							item: item,
+							mode: ""
+						});
 					});
 				} else {
 					res.json().then((data) => console.log(data));
@@ -62,10 +64,8 @@ function App() {
   return (
     <div className="App">
 			<ItemDisplay
-				item={item}
-				setItem={setItem}
-				mode={mode}
-				setMode={setMode}
+				setShowItem={setShowItem}
+				showItem={showItem}
 				activeUser={user}
 			/>
 			<SignUp
@@ -86,7 +86,7 @@ function App() {
 							activeUser={user}
 							setActiveUser={setUser}
 							onClickItem={handleClickItem}
-							onClickAddItem={() => setItem({mode: "add"})}
+							onClickAddItem={() => setShowItem({item: "add", mode: "add"})}
 						/>
 					) : null}
 				/>

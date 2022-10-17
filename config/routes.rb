@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :friendships, only: [:create, :destroy]
 	resources :items, only: [:index, :show, :update, :create, :destroy]
 	resources :tags, only: [:index]
-	resources :tickets, only: [:create, :show, :update]
+	resources :tickets, only: [:create, :show]
 
 	# Auth
 	post "/login", to: "users#login"
@@ -31,6 +31,10 @@ Rails.application.routes.draw do
 	patch "/tickets/close/:id/user/:user_id", to: "tickets#close"
 	get "/tickets/requests/:user_id", to: "tickets#my_requests"
 	patch "/tickets/approve/:id", to: "tickets#approve"
+	patch "/tickets/date/:id", to: "tickets#set_return_date"
+	patch "/tickets/offer/:id", to: "tickets#offer_gift"
+	patch "/tickets/decline_gift/:id", to: "tickets#decline_gift"
+	patch "/tickets/accept_gift/:id", to: "tickets#accept_gift"
 	patch "/tickets/complete/:id", to: "tickets#complete"
 	patch "/tickets/receive/:id", to: "tickets#receive_item"
 	get "/tickets/loans/:user_id", to: "tickets#active_loans"
