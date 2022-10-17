@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ItemInfo from "./ItemInfo";
-import GiftItem from "./GiftItem";
 import EditItem from "./EditItem";
 import CreateItem from "./CreateItem";
 import ItemTickets from "./ItemTickets";
@@ -66,14 +65,6 @@ function ItemDisplay({ showItem, setShowItem, activeUser}) {
 
 	function renderDisplay() {
 		switch (mode) {
-			case "gift":
-				return (
-					<GiftItem
-						item={item}
-						setShowItem={setShowItem}
-						activeUser={activeUser}
-					/>
-				);
 			case "edit":
 				return (
 					<EditItem
@@ -151,3 +142,14 @@ function ItemDisplay({ showItem, setShowItem, activeUser}) {
 }
 
 export default ItemDisplay;
+
+// --------------------------------------------------
+
+// case "gift":
+// 				return (
+// 					<GiftItem
+// 						item={item}
+// 						setShowItem={setShowItem}
+// 						activeUser={activeUser}
+// 					/>
+// 				);

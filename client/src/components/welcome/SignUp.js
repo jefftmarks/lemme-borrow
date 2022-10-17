@@ -31,7 +31,7 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((data) => {
-						localStorage.setItem("jwt", data.token);
+						sessionStorage.setItem("jwt", data.token);
 						setShowSignup(false);
 						setUser(data.user);
 					});

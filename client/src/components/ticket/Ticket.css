@@ -6,13 +6,13 @@
 }
 
 #ticket-container {
-	width: 75%;
+	width: 90%;
 	display: flex;
 	justify-content: space-between;
 }
 
 #item-panel {
-	width: 36%;
+	width: 35%;
 	display: flex;
 	justify-content: center;
 }

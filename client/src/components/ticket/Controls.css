@@ -1,11 +1,19 @@
 #controls {
-	background-color: var(--light-gray);
-	width: 70%;
+	/* background-color: var(--light-gray); */
 	display: flex;
 	flex-direction: column;
+	justify-content: space-evenly;
+	text-align: center;
 	padding: 1rem;
 	row-gap: 1rem;
-	flex-grow: 1;
+	color: black;
+	width: 70%;
+}
+
+#control-buttons {
+	display: flex;
+	flex-direction: column;
+	row-gap: 1rem;
 }
 
 #controls button {
@@ -17,4 +25,33 @@
 
 #controls button:hover {
 	cursor: pointer;
+}
+
+#controls #date-form {
+	display: flex;
+}
+
+/* #controls #date-form button {
+	flex-grow: 1;
+} */
+
+#controls #set-date {
+	background-color: var(--dark-gray);
+}
+
+
+#controls #set-date:hover {
+	cursor: auto;
+}
+
+#controls #date-form button {
+	flex-grow: 1;
+}
+
+#controls #date-form input {
+	padding: 0.5rem;
+}
+
+#controls p {
+	color: var(--bright-red);
 }

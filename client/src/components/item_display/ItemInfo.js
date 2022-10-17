@@ -22,12 +22,6 @@ function ItemInfo({ item, setShowItem, activeUser, tickets }) {
 						>
 							Edit Item
 						</button>
-						<button
-							id="status-btn"
-							onClick={() => setShowItem({item: item, mode: "gift"})}
-						>
-							Gift Item
-						</button>
 					</div>
 				)
 			} else {

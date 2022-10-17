@@ -7,7 +7,7 @@ function Nav({ user, setUser }) {
 	const navigate = useNavigate();
 
 	function handleLogout() {
-		localStorage.clear();
+		sessionStorage.clear();
 		setUser(null);
 		navigate("/");
 	}

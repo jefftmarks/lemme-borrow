@@ -50,6 +50,10 @@ function Ticket({ activeUser }) {
 		}
 	}, [ticket]);
 
+	if (!ticket) {
+		return <h1>Loading . . .</h1>
+	}
+
 	if (!isAuthorized) {
 		return <h1>Page Not Found</h1>
 	}
