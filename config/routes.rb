@@ -35,7 +35,6 @@ Rails.application.routes.draw do
 	patch "/tickets/offer/:id", to: "tickets#offer_gift"
 	patch "/tickets/decline_gift/:id", to: "tickets#decline_gift"
 	patch "/tickets/accept_gift/:id", to: "tickets#accept_gift"
-	patch "/tickets/complete/:id", to: "tickets#complete"
 	patch "/tickets/receive/:id", to: "tickets#receive_item"
 	get "/tickets/loans/:user_id", to: "tickets#active_loans"
 	get "/tickets/borrows/:user_id", to: "tickets#active_borrows"
