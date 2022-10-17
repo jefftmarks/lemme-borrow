@@ -1,5 +1,5 @@
 class TicketsController < ApplicationController
-	before_action :set_ticket, only: [:show, :set_return_date, :decline, :approve, :complete, :receive_item, :close]
+	before_action :set_ticket, only: [:show, :set_return_date, :decline, :approve, :receive_item, :close]
 	before_action :set_user, only: [:my_requests, :active_loans, :active_borrows, :close]
 	before_action :set_owner_borrower_item, only: [:set_return_date, :approve, :receive_item, :close ]
 
@@ -34,7 +34,7 @@ class TicketsController < ApplicationController
 	end
 
 	def close
-		@item.update!(borrower: nil)
+		@item.update!(borrower: nil, status: "home")
 		@ticket.destroy
 		render json: @ticket
 	end
@@ -74,13 +74,6 @@ class TicketsController < ApplicationController
 		message = Message.create!(ticket: @ticket, automated: true, text: "Automated Message: #{@borrower.first_name} has received #{@owner.first_name}'s item: #{@item.name}. Take good care of it, #{@borrower.first_name}!\nNEXT STEP: #{@owner.first_name}, you may now set an optional return date to make sure you get your item back in time. When the item is returned, let us know!")
 
 		render json: {ticket: TicketSerializer.new(@ticket), message: message }, status: :accepted
-	end
-
-	# Close a ticket
-	def complete 
-		@ticket.update!(status: "completed", return_date: nil, overdue: false)
-		@ticket.item.update!(borrower: nil, status: "home")
-		render json: @ticket, status: :accepted
 	end
 
 	# Get active user's items currently on loan

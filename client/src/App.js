@@ -86,7 +86,7 @@ function App() {
 							activeUser={user}
 							setActiveUser={setUser}
 							onClickItem={handleClickItem}
-							onClickAddItem={() => setShowItem({item: "add", mode: "add"})}
+							onClickAddItem={() => setShowItem({item: true, mode: "add"})}
 						/>
 					) : null}
 				/>

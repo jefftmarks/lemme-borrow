@@ -8,7 +8,7 @@ const initialState = {
 	tags: "",
 }
 
-function CreateItem({ setShowItem, activeUser, setMode }) {
+function CreateItem({ setShowItem, activeUser }) {
 	const [formData, setFormData] = useState(initialState);
 	const [tagCards, setTagCards] = useState([]);
 
