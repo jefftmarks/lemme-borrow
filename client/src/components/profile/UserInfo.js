@@ -36,7 +36,10 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 						friend_status: status,
 					}));
 				} else {
-					res.json().then((data) => console.log(data));
+					res.json().then((data) => {
+						alert(data.error);
+						setIsUnfriending(false);
+					});
 				}
 			});
 	}
@@ -74,6 +77,22 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 				user_id: activeUser.id,
 				friend_id: profile.user.id,
 			}),
+		})
+			.then((res) => {
+				if (res.ok) {
+					res.json().then((status) => setProfile({
+						...profile,
+						friend_status: status,
+					}));
+				} else {
+					res.json().then((data) => console.log(data));
+				}
+			})
+	}
+
+	function handleDeclineFriendRequest() {
+		fetch(`/friend_requests/${profile.friend_status.id}`, {
+			method: "DELETE",
 		})
 			.then((res) => {
 				if (res.ok) {
@@ -141,7 +160,10 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 					return (
 						<div id="user-actions">
 							<button id="user-btn" onClick={handleAcceptFriendRequest}>
-								Respond to {profile.user.first_name}'s Friend Request
+								Accept {profile.user.first_name}'s Friend Request
+							</button>
+							<button id="user-btn" onClick={handleDeclineFriendRequest}>
+								Decline {profile.user.first_name}'s Friend Request
 							</button>
 						</div>
 					);

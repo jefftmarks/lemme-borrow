@@ -9,7 +9,7 @@ class Ticket < ApplicationRecord
 	validates :owner_id, presence: true
 	validates :borrower_id, presence: true
 	validates :item_id, presence: true, uniqueness: { scope: :borrower_id }
-	validates :status, presence: true, inclusion: { in: ["requested", "approved", "gifting", "on loan", "completed"]}
+	validates :status, presence: true, inclusion: { in: ["requested", "approved", "gifting", "on loan", "declined"]}
 
 	def is_overdue(return_date)
 		today = Date.today.to_time.iso8601.slice(0, 10)

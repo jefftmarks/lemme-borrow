@@ -3,7 +3,7 @@ class FriendRequestsController < ApplicationController
 
 	def create
 		friend_request = FriendRequest.create!(request_params)
-		render json: { is_friends: false, mode: "Pending Response" }
+		render json: { is_friends: false, mode: "Pending Response" }, status: :created
 	end
 
 	# Get all of user's pending requests

@@ -8,19 +8,18 @@ class TicketsController < ApplicationController
 		borrower = User.find(ticket_params[:borrower_id])
 		item = Item.find(ticket_params[:item_id])
 
-		# Error handling
 		if borrower.belongings.include?(item)
-			render json: { error: "You can't borrow from your own item" } and return
+			render json: { error: "You can't borrow from your own item" }, status: :unauthorized
 		elsif !borrower.friends.include?(owner)
-			render json: { error: "You can't borrow from someone you're not friends with" } and return
+			render json: { error: "You can't borrow from someone you're not friends with" }, status: :unauthorized
+		else
+
+			ticket = Ticket.create!(**ticket_params, status: "requested", return_date: "", overdue: false)
+
+			Message.create!(ticket: ticket, automated: true, text: "Automated Message: #{borrower.first_name} requests to borrow #{owner.first_name}'s item: #{item.name}.\nNEXT STEP: #{owner.first_name} can 1) approve the request or 2) decline the request.\nUse the messenger to discuss the details of the request.")
+
+			render json: ticket, status: :created
 		end
-		# Ticket model also validates uniqueness so that same user cannot request to borrow an item they've already requested/are already borrowing
-
-		ticket = Ticket.create!(**ticket_params, status: "requested", return_date: "", overdue: false)
-
-		Message.create!(ticket: ticket, automated: true, text: "Automated Message: #{borrower.first_name} requests to borrow #{owner.first_name}'s item: #{item.name}.\nNEXT STEP: #{owner.first_name} can 1) approve the request or 2) decline the request.\nUse the messenger to discuss the details of the request.")
-
-		render json: ticket, status: :created
 	end
 
 	def show
@@ -30,7 +29,7 @@ class TicketsController < ApplicationController
 		else
 			@ticket.update!(overdue: false)
 		end
-		render json: @ticket
+		render json: @ticket, serializer: TicketWithFullDetailsSerializer
 	end
 
 	def close
@@ -46,13 +45,7 @@ class TicketsController < ApplicationController
 
 		message = Message.create!(ticket: @ticket, automated: true, text: "Automated Message: #{@owner.first_name} has set the return date to #{@ticket.formatted_return_date}.")
 
-		render json: {ticket: TicketSerializer.new(@ticket), message: message }, status: :accepted
-	end
-
-	# All tickets pending initial response from owner
-	def my_requests
-		ticket_requests = @user.lending_tickets.where(status: "requested")
-		render json: ticket_requests
+		render json: {ticket: TicketWithFullDetailsSerializer.new(@ticket), message: message }, status: :accepted
 	end
 
 	# Approve a ticket request (or reopen ticket after it was closed)
@@ -63,7 +56,7 @@ class TicketsController < ApplicationController
 
 		message = Message.create!(ticket: @ticket, automated: true, text: "Automated Message: #{@owner.first_name} promises to lend #{@borrower.first_name} their item: #{@item.name}. Awesome!\nNEXT STEP: Exchange the item! #{@borrower.first_name}, let us know when you have received the item.")
 
-		render json: {ticket: TicketSerializer.new(@ticket), message: message }, status: :accepted
+		render json: {ticket: TicketWithFullDetailsSerializer.new(@ticket), message: message }, status: :accepted
 	end
 
 	# Update ticket and item when it has been received by borrower
@@ -73,29 +66,98 @@ class TicketsController < ApplicationController
 
 		message = Message.create!(ticket: @ticket, automated: true, text: "Automated Message: #{@borrower.first_name} has received #{@owner.first_name}'s item: #{@item.name}. Take good care of it, #{@borrower.first_name}!\nNEXT STEP: #{@owner.first_name}, you may now set an optional return date to make sure you get your item back in time. When the item is returned, let us know!")
 
-		render json: {ticket: TicketSerializer.new(@ticket), message: message }, status: :accepted
+		render json: {ticket: TicketWithFullDetailsSerializer.new(@ticket), message: message }, status: :accepted
+	end
+
+	# All tickets pending initial response from owner
+	def my_requests
+		payload = []
+
+		tickets_requested = @user.lending_tickets.where(status: "requested")
+		
+		tickets_requested.each do |ticket|
+			payload.push(
+				{
+					id: ticket.id,
+					image: ticket.item.image,
+					message: "#{ticket.borrower.first_name} requests to borrow your item: #{ticket.item.name}",
+					created_at: ticket.created_at,
+					return_date: ""
+				}
+			)
+		end
+
+		tickets_requesting = @user.borrowing_tickets.where(status: "requested")
+
+		tickets_requesting.each do |ticket|
+			payload.push(
+				{
+					id: ticket.id,
+					image: ticket.item.image,
+					message: "You've requested to borrow #{ticket.owner.first_name}'s item: #{ticket.item.name}",
+					created_at: ticket.created_at,
+					return_date: ""
+				}
+			)
+		end
+
+		render json: payload
 	end
 
 	# Get active user's items currently on loan
 	def active_loans
 		tickets = @user.lending_tickets.where(status: "on loan")
+		
+		payload = []
+
 		tickets.each do |ticket|
-			if ticket.is_overdue(ticket.return_date)
-				ticket.update!(overdue: true)
+
+			if ticket.return_date != ""
+				ticket.update!(overdue: ticket.is_overdue(ticket.return_date))
+			else
+				ticket.update!(overdue: false)
 			end
+
+			payload.push(
+				{
+					id: ticket.id,
+					image: ticket.item.image,
+					message: "#{ticket.borrower.first_name} is borrowing your item: #{ticket.item.name}",
+					overdue: ticket.overdue,
+					return_date: ticket.return_date
+				}
+			)
 		end
-		render json: tickets
+
+		render json: payload
 	end
 
 	# Get active user's items they're currently borrowing and include whether overdue
 	def active_borrows
 		tickets = @user.borrowing_tickets.where(status: "on loan")
+
+		payload = []
+
 		tickets.each do |ticket|
-			if ticket.is_overdue(ticket.return_date)
-				ticket.update!(overdue: true)
+
+			if ticket.return_date != ""
+				ticket.update!(overdue: ticket.is_overdue(ticket.return_date))
+			else
+				ticket.update!(overdue: false)
 			end
+
+			payload.push(
+				{
+					id: ticket.id,
+					image: ticket.item.image,
+					message: "#{ticket.owner.first_name}'s #{ticket.item.name}",
+					overdue: ticket.overdue,
+					return_date: ticket.return_date
+				}
+			)
 		end
-		render json: tickets
+
+		render json: payload
 	end
 
 	private

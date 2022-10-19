@@ -69,10 +69,12 @@ function Profile({ activeUser, setActiveUser, onClickItem, onClickAddItem }) {
 					</div>
 					<div id="cupboard-search-container"></div>
 				</div>
-				<Cupboard
+				{profile.is_active || profile.friend_status.mode === "Friends" ? (
+					<Cupboard
 					profile={profile}
 					onClickItem={onClickItem}
 				/>
+				) : null}
 			</div>
 		</div>
 	);

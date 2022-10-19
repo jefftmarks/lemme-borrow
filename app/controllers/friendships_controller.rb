@@ -8,7 +8,7 @@ class FriendshipsController < ApplicationController
 
 		# can't be friends with yourself
 		if user.id == friend.id
-			render json: { error: "You can't be friends with yourself" }
+			render json: { error: "You can't be friends with yourself" }, status: :unauthorized
 		else
 			friendship_one = Friendship.create!(friendship_params)
 			# Create a second friendship with reverse attributes and link to first friendship
@@ -35,11 +35,15 @@ class FriendshipsController < ApplicationController
 	end
 
 	def destroy
-		# Delete corresponding friendship and then primary friendship
-		@friendship.corresponding_friendship.destroy
-		@friendship.destroy
-		# Send back payload for re-rendering page
-		render json: { is_friends: false, mode: "Not Friends" }
+		if @friendship.has_active_tickets?
+			render json: { error: "You cannot unfriend #{@friendship.friend.first_name} until you've closed all active tickets" }, status: :unauthorized
+		else
+			# Delete corresponding friendship and then primary friendship
+			@friendship.corresponding_friendship.destroy
+			@friendship.destroy
+			# Send back payload for re-rendering page
+			render json: { is_friends: false, mode: "Not Friends" }
+		end
 	end
 
 	private
