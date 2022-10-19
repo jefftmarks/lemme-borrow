@@ -17,7 +17,8 @@ class FriendStatusesController < ApplicationController
 			render json: { status: { mode: "Pending Response" }, user: UserSerializer.new(friend) }
 		# Friend has already requested you but you haven't responded
 		elsif FriendRequest.find_by(requester: friend, receiver: user)
-			render json: { status: { mode: "Pending Action" }, user: UserSerializer.new(friend) }
+			request = FriendRequest.find_by(requester: friend, receiver: user)
+			render json: { status: { id: request.id, mode: "Pending Action" }, user: UserSerializer.new(friend) }
 		else
 			render json: { status: { mode: "Not Friends" }, user: UserSerializer.new(friend) }
 		end

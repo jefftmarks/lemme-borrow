@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./ItemInfo.css";
 
 function ItemInfo({ item, setShowItem, activeUser, tickets }) {
@@ -9,9 +10,9 @@ function ItemInfo({ item, setShowItem, activeUser, tickets }) {
 	// ---------- If Your Belonging, Render CRUD Options ----------
 
 	function renderStatusBar() {
-		// Item is yours
+		// ITEM IS YOURS
 		if (activeUser.id === owner.id) {
-			// If item has no active tickets
+			// ITEM HAS NO ACTIVE TICKETS ASSOCIATED WITH YOU
 			if (tickets.length < 1) {
 				return (
 					<div id="item-status-bar">
@@ -24,14 +25,30 @@ function ItemInfo({ item, setShowItem, activeUser, tickets }) {
 						</button>
 					</div>
 				)
+			// ITEM HAS ACTIVE TICKETS ASSOCIATED WITH YOU
 			} else {
 				const message = status === "home" ? "in Your Cupboard" : `Being Borrowed by ${borrower.first_name}`
 				return (
 					<div id="item-status-bar">
-						<p id="item-status">Item is Currently {message}</p>
+						Item is Currently {message}
 					</div>
 				);
 			}
+		// ITEM IS NOT YOURS
+		} else {
+			return (
+				<div id="item-status-bar">
+					<Link
+						to={`/user/${owner.id}`}
+						onClick={() => setShowItem({ item: null, mode: "" })}
+					>
+						<img src={owner.avatar} alt="avatar"
+						/>
+					</Link>
+					<p>Item Belongs to {owner.first_name}</p>
+				</div>
+			);
+
 		}
 	}
 

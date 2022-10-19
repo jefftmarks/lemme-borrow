@@ -1,0 +1,28 @@
+.notifications {
+	size: 100%;
+	background-color: var(--light-gray);
+}
+
+.notifications-header {
+	background-color: var(--bright-red);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+
+.notifications-list {
+	padding: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	row-gap: 0.5rem;
+}
+
+.notifications a {
+	color: white;
+	text-decoration: none;
+}
+
+.notifications svg:hover {
+	cursor: pointer;
+}

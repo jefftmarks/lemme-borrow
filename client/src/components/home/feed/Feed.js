@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import FeedCard from "./FeedCard";
 import "./Feed.css";
 
-function Feed({ activeUser }) {
+function Feed({ activeUser, onClickItem }) {
 	const [items, setItems] = useState([]);
-	const [count, setCount] = useState(0);
+	const [count, setCount] = useState(9);
 
 	useEffect(() => {
 		fetch(`/items/recent/${activeUser.id}/count/${count}`)
@@ -18,41 +18,28 @@ function Feed({ activeUser }) {
 	}, [count, activeUser]);
 
 	function handleIncrementCount() {
-		setCount(count => count + 20)
-	}
-
-	function handleDecrementCount() {
-		setCount(count => count - 20)
+		setCount(count => count + 10)
 	}
 
 	return (
 		<div id="feed">
 			<div id="feed-header">
-				<button
-					id="feed-prev"
-					onClick={handleDecrementCount}
-					className={count === 0 ? "feed-hide" : "feed-show"}
-					disabled={count === 0}
-				>
-					Previous
-				</button>
-				<h1>What's in Your Cupboard? New Items From Your Friends</h1>
-				<button
-					id="feed-next"
-					onClick={handleIncrementCount}
-					className={items.length < 20 ? "feed-hide" : "feed-show"}
-					disabled={items.length < 20}
-				>
-					Show More
-				</button>
+				<h1>New Items From Your Friends</h1>
 			</div>
 			<div id="feed-list">
 				{items.map((item) => (
 					<FeedCard
 						key={item.id}
 						item={item}
+						onClickItem={onClickItem}
+						
 					/>
 				))}
+				{items.length % 10 !== 0 ? null : (
+					<button onClick={handleIncrementCount}>
+						Show More
+					</button>
+				)}
 			</div>
 		</div>
 	);

@@ -39,7 +39,12 @@ function App() {
 
 	// Render element for home path depending on whether or not user is logged in
 	function renderElement() {
-		return user ? <Home user={user}/> : <Welcome />;
+		return user ? (
+			<Home
+				user={user}
+				onClickItem={handleClickItem}
+			/>
+		) : <Welcome />;
 	}
 
 	// ---------- Render Display Item ----------

@@ -1,0 +1,8 @@
+#dashboard {
+	width: 40%;
+}
+
+.gray-divider {
+	background-color: var(--light-gray);
+	height: 1%;
+}

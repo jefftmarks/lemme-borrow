@@ -10,8 +10,7 @@
 
 #tickets-list {
 	padding: 0.5rem;
-}
-
-#tickets-list div:not(:first-child) {
-	border-top: 1px solid black;
+	display: flex;
+	flex-direction: column;
+	row-gap: 0.5rem;
 }

@@ -76,11 +76,10 @@ class ItemsController < ApplicationController
 	def recently_uploaded
 		items = Item.where.not(owner: @user).order(created_at: :desc)
 
-		# load 20 items at a time depending on count
-		start = count_params[:count].to_i
-		finish = start + 19
+		# load 10 items to start
+		count = count_params[:count].to_i
 
-		render json: items[start..finish]
+		render json: items[0..count]
 	end
 
 	private
