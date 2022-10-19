@@ -14,11 +14,20 @@ class TicketsController < ApplicationController
 			render json: { error: "You can't borrow from someone you're not friends with" }, status: :unauthorized
 		else
 
-			ticket = Ticket.create!(**ticket_params, status: "requested", return_date: "", overdue: false)
+			if item.tickets.size > 0
+				ticket = Ticket.create!(**ticket_params, status: "waitlisted", return_date: "", overdue: false)
 
-			Message.create!(ticket: ticket, automated: true, text: "Automated Message: #{borrower.first_name} requests to borrow #{owner.first_name}'s item: #{item.name}.\nNEXT STEP: #{owner.first_name} can 1) approve the request or 2) decline the request.\nUse the messenger to discuss the details of the request.")
+				Message.create!(ticket: ticket, automated: true, text: "Automated Message: #{borrower.first_name} requests to borrow #{owner.first_name}'s item: #{item.name}.\nThis item has already been requested/is already being borrowed by a different user. #{owner.first_name} can approve the request once the item has been returned.")
 
-			render json: ticket, status: :created
+				render json: ticket, status: :created
+
+			else
+				ticket = Ticket.create!(**ticket_params, status: "requested", return_date: "", overdue: false)
+
+				Message.create!(ticket: ticket, automated: true, text: "Automated Message: #{borrower.first_name} requests to borrow #{owner.first_name}'s item: #{item.name}.\nNEXT STEP: #{owner.first_name} can 1) approve the request or 2) decline the request.\nUse the messenger to discuss the details of the request.")
+
+				render json: ticket, status: :created
+			end
 		end
 	end
 
@@ -29,6 +38,13 @@ class TicketsController < ApplicationController
 		else
 			@ticket.update!(overdue: false)
 		end
+
+		if @ticket.status == "waitlisted"
+			if @ticket.item.tickets.size == 1
+				@ticket.update!(status: "requested")
+			end
+		end
+
 		render json: @ticket, serializer: TicketWithFullDetailsSerializer
 	end
 
@@ -73,8 +89,8 @@ class TicketsController < ApplicationController
 	def my_requests
 		payload = []
 
-		tickets_requested = @user.lending_tickets.where(status: "requested")
-		
+		tickets_requested = @user.lending_tickets.where("status = ? or status = ?", "requested", "waitlisted")
+
 		tickets_requested.each do |ticket|
 			payload.push(
 				{
@@ -87,7 +103,7 @@ class TicketsController < ApplicationController
 			)
 		end
 
-		tickets_requesting = @user.borrowing_tickets.where(status: "requested")
+		tickets_requesting = @user.borrowing_tickets.where("status = ? or status =?", "requested", "waitlisted")
 
 		tickets_requesting.each do |ticket|
 			payload.push(
@@ -201,37 +217,3 @@ class TicketsController < ApplicationController
 		@user = User.find(params[:user_id])
 	end
 end
-
-# -------------------------------------------------
-
-# if ["approved", "on loan"].include?(@ticket.status)
-		# 	if @user == @ticket.borrower
-		# 	render json: { error: "Only the item's owner can delete the ticket" } and return
-		# 	elsif @user == @ticket.user
-		# 	render json: { error: "You cannot delete the ticket unless the item has been returned or you unapprove the ticket request" } and return
-		# 	end
-		# end
-
-
-		# def offer_gift
-		# 	@ticket.update!(status: "gifting")
-	
-		# 	message = Message.create!(ticket: @ticket, automated: true, text: "Automated Message: #{@owner.first_name} would like to gift their belonging to #{@borrower.first_name}. #{@borrower.first_name}, please accept or decline ownership of the item: #{@item.name}. Accepting ownership will close the ticket.")
-	
-		# 	render json: {ticket: TicketSerializer.new(@ticket), message: message }, status: :accepted
-		# end
-	
-		# def decline_gift
-		# 	@ticket.update!(status: "on loan")
-	
-		# 	message = Message.create!(ticket: @ticket, automated: true, text: "Automated Message: #{@borrower.first_name} has declinded to accept ownership of #{@borrower.first_name}'s belonging: #{@item.name}. The item remains on loan.")
-	
-		# 	render json: {ticket: TicketSerializer.new(@ticket), message: message }, status: :accepted
-		# end
-	
-		# def accept_gift
-		# 	@item.update!(status: "home", owner: @borrower, borrower: nil)
-		# 	@ticket.destroy
-	
-		# 	render json: @ticket
-		# end

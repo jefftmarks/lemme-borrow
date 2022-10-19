@@ -39,12 +39,34 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 	function renderButtons() {
 
 		// ---------- ROLE: BORROWER ----------
+
 		if (!isOwner) {
-		
-			// Step 1 - Owner has yet to respond to your request
-			if (status === "requested") {	
+
+			// Step 0 - Item is already being requested/borrowed by a different user
+
+			if (status === "waitlisted") {
 
 				// In the meantime, you can cancel your request
+
+				return (
+					<>
+						This ticket has been waitlisted!
+						<div id="control-buttons">
+							<button onClick={onClickDelete}>
+								Cancel Your Pending Request
+							</button>
+						</div>
+					</>
+				);
+
+			}
+		
+			// Step 1 - Owner has yet to respond to your request
+
+			else if (status === "requested") {	
+
+				// In the meantime, you can cancel your request
+
 				return (
 					<>
 						Waiting for {owner.first_name} to respond to your request . . .
@@ -57,9 +79,11 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 				);
 
 			// Step 2 - Your request has been approved
+
 			} else if (status === "approved") {
 
 				// You can either 1) mark when item is received or 2) delete the ticket
+
 				return (
 					<>
 						Let us know when you've received the item!
@@ -75,9 +99,11 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 				);
 
 			// Step 3 - You receive the item. No actions.
+
 			} else if (status === "on loan") {
 
 				// No actions
+
 				return (
 					<div id="control-buttons">
 						You're currently borrowing this item from {owner.first_name}. The ticket cannot be deleted until the item has been returned.
@@ -87,12 +113,34 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 			} 
 		
 		// ---------- ROLE: OWNER ----------
+		
 		} else {
 
+		// Step 0 - Item is already being requested/borrowed by a different user
+
+			if (status === "waitlisted") {
+
+				// In the meantime, you can cancel your request
+
+				return (
+					<>
+						This ticket has been waitlisted!
+						<div id="control-buttons">
+							<button onClick={onClickDelete}>
+								Decline Request
+							</button>
+						</div>
+					</>
+				);
+
+			}
+
 		// Step 1 - You have yet to respond to borrower's request
-			if (status === "requested") {
+
+			else if (status === "requested") {
 
 				// You can either 1) approve request or 2) delete the ticket
+
 				return (
 					<>
 						Please respond to {borrower.first_name}'s request
@@ -108,9 +156,11 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 				);
 
 		// Step 2 - You approved the request
+
 			} else if (status === "approved") {
 
 				// You can 1) delete the ticket. Otherwise, wait for borrower to confirm receipt.
+
 				return (
 					<>
 					Waiting for {borrower.first_name} to receive the item . . .
@@ -123,9 +173,11 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 				);
 
 		// Step 3 - Your item has been received and is being borrowed
+
 			} else if (status === "on loan") {
 
 				// You can either 1) set or reset a return date or 2) mark when the item has been returned
+
 				return (
 					<div id="control-buttons">
 						Let us know when you get your item back!
