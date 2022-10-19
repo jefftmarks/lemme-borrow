@@ -1,25 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import NotificationCard from "./NotificationCard";
 import { Link } from "react-router-dom";
 import "./Notifications.css";
 
-function ActiveBorrows({ activeUser }) {
-	const [tickets, setTickets] = useState([]);
-
-	useEffect(() => {
-		fetch(`/tickets/borrows/${activeUser.id}`)
-			.then((res) => {
-				if (res.ok) {
-					res.json().then((tickets) => setTickets(tickets));
-				} else {
-					res.json().then((data) => console.log(data))
-				}
-			})
-	}, [activeUser]);
+function ActiveBorrows({ activeUser, borrows, setBorrows }) {
 
 	return (		
 		<div className="notifications-list">
-			{tickets.map((ticket) => (
+			{borrows.length === 0 ? "You're not borrowing any items . . . Why not?" : null}
+			{borrows.map((ticket) => (
 				<Link
 					to={`/ticket/${ticket.id}`}
 					key={ticket.id}
@@ -28,6 +17,7 @@ function ActiveBorrows({ activeUser }) {
 						ticket={ticket}
 				/></Link>
 			))}
+			{borrows.length === 0 ? "You're not borrowing any items . . . Why not?" : null}
 		</div>
 	);
 }

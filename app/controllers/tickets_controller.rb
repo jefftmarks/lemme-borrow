@@ -81,8 +81,8 @@ class TicketsController < ApplicationController
 					id: ticket.id,
 					image: ticket.item.image,
 					message: "#{ticket.borrower.first_name} requests to borrow your item: #{ticket.item.name}",
-					created_at: ticket.created_at,
-					return_date: ""
+					return_date: "",
+					status: "pending"
 				}
 			)
 		end
@@ -95,13 +95,13 @@ class TicketsController < ApplicationController
 					id: ticket.id,
 					image: ticket.item.image,
 					message: "You've requested to borrow #{ticket.owner.first_name}'s item: #{ticket.item.name}",
-					created_at: ticket.created_at,
-					return_date: ""
+					return_date: "",
+					status: "pending"
 				}
 			)
 		end
 
-		render json: payload
+		render json: payload.sort_by { |ticket| ticket[:created_at] }.reverse!
 	end
 
 	# Get active user's items currently on loan
@@ -124,21 +124,23 @@ class TicketsController < ApplicationController
 					image: ticket.item.image,
 					message: "#{ticket.borrower.first_name} is borrowing your item: #{ticket.item.name}",
 					overdue: ticket.overdue,
-					return_date: ticket.return_date
+					return_date: ticket.return_date,
+					status: "active"
 				}
 			)
 		end
 
-		render json: payload
+		render json: payload.sort_by { |ticket| ticket[:created_at] }.reverse!
 	end
 
 	# Get active user's items they're currently borrowing and include whether overdue
 	def active_borrows
-		tickets = @user.borrowing_tickets.where(status: "on loan")
-
 		payload = []
 
-		tickets.each do |ticket|
+		borrowing = @user.borrowing_tickets.where(status: "on loan")
+		approved = @user.borrowing_tickets.where(status: "approved")
+
+		borrowing.each do |ticket|
 
 			if ticket.return_date != ""
 				ticket.update!(overdue: ticket.is_overdue(ticket.return_date))
@@ -152,12 +154,27 @@ class TicketsController < ApplicationController
 					image: ticket.item.image,
 					message: "#{ticket.owner.first_name}'s #{ticket.item.name}",
 					overdue: ticket.overdue,
-					return_date: ticket.return_date
+					return_date: ticket.return_date,
+					status: "active"
 				}
 			)
 		end
 
-		render json: payload
+		approved.each do |ticket|
+
+			payload.push(
+				{
+					id: ticket.id,
+					image: ticket.item.image,
+					message: "#{ticket.owner.first_name} APPROVED your request to borrow #{ticket.item.name}",
+					overdue: ticket.overdue,
+					return_date: ticket.return_date,
+					status: "approved"
+				}
+			)
+		end
+
+		render json: payload.sort_by { |ticket| ticket[:created_at] }.reverse!
 	end
 
 	private

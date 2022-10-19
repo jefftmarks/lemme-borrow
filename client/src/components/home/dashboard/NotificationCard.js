@@ -3,7 +3,7 @@ import "./NotificationCard.css";
 
 function NotificationCard({ ticket }) {
 
-	const { return_date, image, overdue, message } = ticket
+	const { return_date, image, overdue, message, status } = ticket
 
 	// ---------- Reformat Date ----------
 
@@ -31,14 +31,24 @@ function NotificationCard({ ticket }) {
 		formattedDate = `${mm}/${dd}/${yyyy}`;
 	}
 
+	function renderStatus() {
+		if (overdue) {
+			return "OVERDUE!";
+		} else if (status === "approved") {
+			return "Let us know when you've received the item";
+		} else if (status === "pending") {
+			return null;
+		} else {
+			return `Return Date: ${return_date ? formattedDate : "--"}`;
+		}
+	}
+
 	return (
-		<div className={`notification-card overdue-${overdue}`}>
+		<div className={`notification-card overdue-${overdue} ${status}`}>
 			<img src={image} alt="item" />
 			<div className="notifcation-info">
 				<p>{message}</p>
-				{overdue ? "OVERDUE!" : (
-					<p>Return Date: {return_date ? formattedDate : "--"}</p>
-				)}
+				<p>{renderStatus()}</p>
 			</div>
 		</div>
 	);

@@ -4,16 +4,22 @@
 	border-radius: 100px;
 	align-items: center;
 	column-gap: 1rem;
+}
+
+.friend-request-card {
 	background-color: var(--light-blue);
 }
 
 .overdue-true {
-	border: 5px solid red;
 	background-color: var(--light-red);
 }
 
-.overdue-false {
-	background-color: var(--light-blue);
+.pending, .approved {
+	background-color: var(--light-purple);
+}
+
+.active.overdue-false {
+	background-color: var(--light-green);
 }
 
 .notification-card img {

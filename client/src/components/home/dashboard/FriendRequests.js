@@ -1,25 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import FriendRequestCard from "./FriendRequestCard";
 import { Link } from "react-router-dom";
 import "./Notifications.css";
 
-function FriendRequests({ activeUser }) {
-	const [requests, setRequests] = useState([]);
-
-	useEffect(() => {
-		fetch(`/friend_requests/user/${activeUser.id}`)
-			.then((res) => {
-				if (res.ok) {
-					res.json().then((requests) => setRequests(requests));
-				} else {
-					res.json().then((data) => console.log(data))
-				}
-			})
-	}, [activeUser]);
+function FriendRequests({ activeUser, setFriendRequests, friendRequests }) {
 
 	return (
 		<div className="notifications-list">
-			{requests.map((request) => (
+			{friendRequests.map((request) => (
 				<Link
 					to={`/user/${request.requester.id}`}
 					key={request.id}
@@ -29,6 +17,7 @@ function FriendRequests({ activeUser }) {
 					/>
 				</Link>
 			))}
+			{friendRequests.length === 0 ? "No new requests . . ." : null}
 		</div>
 	);
 }
