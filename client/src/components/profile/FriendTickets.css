@@ -1,0 +1,35 @@
+#friend-tickets {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#friend-tickets-container {
+	background-color: var(--dark-red);
+	padding: 1rem;
+	width: 500px;
+	height: 550px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+#friend-tickets-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#friend-tickets #friend-tickets-list {
+	padding: 2rem 1rem;
+	background-color: var(--darkest-red);
+	overflow-y: scroll;
+	display: block;
+	height: 91%;
+}

@@ -11,11 +11,29 @@
 	padding: 0.5rem 0.5rem 0.5rem 0.5rem;
 }
 
+.notifications-header div {
+	background-color: white;
+	color: var(--bright-red);
+	font-size: 80%;
+	font-weight: bold;
+	border-radius: 50%;
+	width: 1.5rem;
+	height: 1.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.notifications-header .zero {
+	background-color: var(--bright-red);
+}
+
 .notifications-list {
 	padding: 0.5rem;
 	display: flex;
 	flex-direction: column;
 	row-gap: 0.5rem;
+	color: black;
 }
 
 .notifications a {

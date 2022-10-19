@@ -10,7 +10,7 @@ class FriendRequestsController < ApplicationController
 	def my_requests
 		user = User.find(user_params[:user_id])
 		requests = user.incoming_friend_requests
-		render json: requests, status: :ok
+		render json: requests.sort_by { |request| request[:created_at] }.reverse!
 	end
 
 	# Friend request declined

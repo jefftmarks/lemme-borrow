@@ -35,7 +35,7 @@ function Feed({ activeUser, onClickItem }) {
 						
 					/>
 				))}
-				{items.length % 10 !== 0 ? null : (
+				{items.length < 1 || items.length % 10 !== 0 ? null : (
 					<button onClick={handleIncrementCount}>
 						Show More
 					</button>

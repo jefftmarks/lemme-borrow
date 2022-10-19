@@ -38,6 +38,7 @@ Rails.application.routes.draw do
 
 	# Pending Tickets - Custom Controller
 	get "/pending_tickets/item/:item_id/user/:user_id", to: "pending_tickets#show"
+	get "/pending_tickets/user/:user_id/friend/:friend_id", to: "pending_tickets#between_friends"
 
 	# Messages
 	get "/messages/ticket/:ticket_id", to: "messages#ticket_messages"

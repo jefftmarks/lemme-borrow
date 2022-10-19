@@ -12,6 +12,7 @@ function App() {
 	const [user, setUser] = useState(null);
 	const [showSignup, setShowSignup] = useState(false);
 	const [showItem, setShowItem] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 
 	// ---------- Render Active User on Reload ----------
 
@@ -29,11 +30,14 @@ function App() {
 				if (res.ok) {
 					res.json().then((user) => {
 						setUser(user);
+						setIsLoading(false);
 					});
 				} else {
 					res.json().then((data) => console.log(data));
 				}
 			});
+		} else {
+			setIsLoading(false);
 		}
 	}, [user]);
 
@@ -64,6 +68,10 @@ function App() {
 					res.json().then((data) => console.log(data));
 				}
 			});
+	}
+
+	if (isLoading) {
+		return null;
 	}
 
   return (

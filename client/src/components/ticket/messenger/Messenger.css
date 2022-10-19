@@ -22,7 +22,10 @@
 }
 
 #messenger-header img {
-	width: 100%;
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+	object-position: center;
 	border-radius: 50%;
 	background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
 }

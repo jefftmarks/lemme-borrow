@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import EditProfile from "./EditProfile";
 import MyFriends from "./MyFriends";
+import FriendTickets from "./FriendTickets";
 import "./UserInfo.css";
 
 function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriending, setIsUnfriending, friends, setFriends, onClickAddItem }) {
 	const [showEditProfile, setShowEditProfile] = useState(false);
 	const [showFriends, setShowFriends] = useState(false);
+	const [showTickets, setShowTickets] = useState(false);
 
 	// ---------- Render Friends ----------
 
@@ -128,6 +130,9 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 				case "Friends":
 					return (
 						<div id="user-actions">
+							<button id="user-btn" onClick={() => setShowTickets(true)}>
+									Open Tickets
+								</button>
 							{isUnfriending ? (
 								<div id="unfriend-container">
 									<div>Are You Sure?</div>
@@ -192,6 +197,10 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 				friends={friends}
 				showFriends={showFriends}
 				setShowFriends={setShowFriends}
+			/>
+			<FriendTickets
+				showTickets={showTickets}
+				setShowTickets={setShowTickets}
 			/>
 			<div id="user-info">
 				<h3>{profile.is_active ? "My" : profile.user.first_name + "'s"} Cupboard</h3>

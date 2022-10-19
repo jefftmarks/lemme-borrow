@@ -3,23 +3,11 @@ import NotificationCard from "./NotificationCard";
 import { Link } from "react-router-dom";
 import "./Notifications.css";
 
-function ActiveLoans({ activeUser }) {
-	const [tickets, setTickets] = useState([]);
-
-	useEffect(() => {
-		fetch(`/tickets/loans/${activeUser.id}`)
-			.then((res) => {
-				if (res.ok) {
-					res.json().then((tickets) => setTickets(tickets));
-				} else {
-					res.json().then((data) => console.log(data))
-				}
-			})
-	}, [activeUser]);
+function ActiveLoans({ activeUser, loans, setLoans }) {
 
 	return (		
-		<div className="notifications-list">
-			{tickets.map((ticket) => (
+		<div className="notifications-list">	
+			{loans.map((ticket) => (
 				<Link
 					to={`/ticket/${ticket.id}`}
 					key={ticket.id}
@@ -29,6 +17,7 @@ function ActiveLoans({ activeUser }) {
 						status={"loan"}
 				/></Link>
 			))}
+			{loans.length === 0 ? "You're not lending any of your items . . . Don't be stingy!" : null}
 		</div>
 	);
 }

@@ -74,12 +74,18 @@ class ItemsController < ApplicationController
 	end
 
 	def recently_uploaded
-		items = Item.where.not(owner: @user).order(created_at: :desc)
+		items = [];
+
+		@user.friends.map do |friend|
+			friend.belongings.map do |item|
+				items.push(item);
+			end
+		end
 
 		# load 10 items to start
 		count = count_params[:count].to_i
 
-		render json: items[0..count]
+		render json: items.sort_by { |item| item[:created_at] }.reverse![0..count]
 	end
 
 	private
