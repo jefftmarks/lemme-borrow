@@ -1,0 +1,52 @@
+.profile-buttons h3 {
+	background-color: var(--bright-red);
+	padding: 0.5rem;
+	text-align: center;
+}
+
+.user-actions {
+	padding: 1rem;
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+	row-gap: 1rem;
+}
+
+.user-btn {
+	color: white;
+	background: var(--dark-gray);
+	border: none;
+	padding: 0.5rem;
+}
+
+.user-actions button:hover {
+	cursor: pointer;
+}
+
+.unfriend-container {
+	display: flex;
+}
+
+.unfriend-container div {
+	width: 60%;
+	text-align: center;
+	background-color: var(--dark-gray);
+	padding: 0.5rem;
+}
+
+.unfriend-container button {
+	color: black;
+	background: var(--basic-gray);
+	width: 20%;
+}
+
+.unfriend-container button.yes {
+	border-right: 1px solid var(--dark-gray);
+	border-top: none;
+	border-bottom: none;
+	border-left: none;
+}
+
+.unfriend-container button.no {
+	border: none;
+}

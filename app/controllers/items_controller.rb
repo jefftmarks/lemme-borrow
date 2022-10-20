@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
 	before_action :set_item, only: [:show, :status, :update, :destroy, :gift_item]
-	before_action :set_user, only: [:status, :my_belongings, :recently_uploaded, :gift_item, :destroy]
+	before_action :set_user, only: [:status, :recently_uploaded, :gift_item]
 	before_action :validate_tags, only: [:create, :update]
 	before_action :set_new_owner, only: [:gift_item]
 
@@ -59,18 +59,21 @@ class ItemsController < ApplicationController
 
 	def destroy
 		# You can't delete item if it is in borrowing process
-		if @item.owner == @user && @item.tickets.where(status: "requested").size > 0
-			render json: { error: "This item has been requested. Please close any pending tickets before deleting" } and return
-		elsif @item.status == "on loan"
-			render json: { error: "#{@item.borrower.first_name} is currently borrowing this item. You cannot delete until the item has been returned" } and return
+		if @item.tickets.size > 0
+			render json: { error: "Please close any pending tickets before deleting" }, status: :unauthorized
+		else
+			@item.destroy
+			render json: @item
 		end
-
-		@item.destroy
-		render json: @item
 	end
 
 	def my_belongings
-		render json: @user.belongings.order(created_at: :desc)
+		start = count_params[:count].to_i
+		finish = start + 9
+
+		items = @user.belongings.order(created_at: :desc)[start..finish]
+
+		render json: { items: items, total: @user.belongings.size }
 	end
 
 	def recently_uploaded
@@ -82,7 +85,6 @@ class ItemsController < ApplicationController
 			end
 		end
 
-		# load 10 items to start
 		count = count_params[:count].to_i
 
 		render json: items.sort_by { |item| item[:created_at] }.reverse![0..count]
@@ -106,12 +108,12 @@ class ItemsController < ApplicationController
 		@new_owner = User.find(params[:new_owner_id])
 	end
 
-	def count_params
-		params.permit(:count)
-	end
-
 	def tags_params
 		params.permit(:tags => [])
+	end
+
+	def count_params
+		params.permit(:count)
 	end
 
 	def validate_tags

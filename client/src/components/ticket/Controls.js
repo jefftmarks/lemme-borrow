@@ -32,7 +32,7 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 		return () => {
 			clearTimeout(resetDateForm);
 		}
-	});
+	}, [dateIsChanged] );
 
 	// ---------- Render Control Buttons ----------
 

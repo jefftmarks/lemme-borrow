@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import UserInfo from "./UserInfo";
-import Cupboard from "./Cupboard";
+import UserInfo from "./user/UserInfo";
+import Cupboard from "./cupboard/Cupboard";
 import "./Profile.css";
 
 function Profile({ activeUser, setActiveUser, onClickItem, onClickAddItem }) {
@@ -50,30 +50,30 @@ function Profile({ activeUser, setActiveUser, onClickItem, onClickAddItem }) {
 	}
 
 	return (
-		<div id="profile">
-			<div id="profile-container">
-				<div id="profile-header">
-					<div id="user-card">
-						<img id="profile-pic" src={profile.user.avatar} alt="avatar" />
-						<UserInfo
-							profile={profile}
-							setProfile={setProfile}
-							activeUser={activeUser}
-							setActiveUser={setActiveUser}
-							isUnfriending={isUnfriending}
-							setIsUnfriending={setIsUnfriending}
-							friends={friends}
-							setFriends={setFriends}
-							onClickAddItem={onClickAddItem}
-						/>
-					</div>
-					<div id="cupboard-search-container"></div>
+		<div className="profile">
+			<div className="profile-container">
+				<div className="profile-header">
+
+					<img src={profile.user.avatar} alt="avatar" />
+
+					<UserInfo
+						profile={profile}
+						setProfile={setProfile}
+						activeUser={activeUser}
+						setActiveUser={setActiveUser}
+						isUnfriending={isUnfriending}
+						setIsUnfriending={setIsUnfriending}
+						friends={friends}
+						setFriends={setFriends}
+						onClickAddItem={onClickAddItem}
+					/>
+
 				</div>
 				{profile.is_active || profile.friend_status.mode === "Friends" ? (
 					<Cupboard
 					profile={profile}
 					onClickItem={onClickItem}
-				/>
+					/>
 				) : null}
 			</div>
 		</div>

@@ -20,10 +20,8 @@ Rails.application.routes.draw do
 
 	# Friendships
 	get "/friendships/user/:user_id", to: "friendships#my_friends"
-	# delete "/friendships/user/:user_id/friend/:friend_id", to: "friendships#destroy"
 
 	# Items
-	get "/items/belongings/:user_id", to: "items#my_belongings"
 	get "/items/recent/:user_id/count/:count", to: "items#recently_uploaded"
 	patch "/items/:id/user/:user_id/to/:new_owner_id", to: "items#gift_item"
 
@@ -38,9 +36,11 @@ Rails.application.routes.draw do
 
 	# Pending Tickets - Custom Controller
 	get "/pending_tickets/item/:item_id/user/:user_id", to: "pending_tickets#show"
-	get "/pending_tickets/user/:user_id/friend/:friend_id", to: "pending_tickets#between_friends"
 
 	# Messages
 	get "/messages/ticket/:ticket_id", to: "messages#ticket_messages"
+
+	# Search
+	post "/items/belongings/:user_id", to: "searches#my_belongings"
  
 end
