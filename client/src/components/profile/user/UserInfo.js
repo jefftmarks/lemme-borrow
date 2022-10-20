@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import EditProfile from "./EditProfile";
-import MyFriends from "./MyFriends";
-import FriendTickets from "./FriendTickets";
+import MyFriends from "../friends/MyFriends";
 import "./UserInfo.css";
 
 function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriending, setIsUnfriending, friends, setFriends, onClickAddItem }) {
 	const [showEditProfile, setShowEditProfile] = useState(false);
 	const [showFriends, setShowFriends] = useState(false);
-	const [showTickets, setShowTickets] = useState(false);
 
 	// ---------- Render Friends ----------
 
@@ -113,14 +111,14 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 	function renderButtons() {
 		if (profile.is_active) {
 			return (
-				<div id="user-actions">
-					<button id="user-btn" onClick={onClickAddItem}>
+				<div className="user-actions">
+					<button className="user-btn" onClick={onClickAddItem}>
 						Add Item
 					</button>
-					<button id="user-btn" onClick={() => setShowEditProfile(true)}>
+					<button className="user-btn" onClick={() => setShowEditProfile(true)}>
 						Edit My Profile
 					</button>
-					<button id="user-btn" onClick={onClickShowFriends}>
+					<button className="user-btn" onClick={onClickShowFriends}>
 						My Friends
 					</button>
 				</div>
@@ -129,53 +127,50 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 			switch (profile.friend_status.mode) {
 				case "Friends":
 					return (
-						<div id="user-actions">
-							<button id="user-btn" onClick={() => setShowTickets(true)}>
-									Open Tickets
-								</button>
+						<div className="user-actions">
 							{isUnfriending ? (
-								<div id="unfriend-container">
+								<div className="unfriend-container">
 									<div>Are You Sure?</div>
-									<button id="unfriend-yes" onClick={handleUnfriend}>
+									<button className="yes" onClick={handleUnfriend}>
 										Yes
 									</button>
-									<button id="unfriend-no" onClick={() => setIsUnfriending(false)}>
+									<button className="no" onClick={() => setIsUnfriending(false)}>
 										No
 									</button>
 								</div>
 							) : (
-								<button id="user-btn" onClick={() => setIsUnfriending(true)}>
+								<button className="user-btn" onClick={() => setIsUnfriending(true)}>
 									Unfriend {profile.user.first_name}
 								</button>
 							)}
-							<button id="user-btn" onClick={onClickShowFriends}>
+							<button className="user-btn" onClick={onClickShowFriends}>
 								View {profile.user.first_name}'s' Friends
 							</button>
 						</div>
 					);
 				case "Pending Response":
 					return (
-						<div id="user-actions">
-							<button id="user-btn">
+						<div className="user-actions">
+							<button className="user-btn">
 								Friend Request Pending . . .
 							</button>
 						</div>
 					);
 				case "Pending Action":
 					return (
-						<div id="user-actions">
-							<button id="user-btn" onClick={handleAcceptFriendRequest}>
+						<div className="user-actions">
+							<button className="user-btn" onClick={handleAcceptFriendRequest}>
 								Accept {profile.user.first_name}'s Friend Request
 							</button>
-							<button id="user-btn" onClick={handleDeclineFriendRequest}>
+							<button className="user-btn" onClick={handleDeclineFriendRequest}>
 								Decline {profile.user.first_name}'s Friend Request
 							</button>
 						</div>
 					);
 				default:
 					return (
-						<div id="user-actions">
-							<button id="user-btn" onClick={handleSendFriendRequest}>
+						<div className="user-actions">
+							<button className="user-btn" onClick={handleSendFriendRequest}>
 								Friend {profile.user.first_name}
 							</button>
 						</div>
@@ -198,11 +193,7 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 				showFriends={showFriends}
 				setShowFriends={setShowFriends}
 			/>
-			<FriendTickets
-				showTickets={showTickets}
-				setShowTickets={setShowTickets}
-			/>
-			<div id="user-info">
+			<div className="profile-buttons">
 				<h3>{profile.is_active ? "My" : profile.user.first_name + "'s"} Cupboard</h3>
 				{renderButtons()}
 			</div>

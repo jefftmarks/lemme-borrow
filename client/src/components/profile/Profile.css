@@ -1,35 +1,31 @@
-#profile {
+.profile {
 	display: flex;
 	justify-content: center;
 	margin-top: 2rem;
 }
 
-#profile-container {
+.profile-container {
 	width: 85%;
 }
 
-#profile-header {
+.profile-header {
 	display: flex;
-	/* flex-wrap: wrap; */
+	column-gap: 2rem;
+	flex-wrap: wrap;
 }
 
-#user-card {
-	display: flex;
-	width: 40%;
-}
-
-#profile-pic {
+.profile-header img {
 	border-radius: 50%;
-	margin-right: 0.5rem;
-	width: 200px;
-	height: 200px;
+	width: 10%;
 	object-fit: cover;
 	object-position: center;
 	background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
 
 }
 
-#cupboard-search-container {
-	flex-grow: 1;
-	background-color: var(--basic-gray) ;
+.profile-buttons {
+	display: flex;
+	flex-direction: column;
+	background-color: var(--light-gray);
+	width: 25%;
 }

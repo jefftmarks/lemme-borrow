@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import NotificationCard from "./NotificationCard";
 import { Link } from "react-router-dom";
 import "./Notifications.css";
