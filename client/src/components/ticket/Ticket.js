@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"
+import { createConsumer } from "@rails/actioncable";
 import CommandCenter from "./CommandCenter";
 import Messenger from "./messenger/Messenger";
 import "./Ticket.css";
+
+// ---------- Action Cable: Create Consumer ----------
+
+function getWebSocketURL() {
+	const token = sessionStorage.getItem("jwt");
+	return `http://localhost:3000/cable?token=${token}`
+}
+
+const consumer = createConsumer(getWebSocketURL);
+
+// --------------------
 
 function Ticket({ activeUser }) {
 	const [isAuthorized, setIsAuthorized] = useState(false);
@@ -10,7 +22,23 @@ function Ticket({ activeUser }) {
 	const [isOwner, setIsOwner] = useState(false);
 	const [messages, setMessages] = useState([]);
 
+	const [channel, setChannel] = useState(null);
+
 	const params = useParams();
+
+	// ---------- Action Cable: Create Subscription ----------
+
+	useEffect(() => {
+		if (activeUser && ticket) {
+			const newChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: `Ticket_${ticket.id}` }, {
+				received(message) {
+					setMessages(oldMessages => [message, ...oldMessages]);
+				} 
+			})
+
+			setChannel(newChannel);
+		} 
+	}, [activeUser, ticket]);
 
 	// ---------- Render Ticket ----------
 
@@ -50,6 +78,8 @@ function Ticket({ activeUser }) {
 		}
 	}, [ticket]);
 
+	// ---------- Authorization and Page Rendering ----------
+
 	if (!isAuthorized) {
 		return <h1>Page Not Found</h1>
 	}
@@ -78,6 +108,7 @@ function Ticket({ activeUser }) {
 						ticket={ticket}
 						isOwner={isOwner}
 						activeUser={activeUser}
+						channel={channel}
 					/>
 				</div>
 			</div>

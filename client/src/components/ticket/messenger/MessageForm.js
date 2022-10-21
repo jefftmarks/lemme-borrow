@@ -1,33 +1,23 @@
 import React, { useState } from "react";
 import "./MessageForm.css";
 
-function MessageForm({ sender, receiver, ticket, onSendMessage}) {
-	const [message, setMessage] = useState("");
+function MessageForm({ sender, receiver, ticket, channel}) {
+	const [text, setText] = useState("");
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		fetch("/messages", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				sender_id: sender.id,
-				receiver_id: receiver.id,
-				ticket_id: ticket.id,
-				text: message,
-			})
-		})
-			.then((res) => {
-				if (res.ok) {
-					res.json().then((message) => {
-						onSendMessage(message);
-						setMessage("");
-					})
-				} else {
-					res.json().then((data) => console.log(data))
-				}
-			})
+
+		const newMessage = {
+			sender_id: sender.id,
+			receiver_id: receiver.id,
+			ticket_id: ticket.id,
+			text: text,
+			automated: false
+		}
+
+		channel.send(newMessage);
+
+		setText("");
 	}
 
 	return (
@@ -36,8 +26,8 @@ function MessageForm({ sender, receiver, ticket, onSendMessage}) {
 				required
 				type="text"
 				name="text"
-				onChange={(e) => setMessage(e.target.value)}
-				value={message}
+				onChange={(e) => setText(e.target.value)}
+				value={text}
 			/>
 			<button>SEND</button>
 		</form>

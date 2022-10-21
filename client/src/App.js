@@ -25,7 +25,7 @@ function App() {
 
 	// Grab active user via JWT token stored in local storage
 	useEffect(() => {
-		let token = sessionStorage.getItem("jwt");
+		const token = sessionStorage.getItem("jwt");
 		if (token && !user) {
 			fetch("/profile", {
 				headers: {

@@ -4,7 +4,7 @@ import MessageForm from "./MessageForm";
 import Message from "./Message";
 import "./Messenger.css";
 
-function Messenger({ ticket, messages, setMessages, isOwner, activeUser }) {
+function Messenger({ ticket, messages, setMessages, isOwner, activeUser, channel }) {
 	const [left, setLeft] = useState({});
 	const [right, setRight] = useState({});
 
@@ -19,10 +19,6 @@ function Messenger({ ticket, messages, setMessages, isOwner, activeUser }) {
 			setRight(ticket.owner);
 		}
 	}, [ticket, isOwner]);
-
-	function handleUpdateMessages(message) {
-		setMessages([message, ...messages]);
-	}
 
 	return (
 		<div id="messenger">
@@ -57,7 +53,7 @@ function Messenger({ ticket, messages, setMessages, isOwner, activeUser }) {
 				sender={left}
 				receiver={right}
 				ticket={ticket}
-				onSendMessage={handleUpdateMessages}
+				channel={channel}
 			/>
 		</div>
 	);
