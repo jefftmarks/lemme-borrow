@@ -6,7 +6,7 @@ import CreateItem from "./CreateItem";
 import ItemTickets from "./ItemTickets";
 import "./ItemDisplay.css";
 
-function ItemDisplay({ showItem, setShowItem, activeUser}) {
+function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuery }) {
 	const [isLoading, setIsLoading] = useState(true)
 	const [tickets, setTickets] = useState([]);
 	
@@ -86,6 +86,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser}) {
 						setShowItem={setShowItem}
 						activeUser={activeUser}
 						tickets={tickets}
+						handleClickTag={handleClickTag}
 					/>
 				);
 		}
@@ -115,6 +116,14 @@ function ItemDisplay({ showItem, setShowItem, activeUser}) {
 				</button>
 			);
 		}
+	}
+
+	// ---------- Trigger Search When Tag Clicked ----------
+
+	function handleClickTag(tag) {
+		setShowItem({item: null, mode: ""});
+		setQuery(tag);
+		setShowSearch({ show: true, mode: "items"});
 	}
 	
 	// ---------- Conditionally Render Item Modal ----------

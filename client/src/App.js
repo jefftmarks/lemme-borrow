@@ -16,8 +16,7 @@ function App() {
 
 	const [showItem, setShowItem] = useState(false);
 
-	const [showSearch, setShowSearch] = useState(false);
-	const [searchInput, setSearchInput] = useState("");
+	const [showSearch, setShowSearch] = useState({show: false, mode: ""});
 	const [query, setQuery] = useState("");
 
 	const [isLoading, setIsLoading] = useState(true);
@@ -77,20 +76,13 @@ function App() {
 
 	// ---------- Render Search Display ----------
 
-	useEffect(() => {
+	function handleSearch(searchInput) {
 		if (searchInput !== "") {
-			const delayedSearch = setTimeout(() => {
-				setShowSearch(true);
-				setQuery(searchInput);
-				document.getElementById("nav-search-input").blur();
-				document.getElementById("search-display-input").focus();
-			}, 500);
-	
-			return () => {
-				clearTimeout(delayedSearch);
-			}
+			setShowSearch({show: true, mode: "users"});
+			setQuery(searchInput);
+			document.getElementById("nav-search-input").blur();
 		}
-	}, [searchInput]);
+	}
 
 	if (isLoading) {
 		return null;
@@ -102,11 +94,12 @@ function App() {
 				setShowItem={setShowItem}
 				showItem={showItem}
 				activeUser={user}
+				setShowSearch={setShowSearch}
+				setQuery={setQuery}
 			/>
 			<SearchDisplay
 				showSearch={showSearch}
 				setShowSearch={setShowSearch}
-				resetSearch={setSearchInput}
 				query={query}
 				setQuery={setQuery}
 				activeUser={user}
@@ -121,8 +114,7 @@ function App() {
 				user={user}
 				setUser={setUser}
 				setShowSignup={setShowSignup}
-				searchInput={searchInput}
-				setSearchInput={setSearchInput}
+				onSearch={handleSearch}
 			/>
 			<Routes>
 				<Route

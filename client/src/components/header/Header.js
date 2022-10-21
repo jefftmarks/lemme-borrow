@@ -4,7 +4,7 @@ import Login from "./Login";
 import Nav from "./Nav";
 import "./Header.css";
 
-function Header({ user, setUser, searchInput, setSearchInput, setShowSignup }) {
+function Header({ user, setUser, onSearch, setShowSignup }) {
 
 	function renderNavbar() {
 		if (user) {
@@ -12,8 +12,7 @@ function Header({ user, setUser, searchInput, setSearchInput, setShowSignup }) {
 				<Nav
 					user={user}
 					setUser={setUser}
-					searchInput={searchInput}
-					setSearchInput={setSearchInput}
+					onSearch={onSearch}
 				/>
 			)
 		} else {

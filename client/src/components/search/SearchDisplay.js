@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import "./SearchDisplay.css";
 
-function SearchDisplay({ showSearch, setShowSearch, resetSearch, query, setQuery, onClickItem, activeUser }) {
+function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem, activeUser }) {
 	const [searchInput, setSearchInput] = useState("");
-	const [showUsers, setShowUsers] = useState(true);
 	const [users, setUsers] = useState([]);
 	const [items, setItems] = useState([]);
 	const [isLoading, setisLoading] = useState(false);
@@ -14,32 +13,35 @@ function SearchDisplay({ showSearch, setShowSearch, resetSearch, query, setQuery
 	// ---------- Perform Search Based on Users or Items ----------
 
 	useEffect(() => {
-		setSearchInput(query);
-		setisLoading(true);
-		fetch(`/${showUsers ? "users" : "items"}/search/${activeUser.id}`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				query: query
+		if (showSearch.show) {
+			setisLoading(true);
+			setSearchInput(query)
+			document.getElementById("search-display-input").focus();
+			fetch(`/${showSearch.mode === "users" ? "users" : "items"}/search/${activeUser.id}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					query: query
+				})
 			})
-		})
-			.then((res) => {
-				if (res.ok) {
-					res.json().then((data) => {
-						setisLoading(false);
-						if (showUsers) {
-							setUsers(data);
-						} else {
-							setItems(data);
-						}
-					});
-				} else {
-					res.json().then((users) => console.log(users));
-				}
-			});
-	}, [query, activeUser, showUsers]);
+				.then((res) => {
+					if (res.ok) {
+						res.json().then((data) => {
+							setisLoading(false);
+							if (showSearch.mode === "users") {
+								setUsers(data);
+							} else if (showSearch.mode === "items") {
+								setItems(data);
+							}
+						});
+					} else {
+						res.json().then((users) => console.log(users));
+					}
+				});
+		}
+	}, [query, activeUser, showSearch]);
 
 	// ---------- Delayed Search on Input Change ----------
 
@@ -51,12 +53,12 @@ function SearchDisplay({ showSearch, setShowSearch, resetSearch, query, setQuery
 		return () => {
 			clearTimeout(delayedSearch);
 		} 
-	}, [searchInput]);
+	}, [searchInput, setQuery]);
 
 	// ---------- Render Search Results ----------
 
 	function renderSearchResults() {
-		if (showUsers) {
+		if (showSearch.mode === "users") {
 			return (
 				users.map((user) => (
 					<Link
@@ -71,7 +73,7 @@ function SearchDisplay({ showSearch, setShowSearch, resetSearch, query, setQuery
 					</Link>
 				))
 			)
-		} else {
+		} else if (showSearch.mode === "items") {
 			return (
 				items.map((item) => (
 					<SearchResult
@@ -91,9 +93,7 @@ function SearchDisplay({ showSearch, setShowSearch, resetSearch, query, setQuery
 	function onClickEx() {
 		setUsers([]);
 		setItems([]);
-		resetSearch("");
-		setShowSearch(false);
-		setShowUsers(true);
+		setShowSearch({show: false, mode: ""});
 	}
 	
 	function handleClickResult(id) {
@@ -101,7 +101,7 @@ function SearchDisplay({ showSearch, setShowSearch, resetSearch, query, setQuery
 		onClickItem(id);
 	}
 
-	if (!showSearch) {
+	if (!showSearch.show) {
 		return null;
 	}
 
@@ -126,14 +126,14 @@ function SearchDisplay({ showSearch, setShowSearch, resetSearch, query, setQuery
 					</form>
 					<div>
 						<button
-							className={`search-filter search-${showUsers}`}
-							onClick={() => setShowUsers(true)}
+							className={`search-filter search-${showSearch.mode === "users"}`}
+							onClick={() => setShowSearch({show: true, mode: "users"})}
 						>
 							Users
 						</button>
 						<button
-							className={`search-filter search-${!showUsers}`}
-							onClick={() => setShowUsers(false)}
+							className={`search-filter search-${showSearch.mode === "items"}`}
+							onClick={() => setShowSearch({show: true, mode: "items"})}
 						>
 							Items
 						</button>

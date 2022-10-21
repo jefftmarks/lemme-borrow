@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./ItemInfo.css";
 
-function ItemInfo({ item, setShowItem, activeUser, tickets }) {
+function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	const { id, name, description, image, status, tags, owner, borrower} = item;
@@ -15,10 +15,10 @@ function ItemInfo({ item, setShowItem, activeUser, tickets }) {
 			// ITEM HAS NO ACTIVE TICKETS ASSOCIATED WITH YOU
 			if (tickets.length < 1) {
 				return (
-					<div id="item-status-bar">
-						<p id="item-status">Item is Currently in Your Cupboard</p>
+					<div className="item-status-bar">
+						<p className="item-status">Item is Currently in Your Cupboard</p>
 						<button
-							id="status-btn"
+							className="status-btn"
 							onClick={() => setShowItem({item: item, mode: "edit"})}
 						>
 							Edit Item
@@ -29,7 +29,7 @@ function ItemInfo({ item, setShowItem, activeUser, tickets }) {
 			} else {
 				const message = status === "home" ? "in Your Cupboard" : `Being Borrowed by ${borrower.first_name}`
 				return (
-					<div id="item-status-bar">
+					<div className="item-status-bar">
 						Item is Currently {message}
 					</div>
 				);
@@ -37,7 +37,7 @@ function ItemInfo({ item, setShowItem, activeUser, tickets }) {
 		// ITEM IS NOT YOURS
 		} else {
 			return (
-				<div id="item-status-bar">
+				<div className="item-status-bar">
 					<Link
 						to={`/user/${owner.id}`}
 						onClick={() => setShowItem({ item: null, mode: "" })}
@@ -76,14 +76,14 @@ function ItemInfo({ item, setShowItem, activeUser, tickets }) {
 			// And no active tikets
 			if (tickets.length < 1) {
 				return (
-					<div id="delete-item">
+					<div className="delete-item">
 						{isDeleting ? (
-							<button id="delete-item-2" onClick={handleDelete}>
+							<button className="delete-item-2" onClick={handleDelete}>
 								Confirm Delete
 							</button>
 						) : (
 							<button
-								id="delete-item-1"
+								className="delete-item-1"
 								onClick={() => setIsDeleting(true)}
 							>
 								Delete Item?
@@ -93,8 +93,8 @@ function ItemInfo({ item, setShowItem, activeUser, tickets }) {
 				);
 			} else {
 				return (
-					<div id="delete-item">
-						<p id="delete-item-1">You Cannot Edit or Delete Item with Pending Tickets</p>
+					<div className="delete-item">
+						<p className="delete-item-1">You Cannot Edit or Delete Item with Pending Tickets</p>
 					</div>
 				);
 			}
@@ -102,20 +102,24 @@ function ItemInfo({ item, setShowItem, activeUser, tickets }) {
 	}
 
 	return (
-		<div id="item-info">
+		<div className="item-info">
 			{renderStatusBar()}
-			<div id="item-image-container">
-				<img id="item-front-image" src={image} alt={name} />
-				<div id="item-image-blur" style={{backgroundImage: `url("${image}")`}}>
+			<div className="item-image-container">
+				<img className="item-front-image" src={image} alt={name} />
+				<div className="item-image-blur" style={{backgroundImage: `url("${image}")`}}>
 					<img src={image} alt={name} />
 				</div>
 			</div>
 			<p>{description}</p>
 			<div className="tag-display">
 				{tags.map((tag) => (
-					<div className="tag-card" key={tag}>
+					<button
+						className="tag-card"
+						key={tag}
+						onClick={() => handleClickTag(tag)}
+					>
 						{tag}
-					</div>
+					</button>
 				))}
 			</div>
 			{renderDeleteButton()}

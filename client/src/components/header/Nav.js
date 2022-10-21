@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import "./Nav.css";
 
-function Nav({ user, setUser, searchInput, setSearchInput }) {
+function Nav({ user, setUser, onSearch }) {
+	const [searchInput, setSearchInput] = useState("");
 
 	// ---------- Logout ----------
 
@@ -13,6 +14,12 @@ function Nav({ user, setUser, searchInput, setSearchInput }) {
 		sessionStorage.clear();
 		setUser(null);
 		navigate("/");
+	}
+
+	function handleSubmit(e) {
+		e.preventDefault();
+		onSearch(searchInput);
+		setSearchInput("");
 	}
 
 	return (
@@ -25,7 +32,7 @@ function Nav({ user, setUser, searchInput, setSearchInput }) {
 			</div>
 
 			<div className="nav-search">
-				<form>
+				<form onSubmit={handleSubmit}>
 				<input
 					id="nav-search-input"
 					type="text"
