@@ -42,5 +42,7 @@ Rails.application.routes.draw do
 
 	# Search
 	post "/items/belongings/:user_id", to: "searches#my_belongings"
+	post "/users/search/:user_id", to: "searches#search_users"
+	post "/items/search/:user_id", to: "searches#search_items"
  
 end

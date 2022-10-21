@@ -4,7 +4,7 @@ import Login from "./Login";
 import Nav from "./Nav";
 import "./Header.css";
 
-function Header({ user, setUser, setShowSignup }) {
+function Header({ user, setUser, searchInput, setSearchInput, setShowSignup }) {
 
 	function renderNavbar() {
 		if (user) {
@@ -12,6 +12,8 @@ function Header({ user, setUser, setShowSignup }) {
 				<Nav
 					user={user}
 					setUser={setUser}
+					searchInput={searchInput}
+					setSearchInput={setSearchInput}
 				/>
 			)
 		} else {
@@ -25,11 +27,9 @@ function Header({ user, setUser, setShowSignup }) {
 	}
 
 	return (
-		<header id="header">
+		<header className="header">
 			<Link to="/"><h1>Logo</h1></Link>
-			<div id="navbar">
-				{renderNavbar()}
-			</div>
+			{renderNavbar()}
 		</header>
 	);
 }

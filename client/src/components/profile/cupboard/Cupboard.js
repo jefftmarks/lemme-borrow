@@ -20,7 +20,7 @@ function Cupboard({ profile, onClickItem }) {
 		}, 500);
 
 		return () => {
-			clearInterval(delayedSearch);
+			clearTimeout(delayedSearch);
 		} 
 	}, [searchInput]);
 

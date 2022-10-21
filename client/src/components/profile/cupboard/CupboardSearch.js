@@ -43,7 +43,7 @@ function CupboardSearch({ total, count, setCount, sort, setSort, setQuery, searc
 				/>
 				<button className="search-icon"><AiOutlineSearch/></button>
 				</form>
-				<button onClick={onClickClear}>Clearn Search</button>
+				<button onClick={onClickClear}>Clear Search</button>
 			</div>
 			<div className="cupboard-sort">
 				<select

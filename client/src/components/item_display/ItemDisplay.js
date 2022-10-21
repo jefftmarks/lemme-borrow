@@ -142,14 +142,3 @@ function ItemDisplay({ showItem, setShowItem, activeUser}) {
 }
 
 export default ItemDisplay;
-
-// --------------------------------------------------
-
-// case "gift":
-// 				return (
-// 					<GiftItem
-// 						item={item}
-// 						setShowItem={setShowItem}
-// 						activeUser={activeUser}
-// 					/>
-// 				);

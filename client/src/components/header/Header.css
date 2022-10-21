@@ -1,24 +1,15 @@
-#header {
-  padding: 1rem;
+.header {
+  padding: 1rem 2rem;
 	background-color: var(--dark-red);
   display: flex;
   justify-content: space-between;
   align-content: center;
 }
 
-#header a {
+.header a {
 	color: white;
 }
 
-#header a:hover {
+.header a:hover {
 	cursor: pointer;
 }
-
-/* #header * {
-  margin: 0 0.5rem;
-} */
-
-#navbar {
-	border: 1px solid white;
-}
-

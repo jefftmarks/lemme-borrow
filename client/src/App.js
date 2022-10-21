@@ -5,19 +5,27 @@ import Home from "./components/home/Home";
 import Welcome from "./components/welcome/Welcome";
 import SignUp from "./components/welcome/SignUp";
 import ItemDisplay from "./components/item_display/ItemDisplay";
+import SearchDisplay from "./components/search/SearchDisplay";
 import Profile from "./components/profile/Profile";
 import Ticket from "./components/ticket/Ticket";
 
 function App() {
 	const [user, setUser] = useState(null);
+
 	const [showSignup, setShowSignup] = useState(false);
+
 	const [showItem, setShowItem] = useState(false);
+
+	const [showSearch, setShowSearch] = useState(false);
+	const [searchInput, setSearchInput] = useState("");
+	const [query, setQuery] = useState("");
+
 	const [isLoading, setIsLoading] = useState(true);
 
 	// ---------- Render Active User on Reload ----------
 
+	// Grab active user via JWT token stored in local storage
 	useEffect(() => {
-		// Grab active via JWT token stored in local storage
 		let token = sessionStorage.getItem("jwt");
 		if (token && !user) {
 			fetch("/profile", {
@@ -41,7 +49,7 @@ function App() {
 		}
 	}, [user]);
 
-	// Render element for home path depending on whether or not user is logged in
+	// Render home dashboard if active user, otherwise load welcome page
 	function renderElement() {
 		return user ? (
 			<Home
@@ -51,7 +59,7 @@ function App() {
 		) : <Welcome />;
 	}
 
-	// ---------- Render Display Item ----------
+	// ---------- Render Item Display ----------
 
 	function handleClickItem(id) {
 		setShowItem(true);
@@ -59,16 +67,30 @@ function App() {
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((item) => {
-						setShowItem({
-							item: item,
-							mode: ""
-						});
+						setShowItem({item: item, mode: ""});
 					});
 				} else {
 					res.json().then((data) => console.log(data));
 				}
 			});
 	}
+
+	// ---------- Render Search Display ----------
+
+	useEffect(() => {
+		if (searchInput !== "") {
+			const delayedSearch = setTimeout(() => {
+				setShowSearch(true);
+				setQuery(searchInput);
+				document.getElementById("nav-search-input").blur();
+				document.getElementById("search-display-input").focus();
+			}, 500);
+	
+			return () => {
+				clearTimeout(delayedSearch);
+			}
+		}
+	}, [searchInput]);
 
 	if (isLoading) {
 		return null;
@@ -81,6 +103,15 @@ function App() {
 				showItem={showItem}
 				activeUser={user}
 			/>
+			<SearchDisplay
+				showSearch={showSearch}
+				setShowSearch={setShowSearch}
+				resetSearch={setSearchInput}
+				query={query}
+				setQuery={setQuery}
+				activeUser={user}
+				onClickItem={handleClickItem}
+			/>
 			<SignUp
 				showSignup={showSignup}
 				setShowSignup={setShowSignup}
@@ -90,6 +121,8 @@ function App() {
 				user={user}
 				setUser={setUser}
 				setShowSignup={setShowSignup}
+				searchInput={searchInput}
+				setSearchInput={setSearchInput}
 			/>
 			<Routes>
 				<Route
