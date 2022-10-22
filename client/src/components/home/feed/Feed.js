@@ -2,9 +2,39 @@ import React, { useEffect, useState } from "react";
 import FeedCard from "./FeedCard";
 import "./Feed.css";
 
+// ---------- Action Cable: Create Consumer ----------
+
+import { createConsumer } from "@rails/actioncable";
+
+function getWebSocketURL() {
+	const token = sessionStorage.getItem("jwt");
+	return `http://localhost:3000/cable?token=${token}`
+}
+
+const consumer = createConsumer(getWebSocketURL);
+
+// --------------------
+
 function Feed({ activeUser, onClickItem }) {
 	const [items, setItems] = useState([]);
 	const [count, setCount] = useState(9);
+	const [channel, setChannel] = useState(null);
+
+	// ---------- Action Cable: Create Subscription ----------
+
+	useEffect(() => {
+		if (activeUser) {
+			const newChannel = consumer.subscriptions.create({ channel: "FeedChannel", user_id: activeUser.id }, {
+				received(item) {
+					setItems(oldItems => [item, ...oldItems.slice(0, -1)]);
+				} 
+			});
+			setChannel(newChannel);
+		} 
+	}, [activeUser]);
+
+
+	// ---------- Grab 10 Most Recent Items ----------
 
 	useEffect(() => {
 		fetch(`/items/recent/${activeUser.id}/count/${count}`)

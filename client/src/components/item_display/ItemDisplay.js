@@ -75,8 +75,8 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 			case "add":
 				return (
 					<CreateItem
-						setShowItem={setShowItem}
 						activeUser={activeUser}
+						setShowItem={setShowItem}
 					/>
 				);
 			default:
