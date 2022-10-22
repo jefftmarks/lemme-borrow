@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./CreateItem.css";
 
+// ---------- Action Cable: Create Consumer ----------
+
+import { createConsumer } from "@rails/actioncable";
+
+function getWebSocketURL() {
+	const token = sessionStorage.getItem("jwt");
+	return `http://localhost:3000/cable?token=${token}`
+}
+
+const consumer = createConsumer(getWebSocketURL);
+
+// --------------------
+
 const initialState = {
 	name: "",
 	image: "",
@@ -11,11 +24,22 @@ const initialState = {
 function CreateItem({ setShowItem, activeUser }) {
 	const [formData, setFormData] = useState(initialState);
 	const [tagCards, setTagCards] = useState([]);
+	const [channel, setChannel] = useState(null);
 
-	function handleChange(e) {
-		const { value, name } = e.target;
-		setFormData({...formData, [name]: value});
-	}
+	// ---------- Action Cable: Create Subscription ----------
+
+	useEffect(() => {
+		if (activeUser) {
+			const newChannel = consumer.subscriptions.create({ channel: "FeedChannel", user_id: activeUser.id }, {
+				received(item) {
+					setShowItem({item: item, mode: ""});
+					setFormData(initialState);
+				} 
+			});
+			setChannel(newChannel);
+		} 
+	}, [activeUser, setShowItem]);
+	
 
 	// ---------- Render Tag Cards to Confirm Correct Format ----------
 
@@ -40,45 +64,29 @@ function CreateItem({ setShowItem, activeUser }) {
 
 	// ---------- Submit ----------
 
-	function handleSubmit(e) {
-		e.preventDefault();
-		fetch("/items/", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				...formData,
-				tags: tagCards,
-				owner_id: activeUser.id,
-			}),
-		})
-			.then((res) => {
-				if (res.ok) {
-					res.json().then((item) => {
-						setShowItem({item: item, mode: ""});
-						setFormData(initialState);
-					})
-				} else {
-					res.json().then((data) => console.log(data));
-				}
-			});
+	function handleChange(e) {
+		const { value, name } = e.target;
+		setFormData({...formData, [name]: value});
 	}
 
-	// ---------- Prevent Refresh ----------
-
-	function onClickBack(e) {
+	function handleSubmit(e) {
 		e.preventDefault();
-		setShowItem({item: null, mode: ""});
+
+		const newItem = {
+			name: formData.name,
+			image: formData.image,
+			description: formData.description,
+			owner_id: activeUser.id,
+			status: "home"
+		}
+
+		channel.send({item: newItem, tags: tagCards});
 	}
 
 	return (
 		<div className="edit-item">
 			<div className="edit-item-header">
 				<p>Create Item</p>
-				<button onClick={onClickBack}>
-					Back
-				</button>
 			</div>
 			<form className="edit-item-form" onSubmit={handleSubmit}>
 				<label>Item Name:

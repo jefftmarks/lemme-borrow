@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"
-import { createConsumer } from "@rails/actioncable";
 import CommandCenter from "./CommandCenter";
 import Messenger from "./messenger/Messenger";
 import "./Ticket.css";
 
 // ---------- Action Cable: Create Consumer ----------
+
+import { createConsumer } from "@rails/actioncable";
 
 function getWebSocketURL() {
 	const token = sessionStorage.getItem("jwt");
@@ -21,7 +22,6 @@ function Ticket({ activeUser }) {
 	const [ticket, setTicket] = useState(null);
 	const [isOwner, setIsOwner] = useState(false);
 	const [messages, setMessages] = useState([]);
-
 	const [channel, setChannel] = useState(null);
 
 	const params = useParams();
@@ -30,12 +30,11 @@ function Ticket({ activeUser }) {
 
 	useEffect(() => {
 		if (activeUser && ticket) {
-			const newChannel = consumer.subscriptions.create({ channel: "ChatChannel", room: `Ticket_${ticket.id}` }, {
+			const newChannel = consumer.subscriptions.create({ channel: "TicketChannel", ticket_id: ticket.id }, {
 				received(message) {
 					setMessages(oldMessages => [message, ...oldMessages]);
 				} 
-			})
-
+			});
 			setChannel(newChannel);
 		} 
 	}, [activeUser, ticket]);

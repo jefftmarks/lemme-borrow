@@ -11,14 +11,10 @@ import Ticket from "./components/ticket/Ticket";
 
 function App() {
 	const [user, setUser] = useState(null);
-
 	const [showSignup, setShowSignup] = useState(false);
-
 	const [showItem, setShowItem] = useState(false);
-
 	const [showSearch, setShowSearch] = useState({show: false, mode: ""});
 	const [query, setQuery] = useState("");
-
 	const [isLoading, setIsLoading] = useState(true);
 
 	// ---------- Render Active User on Reload ----------
@@ -69,7 +65,7 @@ function App() {
 						setShowItem({item: item, mode: ""});
 					});
 				} else {
-					res.json().then((data) => console.log(data));
+					res.json().then((data) => alert(data.error));
 				}
 			});
 	}
