@@ -15,6 +15,7 @@
 	width: 500px;
 	padding: 1em 1.5em;
 	border-radius: 5px;
+	margin: 0 2em;
 }
 
 .signup-header {
@@ -32,8 +33,12 @@
 	color: var(--maximum-green-yellow);
 }
 
+.signup-header svg:hover {
+	cursor: pointer;
+}
+
 .signup form {
-	padding: 1em 0.5em 0.5em 0;
+	padding: 1em 0.5em;
 	display: flex;
 	flex-direction: column;
 	row-gap: 1em;
@@ -43,7 +48,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	color: black;
+	color: var(--speed-cadet);
 }
 
 .signup input, .signup button {
@@ -70,6 +75,7 @@
 
 .signup button:hover {
 	background-color: var(--baby-pink);
+	border: 2px solid var(--speed-cadet);
 }
 
 .signup .errors {
@@ -81,7 +87,7 @@
 	line-height: 1.5rem;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 445px) {
 	.signup label {
 		flex-direction: column;
 		row-gap: 1em;
@@ -89,5 +95,11 @@
 
 	.signup input {
 		width: 100%;
+	}
+}
+
+@media( max-width: 372px) {
+	.signup-header p {
+		line-height: 2.5rem;
 	}
 }

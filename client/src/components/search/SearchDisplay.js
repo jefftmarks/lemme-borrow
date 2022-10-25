@@ -9,13 +9,16 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 	const [searchInput, setSearchInput] = useState("");
 	const [users, setUsers] = useState([]);
 	const [items, setItems] = useState([]);
-	const [isLoading, setisLoading] = useState(false);
 
 	// ---------- Perform Search Based on Users or Items ----------
 
+	function handleSubmit(e) {
+		e.preventDefault();
+		setQuery(searchInput);
+	}
+
 	useEffect(() => {
 		if (showSearch.show) {
-			setisLoading(true);
 			setSearchInput(query)
 			document.getElementById("search-display-input").focus();
 			fetch(`/${showSearch.mode === "users" ? "users" : "items"}/search/${activeUser.id}`, {
@@ -30,7 +33,6 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 				.then((res) => {
 					if (res.ok) {
 						res.json().then((data) => {
-							setisLoading(false);
 							if (showSearch.mode === "users") {
 								setUsers(data);
 							} else if (showSearch.mode === "items") {
@@ -59,7 +61,7 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 	// ---------- Render Search Results ----------
 
 	function renderSearchResults() {
-		if (showSearch.mode === "users") {
+		if (showSearch.mode === "users" && users.length > 0) {
 			return (
 				users.map((user) => (
 					<Link
@@ -74,7 +76,7 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 					</Link>
 				))
 			)
-		} else if (showSearch.mode === "items") {
+		} else if (showSearch.mode === "items" && items.length > 0) {
 			return (
 				items.map((item) => (
 					<SearchResult
@@ -84,6 +86,10 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 						onClickResult={handleClickResult}
 					/>
 				))
+			);
+		} else {
+			return (
+				<p style={{color: "var(--speed-cadet"}}>no results . . .</p>
 			);
 		}
 	}
@@ -117,39 +123,46 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 					/>
 				</div>
 
-				<div className="search-bar">
-					<form>
-						<input
-							type="text"
-							id="search-display-input"
-							value={searchInput}
-							placeholder="Search by User, Item Name or Tag"
-							onChange={(e) => setSearchInput(e.target.value)}
-						/>
-						<button className="search-icon"><AiOutlineSearch/></button>
-					</form>
-					<div>
-						<button
-							className={`search-filter search-${showSearch.mode === "users"}`}
-							onClick={() => setShowSearch({show: true, mode: "users"})}
-						>
-							Users
-						</button>
-						<button
-							className={`search-filter search-${showSearch.mode === "items"}`}
-							onClick={() => setShowSearch({show: true, mode: "items"})}
-						>
-							Items
-						</button>
-					</div>
-				</div>
-				
-				<div className="search-results">
-					<div className="results-container">
-						{isLoading ? "Loading . . ." : renderSearchResults()}
-					</div>
-				</div>
+				<div className="search-body">
+					<div className="search-bar">
+						<form onSubmit={handleSubmit}>
+							<input
+								type="text"
+								id="search-display-input"
+								value={searchInput}
+								placeholder={`search by ${showSearch.mode === "users" ? "user" : "item or tag"}`}
+								onChange={(e) => setSearchInput(e.target.value)}
+							/>
+							<button className="search-icon">
+								<AiOutlineSearch/>
+							</button>
+						</form>
 
+						<div className="filter">
+							<div className="filter-btns">
+								<button
+									className={`search-${showSearch.mode === "users"} ${showSearch.mode}`}
+									onClick={() => setShowSearch({show: true, mode: "users"})}
+								>
+									Users
+								</button>
+								<button
+									className={`search-${showSearch.mode === "items"} ${showSearch.mode}`}
+									onClick={() => setShowSearch({show: true, mode: "items"})}
+								>
+									Items
+								</button>
+							</div>
+							<div className="filter-bottom"></div>
+						</div>
+
+					</div>
+					
+					<div className="search-results">
+						{renderSearchResults()}
+					</div>
+
+				</div>
 			</div>
 		</div>
 	);

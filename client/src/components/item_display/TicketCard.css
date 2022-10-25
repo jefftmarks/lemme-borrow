@@ -1,10 +1,27 @@
 .ticket-card {
-	color: black;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
+.ticket-card p {
+	color: var(--speed-cadet);
+	width: 70%;
+}
+
+.ticket-card button {
+	font-family: comfortaa-bold;
+	font-weight: bolder;
+	font-size: 0.8rem;
+	border: 2px solid #f4ca41;
+	border-radius: 5px;
+	padding: 0.6em 1.25em;
+	color: var(--speed-cadet);
+	font-weight: bolder;
+	background-color: #fbe28f;
+}
+
+/* 
 .ticket-card button {
 	color: white;
 	background-color: var(--bright-red);
@@ -14,4 +31,4 @@
 
 .ticket-card button:hover {
 	cursor: pointer;
-}
+} */

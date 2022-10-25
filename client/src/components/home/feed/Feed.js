@@ -54,8 +54,6 @@ function Feed({ activeUser, onClickItem }) {
 		setCount(count => count + 10)
 	}
 
-	console.log(items);
-
 	return (
 		<div className="feed">
 			<div className="feed-container">

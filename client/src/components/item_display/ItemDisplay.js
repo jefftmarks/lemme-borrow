@@ -4,6 +4,7 @@ import ItemInfo from "./ItemInfo";
 import EditItem from "./EditItem";
 import CreateItem from "./CreateItem";
 import ItemTickets from "./ItemTickets";
+import { MdCancel } from "react-icons/md";
 import "./ItemDisplay.css";
 
 function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuery }) {
@@ -109,10 +110,10 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 		} else if (activeUser.id !== item.owner.id) {
 			return (
 				<button
-					id="lemme-borrow-button"
+					className="lemme-borrow-btn"
 					onClick={handleCreateTicketRequest}
 				>
-					lemme borrow!
+					lemme borrow !
 				</button>
 			);
 		}
@@ -133,17 +134,18 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 	}
 
 	return (
-		<div id="item-display">
+		<div className="item-display">
 			{isLoading && mode !== "add" ? null : (
-				<div id="item-display-container">
-				<div id="item-display-header">
-					<h2>{mode === "add" ? "Add a New Item to Your Cupboard" : item.name}</h2>
-					<span onClick={() => setShowItem({item: null, mode: ""})}>
-						X
-					</span>
-				</div>
-				{renderDisplay()}
-				{renderBorrowActions()}
+				<div className="item-display-container">
+					<div className="item-display-header">
+						<p>{mode === "add" ? "Add a New Item to Your Cupboard" : item.name}</p>
+						<MdCancel
+						onClick={() => setShowItem({item: null, mode: ""})}
+						size="27"
+						/>
+					</div>
+					{renderDisplay()}
+					{renderBorrowActions()}
 			</div>
 			)}
 		</div>

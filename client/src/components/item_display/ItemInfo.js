@@ -10,22 +10,21 @@ function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 	// ---------- If Your Belonging, Render CRUD Options ----------
 
 	function renderStatusBar() {
-		// ITEM IS YOURS
+		// Item is yours
 		if (activeUser.id === owner.id) {
-			// ITEM HAS NO ACTIVE TICKETS ASSOCIATED WITH YOU
+			// Item has no active tickets associated with you
 			if (tickets.length < 1) {
 				return (
 					<div className="item-status-bar">
-						<p className="item-status">Item is Currently in Your Cupboard</p>
+						<p>Item is Currently in Your Cupboard</p>
 						<button
-							className="status-btn"
 							onClick={() => setShowItem({item: item, mode: "edit"})}
 						>
 							Edit Item
 						</button>
 					</div>
 				)
-			// ITEM HAS ACTIVE TICKETS ASSOCIATED WITH YOU
+			// Item has active tickets associated with you
 			} else {
 				const message = status === "home" ? "in Your Cupboard" : `Being Borrowed by ${borrower.first_name}`
 				return (
@@ -34,19 +33,18 @@ function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 					</div>
 				);
 			}
-		// ITEM IS NOT YOURS
+		// Item is not yours
 		} else {
 			return (
-				<div className="item-status-bar">
-					<Link
-						to={`/user/${owner.id}`}
+				<Link to={`/user/${owner.id}`}>
+					<div
+						className="user-card"
 						onClick={() => setShowItem({ item: null, mode: "" })}
-					>
-						<img src={owner.avatar} alt="avatar"
-						/>
-					</Link>
-					<p>Item Belongs to {owner.first_name}</p>
-				</div>
+					>	
+						<div><img src={owner.avatar} alt="avatar" /></div>
+						<p>Belongs to: {owner.first_name} {owner.last_name}</p>
+					</div>
+				</Link>
 			);
 
 		}
@@ -76,20 +74,20 @@ function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 			// And no active tikets
 			if (tickets.length < 1) {
 				return (
-					<div className="delete-item">
+					<>
 						{isDeleting ? (
-							<button className="delete-item-2" onClick={handleDelete}>
+							<button className="delete-item delete-2" onClick={handleDelete}>
 								Confirm Delete
 							</button>
 						) : (
 							<button
-								className="delete-item-1"
+								className="delete-item delete-1"
 								onClick={() => setIsDeleting(true)}
 							>
 								Delete Item?
 							</button>
 						)}
-					</div>	
+					</>
 				);
 			} else {
 				return (
@@ -103,18 +101,21 @@ function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 
 	return (
 		<div className="item-info">
+
 			{renderStatusBar()}
+
 			<div className="item-image-container">
 				<img className="item-front-image" src={image} alt={name} />
 				<div className="item-image-blur" style={{backgroundImage: `url("${image}")`}}>
 					<img src={image} alt={name} />
 				</div>
 			</div>
-			<p>{description}</p>
+
+			<p className="description">{description}</p>
+
 			<div className="tag-display">
 				{tags.map((tag) => (
 					<button
-						className="tag-card"
 						key={tag}
 						onClick={() => handleClickTag(tag)}
 					>
@@ -122,6 +123,7 @@ function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 					</button>
 				))}
 			</div>
+
 			{renderDeleteButton()}
 		</div>
 	);

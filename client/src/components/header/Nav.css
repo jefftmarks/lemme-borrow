@@ -31,6 +31,10 @@
 	width: 300px;
 }
 
+.nav input:focus {
+	outline: none;
+}
+
 .nav button {
 	padding: 0.5em 1.25em;
 	font-size: 1rem;
@@ -66,5 +70,11 @@
 	.nav form {
 		border: none;
 		padding: none;
+	}
+}
+
+@media (max-width: 390px) {
+	.nav input {
+		width: 100%;
 	}
 }
