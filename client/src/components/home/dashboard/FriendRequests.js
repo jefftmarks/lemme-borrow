@@ -1,12 +1,12 @@
 import React from "react";
 import FriendRequestCard from "./FriendRequestCard";
 import { Link } from "react-router-dom";
-import "./Notifications.css";
+import "./Dashboard.css";
 
-function FriendRequests({ activeUser, setFriendRequests, friendRequests }) {
+function FriendRequests({ friendRequests }) {
 
 	return (
-		<div className="notifications-list">
+		<>
 			{friendRequests.map((request) => (
 				<Link
 					to={`/user/${request.requester.id}`}
@@ -17,8 +17,7 @@ function FriendRequests({ activeUser, setFriendRequests, friendRequests }) {
 					/>
 				</Link>
 			))}
-			{friendRequests.length === 0 ? "No new requests . . ." : null}
-		</div>
+		</>
 	);
 }
 

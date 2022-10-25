@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MdCancel } from "react-icons/md";
 import "./SignUp.css";
 
 const initialState = {
@@ -12,7 +13,8 @@ const initialState = {
 }
 
 function SignUp({ showSignup, setShowSignup, setUser }) {
-	const [formData, setFormData] = useState(initialState)
+	const [formData, setFormData] = useState(initialState);
+	const [errors, setErrors] = useState([]);
 
 	function handleChange(e) {
 		const { name, value } = e.target;
@@ -37,7 +39,7 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 						setUser(data.user);
 					});
 				} else {
-					res.json().then((data) => console.log(data));
+					res.json().then((data) => setErrors(data.errors));
 				}
 			})
 	}
@@ -48,68 +50,78 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 	}
 
 	return (
-		<div id="signup">
-			<form id="signup-form" onSubmit={handleSubmit}>
-				<div id="signup-header">
-					<h2>Create Account</h2>
-					<span onClick={() => setShowSignup(false)}>X</span>
+		<div className="signup">
+			<div className="signup-container">
+				<div className="signup-header">
+					<p>Create Account</p>
+					<MdCancel
+						onClick={() => setShowSignup(false)}
+						size="27"
+					/>
 				</div>
-				<label>First Name:
-						<input
-						required
-						type="text"
-						name="first_name"
-						onChange={handleChange}
-						value={formData.first_name}
-						/>
-					</label>
-					<label>Last Name:
-						<input
-						required
-						type="text"
-						name="last_name"
-						onChange={handleChange}
-						value={formData.last_name}
-						/>
-					</label>
-					<label>Email:
-						<input
-						required
-						type="email"
-						name="email"
-						onChange={handleChange}
-						value={formData.email}
-						/>
-					</label>
-					<label>Username:
-						<input
-						required
-						type="text"
-						name="username"
-						onChange={handleChange}
-						value={formData.username}
-						/>
-					</label>
-					<label>Password:
-						<input
-						required
-						type="password"
-						name="password"
-						onChange={handleChange}
-						value={formData.password}
-						/>
-					</label>
-					<label>Confirm Password:
-						<input
-						required
-						type="password"
-						name="password_confirmation"
-						onChange={handleChange}
-						value={formData.password_confirmation}
-						/>
-					</label>
-					<button>Sign Up</button>
-			</form>
+				<form onSubmit={handleSubmit}>
+					<label>First Name:
+							<input
+							required
+							type="text"
+							name="first_name"
+							onChange={handleChange}
+							value={formData.first_name}
+							/>
+						</label>
+						<label>Last Name:
+							<input
+							required
+							type="text"
+							name="last_name"
+							onChange={handleChange}
+							value={formData.last_name}
+							/>
+						</label>
+						<label>Email:
+							<input
+							required
+							type="email"
+							name="email"
+							onChange={handleChange}
+							value={formData.email}
+							/>
+						</label>
+						<label>Username:
+							<input
+							required
+							type="text"
+							name="username"
+							onChange={handleChange}
+							value={formData.username}
+							/>
+						</label>
+						<label>Password:
+							<input
+							required
+							type="password"
+							name="password"
+							onChange={handleChange}
+							value={formData.password}
+							/>
+						</label>
+						<label>Confirm Password:
+							<input
+							required
+							type="password"
+							name="password_confirmation"
+							onChange={handleChange}
+							value={formData.password_confirmation}
+							/>
+						</label>
+						<button>Sign Up</button>
+						<ul className="errors">
+							{errors.map((error) => (
+								<li key={error}>{error}</li>
+							))}
+						</ul>
+				</form>
+			</div>
 		</div>
 	);
 }
