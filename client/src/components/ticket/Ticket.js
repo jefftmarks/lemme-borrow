@@ -29,15 +29,15 @@ function Ticket({ activeUser }) {
 	// ---------- Action Cable: Create Subscription ----------
 
 	useEffect(() => {
-		if (activeUser && ticket) {
+		if (ticket) {
 			const newChannel = consumer.subscriptions.create({ channel: "TicketChannel", ticket_id: ticket.id }, {
 				received(message) {
-					setMessages(oldMessages => [message, ...oldMessages]);
+					setMessages(messages => [message, ...messages]);
 				} 
 			});
 			setChannel(newChannel);
 		} 
-	}, [activeUser, ticket]);
+	}, [ticket]);
 
 	// ---------- Render Ticket ----------
 

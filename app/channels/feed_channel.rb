@@ -38,7 +38,7 @@ class FeedChannel < ApplicationCable::Channel
 				id: item.id,
 				name: item.name,
 				image: item.image,
-				owner_first_name: item.owner.first_name
+				owner: item.owner
 			}
 
 		current_user.friends.each do |friend|

@@ -9,7 +9,4 @@ class TicketChannel < ApplicationCable::Channel
     ActionCable.server.broadcast("ticket_#{params[:ticket_id]}", message)
   end
 
-  def unsubscribed
-  end
-
 end

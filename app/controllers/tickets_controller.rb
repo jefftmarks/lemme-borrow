@@ -122,11 +122,12 @@ class TicketsController < ApplicationController
 
 	# Get active user's items currently on loan
 	def active_loans
-		tickets = @user.lending_tickets.where(status: "on loan")
+		loaning = @user.lending_tickets.where(status: "on loan")
+		approved = @user.lending_tickets.where(status: "approved")
 		
 		payload = []
 
-		tickets.each do |ticket|
+		loaning.each do |ticket|
 
 			if ticket.return_date != ""
 				ticket.update!(overdue: ticket.is_overdue(ticket.return_date))
@@ -138,10 +139,24 @@ class TicketsController < ApplicationController
 				{
 					id: ticket.id,
 					image: ticket.item.image,
-					message: "#{ticket.borrower.first_name} is borrowing your item: #{ticket.item.name}",
+					message: "#{ticket.borrower.first_name} is borrowing your item: #{ticket.item.name}. Return Date: #{ticket.formatted_return_date}.",
 					overdue: ticket.overdue,
 					return_date: ticket.return_date,
 					status: "active"
+				}
+			)
+		end
+
+		approved.each do |ticket|
+
+			payload.push(
+				{
+					id: ticket.id,
+					image: ticket.item.image,
+					message: "You PROMISED to let #{ticket.borrower.first_name} borrow your item: #{ticket.item.name}",
+					overdue: ticket.overdue,
+					return_date: ticket.return_date,
+					status: "pending"
 				}
 			)
 		end
@@ -168,7 +183,7 @@ class TicketsController < ApplicationController
 				{
 					id: ticket.id,
 					image: ticket.item.image,
-					message: "#{ticket.owner.first_name}'s #{ticket.item.name}",
+					message: "#{ticket.owner.first_name}'s item: #{ticket.item.name}. Return Date: #{ticket.formatted_return_date}.",
 					overdue: ticket.overdue,
 					return_date: ticket.return_date,
 					status: "active"
@@ -182,7 +197,7 @@ class TicketsController < ApplicationController
 				{
 					id: ticket.id,
 					image: ticket.item.image,
-					message: "#{ticket.owner.first_name} APPROVED your request to borrow #{ticket.item.name}",
+					message: "#{ticket.owner.first_name} APPROVED your request to borrow their item: #{ticket.item.name}. Let us know when you've received the item.",
 					overdue: ticket.overdue,
 					return_date: ticket.return_date,
 					status: "approved"

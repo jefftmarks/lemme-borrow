@@ -10,6 +10,10 @@
 	justify-content: center;
 }
 
+#edit-profile input {
+	color: black;
+}
+
 #edit-profile-form {
 	background-color: var(--dark-red);
 	width: 500px;

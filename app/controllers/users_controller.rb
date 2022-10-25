@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 			end
 			render json: @user, status: :accepted
 		else
-			render json: { error: "Invalid username or password" }, status: :unauthorized
+			render json: { error: "invalid username or password" }, status: :unauthorized
 		end
 	end
 
@@ -38,7 +38,6 @@ class UsersController < ApplicationController
 		head :no_content
 	end
 
-	# For signup
 	def create
 		user = User.create!(**user_params, avatar: Faker::Avatar.image)
 		token = generate_token(user.id)
@@ -51,7 +50,7 @@ class UsersController < ApplicationController
 			token = generate_token(user.id)
 			render json: { user: UserSerializer.new(user), token: token }, status: :created
 		else
-			render json: { error: "Invalid username or password" }, status: :unauthorized
+			render json: { error: "invalid username or password" }, status: :unauthorized
 		end
 	end
 

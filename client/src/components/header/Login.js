@@ -5,6 +5,7 @@ const initialState = { username: "", password: "" };
 
 function Login({ setUser, setShowSignup }) {
 	const [formData, setFormData] = useState(initialState);
+	const [error, setError] = useState(null);
 
 	function handleChange(e) {
 		const { name, value } = e.target;
@@ -13,7 +14,6 @@ function Login({ setUser, setShowSignup }) {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		// setErrors([]);
 		fetch("/login", {
 			method: "POST",
 			headers: {
@@ -29,17 +29,15 @@ function Login({ setUser, setShowSignup }) {
 						setUser(data.user);
 					});
 				} else {
-					res.json().then((data) => {
-						console.log(data);
-						// setErrors...
-					});
+					res.json().then((data) => setError(data.error));
 				}
 			})
 	}
 
 	return (
-		<div id="login">
-			<form id="login-form" onSubmit={handleSubmit}>
+		<div className="login">
+			{error ? <p>{error}</p> : null}
+			<form onSubmit={handleSubmit}>
 				<input
 					type="text"
 					required

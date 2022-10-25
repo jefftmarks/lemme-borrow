@@ -1,13 +1,12 @@
 import React from "react";
 import NotificationCard from "./NotificationCard";
 import { Link } from "react-router-dom";
-import "./Notifications.css";
+import "./Dashboard.css";
 
-function ActiveBorrows({ activeUser, borrows, setBorrows }) {
+function ActiveBorrows({ borrows }) {
 
 	return (		
-		<div className="notifications-list">
-			{borrows.length === 0 ? "You're not borrowing any items . . . Why not?" : null}
+		<>
 			{borrows.map((ticket) => (
 				<Link
 					to={`/ticket/${ticket.id}`}
@@ -17,8 +16,7 @@ function ActiveBorrows({ activeUser, borrows, setBorrows }) {
 						ticket={ticket}
 				/></Link>
 			))}
-			{borrows.length === 0 ? "You're not borrowing any items . . . Why not?" : null}
-		</div>
+		</>
 	);
 }
 

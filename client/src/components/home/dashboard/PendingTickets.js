@@ -1,12 +1,12 @@
 import React from "react";
 import NotificationCard from "./NotificationCard";
 import { Link } from "react-router-dom";
-import "./Notifications.css";
+import "./Dashboard.css";
 
-function PendingTickets({ activeUser, setPendingTickets, pendingTickets }) {
+function PendingTickets({ pendingTickets }) {
 
 	return (		
-		<div className="notifications-list">
+		<>
 			{pendingTickets.map((ticket) => (
 				<Link
 					to={`/ticket/${ticket.id}`}
@@ -15,10 +15,10 @@ function PendingTickets({ activeUser, setPendingTickets, pendingTickets }) {
 					<NotificationCard 
 						ticket={ticket}
 						status={"pending"}
-				/></Link>
+					/>
+				</Link>
 			))}
-			{pendingTickets.length === 0 ? "No pending tickets . . ." : null}
-		</div>
+		</>
 	);
 }
 

@@ -7,8 +7,8 @@ function FriendRequestCard({ request }) {
 
 	return (
 		<div className="notification-card friend-request-card">
-			<img src={requester.avatar} alt="item" />
-			{requester.first_name} {requester.last_name} wants to be your friend!
+			<div className="img-div"><img src={requester.avatar} alt="item" /></div>
+			<p>{requester.first_name} {requester.last_name} wants to be your friend!</p>
 		</div>
 	);
 }

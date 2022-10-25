@@ -1,22 +1,53 @@
-#login {
-	height: 100%;
-	padding: 0.5rem;
+.login {
 	display: flex;
+	flex-wrap: wrap;
+	column-gap: 1.25em;
+	row-gap: 1em;
 	align-items: center;
 }
 
-#login-form *, #login span {
-	margin: 0 0.5rem;
+.login form {
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: 1em;
+	row-gap: 1em;
 }
 
-#login span {
+.login input, .login button {
+	font-size: 1rem;
+	border: none;
+	border-radius: 5px;
+}
+
+.login button, .login span {
+	padding: 0.5em 1.25em;
+}
+
+.login span {
+	border-left: 1px solid white;
+}
+
+.login input {
+	color: black;
+	padding: 0.5em;
+}
+
+.login button {
+	color: var(--speed-cadet);
+	font-weight: bolder;
+	background-color: var(--maximum-green-yellow);
+}
+
+.login button:hover {
+	background-color: var(--baby-pink);
+}
+
+.login span:hover {
 	text-decoration: underline;
 }
 
-#login-form button:hover {
-	cursor: pointer;
-}
-
-#login span:hover {
-	cursor: pointer;
+@media (max-width: 759px) {
+	.login span {
+		border: none;
+	}
 }

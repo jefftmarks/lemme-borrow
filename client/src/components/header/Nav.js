@@ -25,24 +25,23 @@ function Nav({ user, setUser, onSearch }) {
 	return (
 		<div className="nav">
 
-			<div className="nav-btns">
+			<div className="nav-links">
 				<Link to={"/"}>Dashboard</Link>
-				<Link to={`/user/${user.id}`}>Profile</Link>
-				<button onClick={handleLogout}>Sign Out</button>
+				<Link to={`/user/${user.id}`}>Cupboard</Link>
 			</div>
 
-			<div className="nav-search">
-				<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit}>
 				<input
 					id="nav-search-input"
 					type="text"
 					value={searchInput}
-					placeholder="Search by User, Item Name or Tag"
+					placeholder="search by user, item name or tag"
 					onChange={(e) => setSearchInput(e.target.value)}
 				/>
-				<button className="search-icon"><AiOutlineSearch/></button>
-				</form>
-			</div>
+				<button><AiOutlineSearch/></button>
+			</form>
+
+			<button className="signout" onClick={handleLogout}>Sign Out</button>
 		</div>
 	);
 }

@@ -1,32 +1,56 @@
+/* COLOR SCHEME */
+
 :root {
-	--darkest-red: #630b0b;
-  --dark-red: #890D0D;
-  --primary-red: #9c0f0f;
-  --bright-red: #e21111;
-
-	--dark-gray: #a9a8a8;
-	--basic-gray: #D9D9D9;
-	--light-gray: #F5F5F5;
-
-	--light-yellow: #eaae17;
+	/* --light-yellow: #eaae17;
 	--light-green: #9ec38b;
 	--light-red: #ed7878;
 	--light-blue: #5e7dd3;
-	--light-purple: #b389c9;
+	--light-purple: #b389c9; */
+	/* PRIMARY */
+	--dark-red: #9c0f0f;
+	--maximum-red: #E21111;
+	--speed-cadet: #212738;
+	--maximum-green-yellow: #e4e943;
+	--cultured: #EDF2EF;
+	--baby-pink: #FFCACA;
+	--light-gray: #e8e8e8;
+}
+
+
+/* FONTS */
+
+@font-face {
+	font-family: comfortaa-light;
+	src: url("./fonts/Comfortaa-Light.ttf");
+}
+
+@font-face {
+	font-family: comfortaa-regular;
+	src: url("./fonts/Comfortaa-Regular.ttf");
+}
+
+@font-face {
+	font-family: comfortaa-bold;
+	src: url("./fonts/Comfortaa-Bold.ttf");
 }
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+	color: white;
+	font-family: comfortaa-regular
 }
 
 body {
-	background-color: var(--primary-red);
+	background-color: var(--cultured);
 }
 
 .App {
-	background-color: var(--primary-red);
+	background-color: var(--cultured);
   min-height: 100vh;
-	color: white;
+}
+
+button:hover {
+	cursor: pointer;
 }

@@ -19,6 +19,7 @@ function Feed({ activeUser, onClickItem }) {
 	const [items, setItems] = useState([]);
 	const [count, setCount] = useState(9);
 	const [channel, setChannel] = useState(null);
+	const [showHeader, setShowHeader] = useState(true);
 
 	// ---------- Action Cable: Create Subscription ----------
 
@@ -47,29 +48,33 @@ function Feed({ activeUser, onClickItem }) {
 			})
 	}, [count, activeUser]);
 
+	// ---------- Pagination ----------
+
 	function handleIncrementCount() {
 		setCount(count => count + 10)
 	}
 
+	console.log(items);
+
 	return (
-		<div id="feed">
-			<div id="feed-header">
-				<h1>New Items From Your Friends</h1>
-			</div>
-			<div id="feed-list">
-				{items.map((item) => (
-					<FeedCard
-						key={item.id}
-						item={item}
-						onClickItem={onClickItem}
-						
-					/>
-				))}
-				{items.length < 1 || items.length % 10 !== 0 ? null : (
-					<button onClick={handleIncrementCount}>
-						Show More
-					</button>
-				)}
+		<div className="feed">
+			<div className="feed-container">
+				{showHeader ? <p className="feed-header">New Items From Your Friends</p> : null }
+				<div className="feed-list">
+					{items.map((item) => (
+						<FeedCard
+							key={item.id}
+							item={item}
+							onClickItem={onClickItem}
+							
+						/>
+					))}
+					{items.length < 1 || items.length % 10 !== 0 ? null : (
+						<button onClick={handleIncrementCount}>
+							Show More
+						</button>
+					)}
+				</div>
 			</div>
 		</div>
 	);

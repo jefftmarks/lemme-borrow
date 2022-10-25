@@ -1,7 +1,5 @@
 class ItemSerializer < ActiveModel::Serializer
-  attributes :id, :name, :image, :owner_first_name
+  attributes :id, :name, :image
 
-	def owner_first_name
-		self.object.owner.first_name
-	end
+	belongs_to :owner
 end

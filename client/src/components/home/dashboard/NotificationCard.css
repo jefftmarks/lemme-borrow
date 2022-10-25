@@ -1,29 +1,39 @@
 .notification-card {
-	padding: 0.5rem;
+	padding: 0 0.7em;
 	display: flex;
-	border-radius: 100px;
+	border-radius: 999px;
 	align-items: center;
-	column-gap: 1rem;
+	column-gap: 0.7em;
+	font-weight: bolder;
+}
+
+.notification-card p {
+	color: var(--speed-cadet);
 }
 
 .friend-request-card {
-	background-color: var(--light-blue);
+	background: linear-gradient(to right, #beeafc 20%, #7cbdff 100%);
 }
 
 .friend-request-card img {
 	background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
 }
 
-.overdue-true {
-	background-color: var(--light-red);
-}
-
 .pending, .approved {
-	background-color: var(--light-purple);
+	background: linear-gradient(to right, #fbe28f 20%, #f4ca41 100%);
 }
 
 .active.overdue-false {
-	background-color: var(--light-green);
+	background: linear-gradient(to right, #d4fcb2 20%, #92e945 100%);
+}
+
+.overdue-true {
+	background: linear-gradient(to right, #f6c0c0 20%, #f36c6c 100%);
+}
+
+.notification-card .img-div {
+	height: 50px;
+	margin: 0.7em 0;
 }
 
 .notification-card img {
@@ -34,9 +44,9 @@
 	border: 2px solid white;
 }
 
-.notifcation-info {
+.notification-info {
+	margin: 1em 0;
 	display: flex;
 	flex-direction: column;
-	width: 100%;
 	row-gap: 0.5rem;
 }

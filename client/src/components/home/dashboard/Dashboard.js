@@ -5,8 +5,8 @@ import ActiveLoans from	"./ActiveLoans";
 import PendingTickets from "./PendingTickets";
 import { GoTriangleUp} from "react-icons/go";
 import { GoTriangleDown} from "react-icons/go";
+import { MdNotifications } from "react-icons/md";
 import "./Dashboard.css";
-import "./Notifications.css";
 
 function Dashboard({ activeUser }) {
 	const [friendRequests, setFriendRequests] = useState([]);
@@ -82,94 +82,98 @@ function Dashboard({ activeUser }) {
 	}, [activeUser]);
 
 	return (
-		<div id="dashboard">
+		<div className="dashboard">
+
+			<p className="dashboard-header">Dashboard</p>
+
 			<div className="notifications">
-				<div className="notifications-header">
+
+				<div className={`notifications-header ${showFriendRequests}`}>
 					<div className={friendRequests.length === 0 ? "zero" : null}>
-						{friendRequests.length}
+						<MdNotifications />{friendRequests.length}
 					</div>
-					<h3>Friend Requests</h3>
+					<p>Friend Requests</p>
 					{showFriendRequests ? (
-						<GoTriangleDown onClick={() => setShowFriendRequests(false)} />
+						<GoTriangleDown className="arrow" onClick={() => setShowFriendRequests(false)} />
 					) : (
-						<GoTriangleUp onClick={() => setShowFriendRequests(true)} />
+						<GoTriangleUp className="arrow" onClick={() => setShowFriendRequests(true)} />
 					)}
 				</div>
+
 				{showFriendRequests ? (
-					<FriendRequests
-						activeUser={activeUser}
-						setFriendRequests={setFriendRequests}
-						friendRequests={friendRequests}
-					/>
+					<div className="notifications-list">
+						<FriendRequests
+							friendRequests={friendRequests}
+						/>
+					</div>
 				) : null}
 			</div>
-			{showFriendRequests ? null : <div className="gray-divider"></div>}
 
 			<div className="notifications">
-				<div className="notifications-header">
+			<div className={`notifications-header ${showPendingTickets}`}>
 				<div className={pendingTickets.length === 0 ? "zero" : null}>
-						{pendingTickets.length}
+					<MdNotifications />{pendingTickets.length}
 					</div>
-					<h3>Pending Tickets</h3>
+					<p>Pending Tickets</p>
 					{showPendingTickets ? (
-						<GoTriangleDown onClick={() => setShowPendingTickets(false)} />
+						<GoTriangleDown className="arrow" onClick={() => setShowPendingTickets(false)} />
 					) : (
-						<GoTriangleUp onClick={() => setShowPendingTickets(true)} />
+						<GoTriangleUp className="arrow" onClick={() => setShowPendingTickets(true)} />
 					)}
 				</div>
+
 				{showPendingTickets ? (
-					<PendingTickets
-						activeUser={activeUser}
-						setPendingTickets={setPendingTickets}
-						pendingTickets={pendingTickets}
-					/>
+					<div className="notifications-list">
+						<PendingTickets
+							pendingTickets={pendingTickets}
+						/>
+					</div>
 				) : null}
 			</div>
-			{showPendingTickets ? null : <div className="gray-divider"></div>}
 
 			<div className="notifications">
-				<div className="notifications-header">
+			<div className={`notifications-header ${showBorrows}`}>
 					<div className={borrows.length === 0 ? "zero" : null}>
-						{borrows.length}
+						<MdNotifications />{borrows.length}
 					</div>
-					<h3>Items You're Currently Borrowing</h3>
+					<p>Items You're Currently Borrowing</p>
 					{showBorrows ? (
-						<GoTriangleDown onClick={() => setShowBorrows(false)} />
+						<GoTriangleDown className="arrow" onClick={() => setShowBorrows(false)} />
 					) : (
-						<GoTriangleUp onClick={() => setShowBorrows(true)} />
+						<GoTriangleUp className="arrow" onClick={() => setShowBorrows(true)} />
 					)}
 				</div>
-				{showBorrows ? (
-					<ActiveBorrows
-						activeUser={activeUser}
-						setBorrows={setBorrows}
-						borrows={borrows}
-					/>
-				) : null}
+
+					{showBorrows ? (
+						<div className="notifications-list">
+							<ActiveBorrows
+								borrows={borrows}
+							/>
+						</div>
+					) : null}
 			</div>
-			{showBorrows ? null : <div className="gray-divider"></div>}
 
 			<div className="notifications">
-				<div className="notifications-header">
+			<div className={`notifications-header ${showLoans}`}>
 					<div className={loans.length === 0 ? "zero" : null}>
-						{loans.length}
+						<MdNotifications />{loans.length}
 					</div>
-					<h3>Your Items Currently on Loan</h3>
+					<p>Your Items Currently on Loan</p>
 					{showLoans ? (
-						<GoTriangleDown onClick={() => setShowLoans(false)} />
+						<GoTriangleDown className="arrow" onClick={() => setShowLoans(false)} />
 					) : (
-						<GoTriangleUp onClick={() => setShowLoans(true)} />
+						<GoTriangleUp className="arrow" onClick={() => setShowLoans(true)} />
 					)}
 				</div>
-				{showLoans ? (
-					<ActiveLoans
-						activeUser={activeUser}
-						setLoans={setLoans}
-						loans={loans}
-					/>
-				) : null}
+				
+					{showLoans ? (
+						<div className="notifications-list">
+							<ActiveLoans
+								loans={loans}
+							/>
+						</div>
+					) : null}
 			</div>
-			{showLoans ? null : <div className="gray-divider"></div>}
 		</div>
 	);
 }
