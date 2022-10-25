@@ -5,14 +5,14 @@
 	background-color: white;
 	padding: 0.7em;
 	border-radius: 5px;
+	border: 2px solid var(--cultured-dark);
 	display: flex;
 	flex-direction: column;
 	row-gap: 0.7em;
 }
 
 .dashboard .dashboard-header {
-	background-color: var(--dark-red);
-	padding: 0.6em 1.25em;
+	color: var(--maximum-red);
 	border-radius: 5px;
 	text-align: center;
 	font-size: 1.8rem;
@@ -21,7 +21,7 @@
 
 .notifications-header {
 	font-size: 1.2rem;
-	background-color: var(--maximum-red);
+	background-color: var(--speed-cadet);
 	display: flex;
 	justify-content: space-between;
 	padding: 0.6rem 0.5rem;
@@ -42,12 +42,8 @@
 	margin-right: -0.75em;
 }
 
-.notifications-header .zero {
-	color: var(--maximum-red);
-}
-
-.notifications-header .zero svg path {
-	color: var(--maximum-red);
+.notifications-header .zero, .notifications-header .zero svg path {
+	color: var(--speed-cadet);
 }
 
 .notifications-list {
@@ -55,7 +51,7 @@
 	display: flex;
 	flex-direction: column;
 	row-gap: 0.7em;
-	background: var(--light-gray);
+	border: 3px solid var(--speed-cadet);
 	border-radius: 0 0 5px 5px;
 	color: var(--speed-cadet);
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SearchResult from "./SearchResult";
 import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
+import { MdCancel } from "react-icons/md";
 import "./SearchDisplay.css";
 
 function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem, activeUser }) {
@@ -109,8 +110,11 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 		<div className="search-display">
 			<div className="search-display-container">
 				<div className="search-display-header">
-					<h2>Search Results</h2>
-					<span onClick={onClickEx}>X</span>
+					<p>Search Results</p>
+					<MdCancel
+						onClick={onClickEx}
+						size="27"
+					/>
 				</div>
 
 				<div className="search-bar">

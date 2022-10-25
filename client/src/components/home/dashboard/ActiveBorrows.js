@@ -16,6 +16,9 @@ function ActiveBorrows({ borrows }) {
 						ticket={ticket}
 				/></Link>
 			))}
+			{borrows.length === 0 ? (
+				<span style={{fontSize: "1rem", color: "var(--speed-cadet"}}>&bull; &bull; &bull;</span>
+			) : null}
 		</>
 	);
 }

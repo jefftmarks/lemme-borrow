@@ -14,7 +14,7 @@
 
 .feed-header {
 	background-color: var(--maximum-red);
-	box-shadow: 0px 1px 2px #888888;
+	border: 2px solid var(--dark-red);
 	padding: 0.8em 1.25em;
 	border-radius: 5px;
 	text-align: center;
@@ -38,7 +38,8 @@
 	padding: 1em 1.25em;
 	color: white;
 	font-weight: bolder;
-	background-color: var(--speed-cadet);
+	background-color: var(--maximum-red);
+	border: 2px solid var(--dark-red);
 }
 
 .feed-list button:hover {

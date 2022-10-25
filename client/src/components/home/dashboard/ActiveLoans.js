@@ -17,6 +17,9 @@ function ActiveLoans({ loans }) {
 						status={"loan"}
 				/></Link>
 			))}
+			{loans.length === 0 ? (
+				<span style={{fontSize: "1rem", color: "var(--speed-cadet"}}>&bull; &bull; &bull;</span>
+			) : null}
 		</>
 	);
 }

@@ -1,6 +1,7 @@
 .feed-card {
 	background-color: white;
 	border-radius: 20px;
+	border: 2px solid var(--cultured-dark);
 	display: flex;
 	flex-direction: column;
 	padding: 0.7em;
