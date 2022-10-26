@@ -18,6 +18,9 @@ function PendingTickets({ pendingTickets }) {
 					/>
 				</Link>
 			))}
+			{pendingTickets.length === 0 ? (
+				<span style={{fontSize: "1rem", color: "var(--speed-cadet"}}>&bull; &bull; &bull;</span>
+			) : null}
 		</>
 	);
 }

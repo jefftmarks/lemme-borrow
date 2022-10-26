@@ -1,52 +1,157 @@
-.profile-buttons h3 {
-	background-color: var(--bright-red);
-	padding: 0.5rem;
-	text-align: center;
-}
-
-.user-actions {
-	padding: 1rem;
+.user-info {
+	width: 20%;
+	max-width: 600px;
+	background-color: var(--cultured-medium);
+	align-self: flex-start;
 	display: flex;
-	height: 100%;
 	flex-direction: column;
-	row-gap: 1rem;
+	align-items: center;
+	row-gap: 1em;
+	border-radius: 20px;
+	border: 2px solid var(--cultured-dark);
+	padding: 1em 0.7em;
 }
 
-.user-btn {
-	color: white;
-	background: var(--dark-gray);
-	border: none;
-	padding: 0.5rem;
+.user-info-top {
+	display: flex;
+	flex-direction: column;
+	row-gap: 1em;
+	align-items: center;
 }
 
-.user-actions button:hover {
-	cursor: pointer;
+.user-info-header {
+	color: var(--cultured-darkest);
+	text-align: center;
+	font-size: 1.8rem;
+}
+
+.user-info-subheader {
+	color: var(--cultured-darkest);
+	font-size: 0.9rem;
+}
+
+.user-info img {
+	width: 230px;
+	height: 230px;
+	object-fit: cover;
+	border-radius: 50%;
+	border: 2px solid var(--cultured-dark);
+	background: linear-gradient(to right, #beeafc 20%, #7cbdff 100%);
+}
+
+.user-info-bottom {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	row-gap: 1em;
+}
+
+.user-info .user-actions {
+	display: flex;
+	flex-direction: column;
+	row-gap: 0.7em;
+	width: 100%;
+}
+
+.user-info .user-btn {
+	background-color: var(--cultured);
+	border: 2px solid var(--cultured-dark);
+	color: var(--cultured-darkest);
+	border-radius: 5px;
+	padding: 0.5em 1em;
 }
 
 .unfriend-container {
 	display: flex;
+	border-bottom: 2px solid var(--speed-cadet);
 }
 
-.unfriend-container div {
-	width: 60%;
-	text-align: center;
-	background-color: var(--dark-gray);
-	padding: 0.5rem;
+.unfriend-container p {
+	flex-grow: 1;
+	align-self: flex-end;
+	color: var(--speed-cadet);
 }
 
 .unfriend-container button {
-	color: black;
-	background: var(--basic-gray);
-	width: 20%;
+	padding: 0.5em 1em;
+	border: none;
 }
 
 .unfriend-container button.yes {
-	border-right: 1px solid var(--dark-gray);
-	border-top: none;
+	background-color: var(--maximum-green-yellow);
+	color: var(--speed-cadet);
+	border-radius: 5px 5px 0 0;
+	border: 2px solid var(--cultured-dark);
 	border-bottom: none;
-	border-left: none;
 }
 
 .unfriend-container button.no {
-	border: none;
+	margin-left: 0.5em;
+	background-color: var(--maximum-red);
+	color: white;
+	border-radius: 5px 5px 0 0;
+	border: 2px solid var(--dark-red);
+	border-bottom: none;
+}
+
+@media (max-width: 1450px) {
+	.user-info img {
+		width: 200px;
+		height: 200px;
+	}
+}
+
+@media (max-width: 1300px) {
+	.user-info img {
+		width: 170px;
+		height: 170px;
+	}
+}
+
+@media (max-width: 1128px) {
+	.user-info {
+		width: 100%;
+		max-width: 100%;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+	.user-info-header {
+		font-size: 1.2em;
+	}
+
+	.user-info img {
+		height: 100px;
+		width: 100px;
+	}
+
+	.user-info-top {
+		flex-direction: row-reverse;
+		column-gap: 1em;
+	}
+
+	.user-info-subheader {
+		display: none;
+	}
+
+	.user-info-bottom {
+		width: auto;
+	}
+
+	.user-info .user-actions {
+		width: 200px;
+	};
+}
+
+@media (max-width: 550px) {
+	.user-info-top {
+		flex-direction: column;
+	}
+}
+
+@media (max-width: 420px) {
+	.user-info {
+		flex-direction: column;
+	}
 }

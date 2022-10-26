@@ -19,7 +19,6 @@ function Feed({ activeUser, onClickItem }) {
 	const [items, setItems] = useState([]);
 	const [count, setCount] = useState(9);
 	const [channel, setChannel] = useState(null);
-	const [showHeader, setShowHeader] = useState(true);
 
 	// ---------- Action Cable: Create Subscription ----------
 
@@ -54,12 +53,10 @@ function Feed({ activeUser, onClickItem }) {
 		setCount(count => count + 10)
 	}
 
-	console.log(items);
-
 	return (
 		<div className="feed">
 			<div className="feed-container">
-				{showHeader ? <p className="feed-header">New Items From Your Friends</p> : null }
+				{/* {showHeader ? <p className="feed-header">New Items From Your Friends</p> : null } */}
 				<div className="feed-list">
 					{items.map((item) => (
 						<FeedCard

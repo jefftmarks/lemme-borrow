@@ -1,4 +1,4 @@
-#my-friends {
+.my-friends {
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -10,32 +10,44 @@
 	justify-content: center;
 }
 
-#friends-container {
-	background-color: var(--dark-red);
-	padding: 1rem;
+.friends-container {
+	background-color: var(--cultured);
 	width: 500px;
-	height: 550px;
+	padding: 1em 1.5em;
+	border-radius: 5px;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	margin: 0 2em;
 }
 
-#my-friends-header {
+.friends-header {
+	background-color: var(--speed-cadet);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	padding: 1em 1.25em;
+	border-radius: 5px;
 }
 
-#my-friends #friends-list {
-	padding: 2rem 1rem;
-	background-color: var(--darkest-red);
+.friends-header p {
+	font-size: 1.5rem;
+	color: var(--maximum-green-yellow);
+}
+
+.friends-header svg:hover {
+	cursor: pointer;
+}
+
+.my-friends .friends-list {
+	border-bottom: 2px solid var(--speed-cadet);
+	padding: 1em;
+	display: flex;
+	flex-direction: column;
+	row-gap: 0.7em;
 	overflow-y: scroll;
-	display: block;
-	height: 91%;
+	height: 406px;
 }
 
-#my-friends a {
-	color: white;
+.my-friends a {
 	text-decoration: none;
 }
-

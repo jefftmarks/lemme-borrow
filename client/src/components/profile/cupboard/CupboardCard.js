@@ -4,14 +4,12 @@ import "./CupboardCard.css";
 function CupboardCard({ item, onClickItem }) {
 
 	return (
-		<div id="cupboard-card"
+		<div className="cupboard-card"
 			onClick={() => onClickItem(item.id)}
 		>
-			<div id="cupboard-image"
-				style={{backgroundImage: `url("${item.image}")`}}
-			>
+			<div style={{backgroundImage: `url(${item.image})` }}>
 			</div>
-			<h2>{item.name}</h2>
+			<p>{item.name}</p>
 		</div>
 	);
 }

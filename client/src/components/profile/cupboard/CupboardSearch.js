@@ -18,43 +18,54 @@ function CupboardSearch({ total, count, setCount, sort, setSort, setQuery, searc
 
 	return (
 		<div className="cupboard-nav">
-			<div className="cupboard-pagination">
-					Displaying {count + 1}-{count + itemsLength} of {total}
-					<button
-						onClick={() => setCount(count => count - 20)}
-						disabled={count === 0}
-					>
-						Prev
-					</button>
-					<button
-						onClick={() => setCount(count => count + 20)}
-						disabled={itemsLength < 20 || count + itemsLength === total }
-					>
-						Next
-					</button>
+
+			<div className={`cupboard-pagination hide-${count + itemsLength === total}`}>
+				<p>{count + 1}-{count + itemsLength} of {total}</p>
+				{count + itemsLength === total ? null : (
+					<div>
+						<button
+							onClick={() => setCount(count => count - 20)}
+							disabled={count === 0}
+						>
+							Prev
+						</button>
+						<button
+							onClick={() => setCount(count => count + 20)}
+							disabled={itemsLength < 20}
+						>
+							Next
+						</button>
+					</div>
+				)}
 			</div>
+
 			<div className="cupboard-search">
 				<form onSubmit={handleSubmit}>
-				<input
-					type="text"
-					value={searchInput}
-					placeholder="Search by Name or Tag"
-					onChange={(e) => setSearchInput(e.target.value)}
-				/>
-				<button className="search-icon"><AiOutlineSearch/></button>
+					<input
+						type="text"
+						value={searchInput}
+						placeholder="search by name or tag"
+						onChange={(e) => setSearchInput(e.target.value)}
+					/>
+					<button className="search-icon"><AiOutlineSearch/></button>
 				</form>
-				<button onClick={onClickClear}>Clear Search</button>
+				<button
+					className="clear"
+					onClick={onClickClear}>
+						Clear Search
+				</button>
 			</div>
-			<div className="cupboard-sort">
-				<select
-					name="sort"
-					value={sort}
-					onChange={(e) => setSort(e.target.value)}
-				>
-					<option value="newest">Newest to Oldest</option>
-					<option value="oldest">Oldest to Newest</option>
-				</select>
-			</div>
+
+			<select
+				className="cupboard-sort"
+				name="sort"
+				value={sort}
+				onChange={(e) => setSort(e.target.value)}
+			>
+				<option value="newest">Newest to Oldest</option>
+				<option value="oldest">Oldest to Newest</option>
+			</select>
+
 		</div>
 	);
 }

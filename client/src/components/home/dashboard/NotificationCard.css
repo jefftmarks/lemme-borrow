@@ -13,6 +13,7 @@
 
 .friend-request-card {
 	background: linear-gradient(to right, #beeafc 20%, #7cbdff 100%);
+	border: 2px solid #7cbdff;
 }
 
 .friend-request-card img {
@@ -21,14 +22,18 @@
 
 .pending, .approved {
 	background: linear-gradient(to right, #fbe28f 20%, #f4ca41 100%);
+	border: 2px solid #f4ca41;
 }
 
 .active.overdue-false {
 	background: linear-gradient(to right, #d4fcb2 20%, #92e945 100%);
+	border: 2px solid #92e945;
 }
 
 .overdue-true {
 	background: linear-gradient(to right, #f6c0c0 20%, #f36c6c 100%);
+	border: 2px solid #f36c6c;
+	
 }
 
 .notification-card .img-div {

@@ -9,14 +9,14 @@ function SearchResult({ result, type, onClickResult }) {
 		if (type === "user") {
 			return (
 				<>
-					<img src={result.avatar} alt="avatar" />
+					<div><img src={result.avatar} alt="avatar" /></div>
 					<p>{result.first_name} {result.last_name}</p>
 				</>
 			);
 		} else {
 			return (
 				<>
-					<img src={result.image} alt="item" />
+					<div><img src={result.image} alt="item" /></div>
 					<p>{result.name}</p>
 				</>
 			)
@@ -26,7 +26,7 @@ function SearchResult({ result, type, onClickResult }) {
 
 	return (
 		<div
-			className={`search-result`}
+			className={`search-result ${type}-card`}
 			onClick={() => onClickResult(result.id)}
 		>
 			{renderSearchCard()}

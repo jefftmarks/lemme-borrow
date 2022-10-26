@@ -1,12 +1,5 @@
 class MessagesController < ApplicationController
 	before_action :set_ticket, only: [:create, :ticket_messages]
-	# before_action :set_sender_and_receiver, only: [:create]
-
-	# ---- HANDLED BY ACTION CABLE ----
-	# def create
-	# 	message = Message.create!(**message_params, automated: false)
-	# 	render json: message, status: :created
-	# end
 
 	def ticket_messages
 		render json: @ticket.messages.order(created_at: :desc)

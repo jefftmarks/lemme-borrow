@@ -1,10 +1,29 @@
 .search-result {
-	padding: 0.5rem;
+	padding: 0 0.7em;
 	display: flex;
-	border-radius: 100px;
+	border-radius: 999px;
 	align-items: center;
-	column-gap: 1rem;
-	background-color: var(--light-blue);
+	column-gap: 0.7em;
+	font-weight: bolder;
+}
+
+.search-result.user-card {
+	background: linear-gradient(to right, #beeafc 20%, #7cbdff 100%);
+	border: 2px solid #7cbdff;
+}
+
+.search-result.item-card {
+	background: linear-gradient(to right, #fbe28f 20%, #f4ca41 100%);
+	border: 2px solid #f4ca41;
+}
+
+.search-result p {
+	color: var(--speed-cadet);
+}
+
+.search-result div {
+	height: 50px;
+	margin: 0.7em 0;
 }
 
 .search-result img {

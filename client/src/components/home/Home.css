@@ -26,6 +26,16 @@
 		width: 100%;
 		margin: 0 auto;
 	}
+
+	.feed-card {
+		margin-right: 0;
+	}
+}
+
+@media (max-width: 775px) {
+	.feed-container {
+		width: 100%;
+	};
 }
 
 @media (max-width: 695px) {

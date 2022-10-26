@@ -1,31 +1,28 @@
-#friend-card {
+.friend-card {
+	padding: 0 0.7em;
 	display: flex;
-	width: 100%;
-	margin-bottom: 1rem;
+	border-radius: 999px;
+	align-items: center;
+	column-gap: 0.7em;
+	font-weight: bolder;
+	background: linear-gradient(to right, #beeafc 20%, #7cbdff 100%);
+	border: 2px solid #7cbdff;
 }
 
+.friend-card div {
+	height: 50px;
+	margin: 0.7em 0;
+}
 
-#friend-card img {
-	width: 100px;
-	height: 100px;
-	border-radius: 50%;
+.friend-card img {
 	object-fit: cover;
-	object-position: center;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	border: 2px solid white;
 	background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
 }
 
-#friend-card-info {
-	flex-grow: 1;
-	display: flex;
-	flex-direction: column;
-}
-
-#friend-card h2 {
-	padding: 0.5rem;
-	background-color: var(--bright-red);
-}
-
-#friend-card-details {
-	flex-grow: 1;
-	background-color: var(--primary-red);
+.friend-card p {
+	color: var(--speed-cadet);
 }
