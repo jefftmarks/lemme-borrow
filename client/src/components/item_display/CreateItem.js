@@ -85,11 +85,9 @@ function CreateItem({ setShowItem, activeUser }) {
 
 	return (
 		<div className="edit-item">
-			<div className="edit-item-header">
-				<p>Create Item</p>
-			</div>
-			<form className="edit-item-form" onSubmit={handleSubmit}>
-				<label>Item Name:
+	
+			<form onSubmit={handleSubmit}>
+				<label><p>Item Name:</p>
 					<input
 					required
 					type="text"
@@ -98,7 +96,7 @@ function CreateItem({ setShowItem, activeUser }) {
 					value={formData.name}
 					/>
 				</label>
-				<label>Image:
+				<label><p>Image:</p>
 					<input
 					required
 					type="text"
@@ -107,37 +105,39 @@ function CreateItem({ setShowItem, activeUser }) {
 					value={formData.image}
 					/>
 				</label>
-				<label>Description:
+				<label><p>Description:</p>
 					<textarea
 					name="description"
 					rows="5"
-					cols="29"
 					onChange={handleChange}
 					value={formData.description}
 					>
 					</textarea>
 				</label>
-				<label>Tags:
+				<label className="tags-label"><p>Tags:</p>
 					<div className="edit-tags">
-						<small>maximum five tags separated by a semi-colon ;</small>
-						<small>tags must be unique</small>
-						<small>example: book; sci-fi; used;</small>
+						<div className="instructions">
+							<p>maximum five tags separated by a semi-colon</p>
+							<p>tags must be unique</p>
+							<p>book; sci-fi; used;</p>
+						</div>
+
 						<textarea
 						name="tags"
-						rows="5"
-						cols="29"
+						rows="2"
 						onChange={handleChange}
 						value={formData.tags}
 						>
 						</textarea>
+
+						<div className="tag-display">
+							{tagCards.map((tag) => (
+								<p key={tag}>{tag}</p>
+							))}
+						</div>
 					</div>
 				</label>
-				<div className="edit-tag-display">
-					{tagCards.map((tag) => (
-						<div className="tag-card" key={tag}>{tag}</div>
-					))}
-				</div>
-				<button>Create Item</button>
+				<button className="update-item-btn">Create Item</button>
 			</form>
 		</div>
 	);

@@ -1,9 +1,20 @@
+.cupboard {
+	width: 75%;
+}
+
 .items-container {
-	margin-top: 2rem;
+	padding: 1em;
+	background-color: white;
+	border: 3px solid var(--maximum-red);
 	display: flex;
-	flex-direction: row;
 	flex-wrap: wrap;
-	row-gap: 2rem;
-	column-gap: 2rem;;
-	align-content: flex-start;
+	justify-content: center;
+	column-gap: 1.5em;
+	row-gap: 1.5em;
+}
+
+@media (max-width: 1128px) {
+	.cupboard {
+		width: 100%;
+	}
 }

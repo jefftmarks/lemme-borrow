@@ -130,7 +130,7 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 						<div className="user-actions">
 							{isUnfriending ? (
 								<div className="unfriend-container">
-									<div>Are You Sure?</div>
+									<p>Are You Sure?</p>
 									<button className="yes" onClick={handleUnfriend}>
 										Yes
 									</button>
@@ -193,9 +193,16 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 				showFriends={showFriends}
 				setShowFriends={setShowFriends}
 			/>
-			<div className="profile-buttons">
-				<h3>{profile.is_active ? "My" : profile.user.first_name + "'s"} Cupboard</h3>
-				{renderButtons()}
+
+			<div className="user-info">
+				<div className="user-info-top">
+					<p className="user-info-header">{profile.is_active ? "My" : profile.user.first_name + "'s"} Cupboard</p>
+					<img src={profile.user.avatar} alt="avatar" />
+				</div>
+				<div className="user-info-bottom">
+					<p className="user-info-subheader">{profile.user.first_name} {profile.user.last_name}</p>
+					{renderButtons()}
+				</div>
 			</div>
 		</>
 	);

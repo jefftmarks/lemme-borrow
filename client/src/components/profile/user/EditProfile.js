@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MdCancel } from "react-icons/md";
 import "./EditProfile.css";
 
 function EditProfile({ showEditProfile, setShowEditProfile, activeUser, setActiveUser }) {
@@ -64,85 +65,104 @@ function EditProfile({ showEditProfile, setShowEditProfile, activeUser, setActiv
 	}
 
 	return (
-		<div id="edit-profile">
-			<form id="edit-profile-form" onSubmit={handleSubmit}>
-				<div id="edit-profile-header">
-					<h2>Edit My Profile</h2>
-					<p onClick={onClickEx}>X</p>
+		<div className="signup">
+			<div className="signup-container">
+
+				<div className="signup-header">
+					<p>Edit My Profile</p>
+					<MdCancel
+						onClick={onClickEx}
+						size="27"
+					/>
 				</div>
-				<label>First Name:
-						<input
-						required
-						type="text"
-						name="first_name"
-						onChange={handleChange}
-						value={formData.first_name}
-						/>
-					</label>
-					<label>Last Name:
-						<input
-						required
-						type="text"
-						name="last_name"
-						onChange={handleChange}
-						value={formData.last_name}
-						/>
-					</label>
-					<label>Username:
-						<input
-						required
-						type="text"
-						name="username"
-						onChange={handleChange}
-						value={formData.username}
-						/>
-					</label>
-					<label>Avatar:
-						<input
-						type="text"
-						name="avatar"
-						onChange={handleChange}
-						value={formData.avatar}
-						/>
-					</label>
-					<label>Enter Your Current Password:
-						<input
-						required
-						type="password"
-						name="current_password"
-						onChange={handleChange}
-						value={formData.current_password}
-						/>
-					</label>
-					{showUpdatePassword ? (
-						<div id="new-password">
-							<p onClick={() => setShowUpdatePassword(false)}>X</p>
-							<label>New Password:
-								<input
-								required
-								type="password"
-								name="password"
-								onChange={handleChange}
-								value={formData.password}
-								/>
-							</label>
-							<label>Confirm New Password:
-								<input
-								required
-								type="password"
-								name="password_confirmation"
-								onChange={handleChange}
-								value={formData.password_confirmation}
-								/>
-							</label>
-						</div>
-					) : (
-						<span onClick={() => setShowUpdatePassword(true)}>
-							Update Password?
-						</span>
-					)}
-					<button>Update Profile</button>
-			</form>
+
+				<form onSubmit={handleSubmit}>
+					<label><p>First Name:</p>
+							<input
+							required
+							type="text"
+							name="first_name"
+							onChange={handleChange}
+							value={formData.first_name}
+							/>
+						</label>
+						<label><p>Last Name:</p>
+							<input
+							required
+							type="text"
+							name="last_name"
+							onChange={handleChange}
+							value={formData.last_name}
+							/>
+						</label>
+						<label><p>Username:</p>
+							<input
+							required
+							type="text"
+							name="username"
+							onChange={handleChange}
+							value={formData.username}
+							/>
+						</label>
+						<label><p>Avatar:</p>
+							<input
+							type="text"
+							name="avatar"
+							onChange={handleChange}
+							value={formData.avatar}
+							/>
+						</label>
+						<label><p>Enter Your Current Password:</p>
+							<input
+							required
+							type="password"
+							name="current_password"
+							onChange={handleChange}
+							value={formData.current_password}
+							/>
+						</label>
+
+						{showUpdatePassword ? (
+							<div className="new-password">
+
+								<div className="update-password-header">
+									<p>Update Password</p>
+									<button onClick={() => setShowUpdatePassword(false)}>
+										Never Mind
+									</button>
+								</div>
+
+								<label><p>New Password:</p>
+									<input
+									required
+									type="password"
+									name="password"
+									onChange={handleChange}
+									value={formData.password}
+									/>
+								</label>
+								<label><p>Confirm New Password:</p>
+									<input
+									required
+									type="password"
+									name="password_confirmation"
+									onChange={handleChange}
+									value={formData.password_confirmation}
+									/>
+								</label>
+							</div>
+						) : (
+							<span
+								className="update-password"
+								onClick={() => setShowUpdatePassword(true)}
+							>
+								Update Password?
+							</span>
+						)}
+
+						<button>Update Profile</button>
+				</form>
+			</div>	
 		</div>
 	);
 }

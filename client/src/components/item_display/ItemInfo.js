@@ -103,13 +103,20 @@ function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 		<div className="item-info">
 
 			{renderStatusBar()}
+			
+			<div
+				style={{backgroundImage: `url(${item.image})` }}
+				className="item-image"
+			>
+			</div>
+			{/* <img src={image} alt={name} /> */}
 
-			<div className="item-image-container">
+			{/* <div className="item-image-container">
 				<img className="item-front-image" src={image} alt={name} />
 				<div className="item-image-blur" style={{backgroundImage: `url("${image}")`}}>
 					<img src={image} alt={name} />
 				</div>
-			</div>
+			</div> */}
 
 			<p className="description">{description}</p>
 

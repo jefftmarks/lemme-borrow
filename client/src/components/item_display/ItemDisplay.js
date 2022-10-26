@@ -138,7 +138,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 			{isLoading && mode !== "add" ? null : (
 				<div className="item-display-container">
 					<div className="item-display-header">
-						<p>{mode === "add" ? "Add a New Item to Your Cupboard" : item.name}</p>
+						<p>{mode === "add" ? "Add New Item" : item.name}</p>
 						<MdCancel
 						onClick={() => setShowItem({item: null, mode: ""})}
 						size="27"

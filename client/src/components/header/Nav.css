@@ -53,12 +53,9 @@
 
 .nav form button {
 	border-radius: 0 5px 5px 0;
+	border: none;
 	padding: 0.5em;
 	background-color: var(--maximum-red);
-}
-
-.nav .signout:hover {
-	background-color: var(--baby-pink);
 }
 
 @media (max-width: 819px) {

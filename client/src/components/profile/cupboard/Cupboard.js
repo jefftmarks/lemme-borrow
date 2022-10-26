@@ -64,6 +64,7 @@ function Cupboard({ profile, onClickItem }) {
 				total={total}
 			/>
 			<div className="items-container">
+
 			{items.map((item) => (
 				<CupboardCard
 					key={item.id}
@@ -72,6 +73,7 @@ function Cupboard({ profile, onClickItem }) {
 				/>
 			))}
 			</div>
+	
 		</div>
 	);
 }

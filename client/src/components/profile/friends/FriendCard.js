@@ -1,15 +1,11 @@
 import React from "react";
 import "./FriendCard.css";
 
-function FriendCard({ friend, setShowFriends }) {
+function FriendCard({ friend }) {
 	return (
-		<div id="friend-card">
-			<img src={friend.avatar} alt="avatar"/>
-			<div id="friend-card-info">
-				<h2>{friend.first_name}</h2>
-				<div id="friend-card-details">
-				</div>
-			</div>
+		<div className="friend-card">
+			<div><img src={friend.avatar} alt="avatar" /></div>
+			<p>{friend.first_name} {friend.last_name}</p>
 		</div>
 	);
 }

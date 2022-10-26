@@ -3,8 +3,8 @@
 	max-width: 600px;
 	align-self: flex-start;
 	background-color: white;
-	padding: 0.7em;
-	border-radius: 5px;
+	padding: 0.7em 0.7em 1em 0.7em;
+	border-radius: 20px;
 	border: 2px solid var(--cultured-dark);
 	display: flex;
 	flex-direction: column;

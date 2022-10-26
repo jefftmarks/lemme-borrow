@@ -1,6 +1,3 @@
-.edit-item {
-}
-
 .edit-item-header {
 	display: flex;
 	justify-content: space-between;
@@ -104,9 +101,4 @@
 	font-weight: bolder;
 	background-color: var(--maximum-green-yellow);
 	border: 2px solid var(--dark-green-yellow);
-}
-
-.edit-item .update-item-btn:hover {
-	background-color: var(--baby-pink);
-	border: 2px solid var(--speed-cadet);
 }

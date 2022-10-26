@@ -38,10 +38,6 @@
 	background-color: var(--maximum-green-yellow);
 }
 
-.login button:hover {
-	background-color: var(--baby-pink);
-}
-
 .login span:hover {
 	text-decoration: underline;
 }

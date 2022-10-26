@@ -48,7 +48,13 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	
+}
+
+.signup label p {
+	width: 50%;
 	color: var(--speed-cadet);
+	line-height: 1.7rem;
 }
 
 .signup input, .signup button {
@@ -73,11 +79,6 @@
 	border: 2px solid var(--dark-green-yellow);
 }
 
-.signup button:hover {
-	background-color: var(--baby-pink);
-	border: 2px solid var(--speed-cadet);
-}
-
 .signup .errors {
 	list-style: none;
 }
@@ -88,12 +89,20 @@
 }
 
 @media (max-width: 445px) {
+	.signup form {
+		row-gap: 2em;
+	}
+	
 	.signup label {
 		flex-direction: column;
-		row-gap: 1em;
+		row-gap: 0.5em;
 	}
 
 	.signup input {
+		width: 100%;
+	}
+
+	.signup label p {
 		width: 100%;
 	}
 }

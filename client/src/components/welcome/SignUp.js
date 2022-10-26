@@ -60,7 +60,7 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 					/>
 				</div>
 				<form onSubmit={handleSubmit}>
-					<label>First Name:
+					<label><p>First Name:</p>
 							<input
 							required
 							type="text"
@@ -69,7 +69,7 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 							value={formData.first_name}
 							/>
 						</label>
-						<label>Last Name:
+						<label><p>Last Name:</p>
 							<input
 							required
 							type="text"
@@ -78,7 +78,7 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 							value={formData.last_name}
 							/>
 						</label>
-						<label>Email:
+						<label><p>Email:</p>
 							<input
 							required
 							type="email"
@@ -87,7 +87,7 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 							value={formData.email}
 							/>
 						</label>
-						<label>Username:
+						<label><p>Username:</p>
 							<input
 							required
 							type="text"
@@ -96,7 +96,7 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 							value={formData.username}
 							/>
 						</label>
-						<label>Password:
+						<label><p>Password:</p>
 							<input
 							required
 							type="password"
@@ -105,7 +105,7 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 							value={formData.password}
 							/>
 						</label>
-						<label>Confirm Password:
+						<label><p>Confirm Password:</p>
 							<input
 							required
 							type="password"
@@ -114,7 +114,7 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 							value={formData.password_confirmation}
 							/>
 						</label>
-						<button>Sign Up</button>
+						<button className="signup-btn">Sign Up</button>
 						<ul className="errors">
 							{errors.map((error) => (
 								<li key={error}>{error}</li>
