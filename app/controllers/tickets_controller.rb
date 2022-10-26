@@ -17,14 +17,14 @@ class TicketsController < ApplicationController
 			if item.tickets.size > 0
 				ticket = Ticket.create!(**ticket_params, status: "waitlisted", return_date: "", overdue: false)
 
-				Message.create!(ticket: ticket, automated: true, text: "Automated Message: #{borrower.first_name} requests to borrow #{owner.first_name}'s item: #{item.name}.\nThis item has already been requested/is already being borrowed by a different user. #{owner.first_name} can approve the request once the item has been returned.")
+				Message.create!(ticket: ticket, automated: true, text: "#{borrower.first_name} requests to borrow #{owner.first_name}'s item: #{item.name}. This item has already been requested/is already being borrowed by a different user. #{owner.first_name} can approve the request once the item has been returned.")
 
 				render json: ticket, status: :created
 
 			else
 				ticket = Ticket.create!(**ticket_params, status: "requested", return_date: "", overdue: false)
 
-				Message.create!(ticket: ticket, automated: true, text: "Automated Message: #{borrower.first_name} requests to borrow #{owner.first_name}'s item: #{item.name}.\nNEXT STEP: #{owner.first_name} can 1) approve the request or 2) decline the request.\nUse the messenger to discuss the details of the request.")
+				Message.create!(ticket: ticket, automated: true, text: "#{borrower.first_name} requests to borrow #{owner.first_name}'s item: #{item.name}. #{owner.first_name} can either approve or decline the request. Use the messenger to discuss!")
 
 				render json: ticket, status: :created
 			end
@@ -59,7 +59,7 @@ class TicketsController < ApplicationController
 
 		@ticket.update!(return_date: ticket_params[:return_date], overdue: is_overdue)
 
-		message = Message.create!(ticket: @ticket, automated: true, text: "Automated Message: #{@owner.first_name} has set the return date to #{@ticket.formatted_return_date}.")
+		message = Message.create!(ticket: @ticket, automated: true, text: "#{@owner.first_name} has set the return date to #{@ticket.formatted_return_date}.")
 
 		render json: {ticket: TicketWithFullDetailsSerializer.new(@ticket), message: message }, status: :accepted
 	end
@@ -70,7 +70,7 @@ class TicketsController < ApplicationController
 		# Update item's borrower
 		@item.update!(borrower: @ticket.borrower)
 
-		message = Message.create!(ticket: @ticket, automated: true, text: "Automated Message: #{@owner.first_name} promises to lend #{@borrower.first_name} their item: #{@item.name}. Awesome!\nNEXT STEP: Exchange the item! #{@borrower.first_name}, let us know when you have received the item.")
+		message = Message.create!(ticket: @ticket, automated: true, text: "#{@owner.first_name} promises to lend #{@borrower.first_name} their item: #{@item.name}. Awesome! #{@borrower.first_name}, let us know when you have received the item.")
 
 		render json: {ticket: TicketWithFullDetailsSerializer.new(@ticket), message: message }, status: :accepted
 	end
@@ -80,7 +80,7 @@ class TicketsController < ApplicationController
 		@ticket.update!(status: "on loan")
 		@ticket.item.update!(status: "on loan")
 
-		message = Message.create!(ticket: @ticket, automated: true, text: "Automated Message: #{@borrower.first_name} has received #{@owner.first_name}'s item: #{@item.name}. Take good care of it, #{@borrower.first_name}!\nNEXT STEP: #{@owner.first_name}, you may now set an optional return date to make sure you get your item back in time. When the item is returned, let us know!")
+		message = Message.create!(ticket: @ticket, automated: true, text: "#{@borrower.first_name} has received #{@owner.first_name}'s item: #{@item.name}. Take good care of it! #{@owner.first_name}, you may now set an optional return date")
 
 		render json: {ticket: TicketWithFullDetailsSerializer.new(@ticket), message: message }, status: :accepted
 	end

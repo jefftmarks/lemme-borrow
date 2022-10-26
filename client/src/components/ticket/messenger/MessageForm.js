@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Logo from "./borrow-logo.png";
 import "./MessageForm.css";
 
 function MessageForm({ sender, receiver, ticket, channel}) {
@@ -21,16 +22,18 @@ function MessageForm({ sender, receiver, ticket, channel}) {
 	}
 
 	return (
-		<form id="message-form" onSubmit={handleSubmit}>
-			<input
-				required
-				type="text"
-				name="text"
-				onChange={(e) => setText(e.target.value)}
-				value={text}
-			/>
-			<button>SEND</button>
-		</form>
+		<div className="message-form">
+			<form onSubmit={handleSubmit}>
+				<input
+					required
+					type="text"
+					name="text"
+					onChange={(e) => setText(e.target.value)}
+					value={text}
+				/>
+				<button>send</button>
+			</form>
+		</div>
 	);
 }
 

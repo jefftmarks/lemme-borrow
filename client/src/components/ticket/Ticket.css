@@ -1,22 +1,17 @@
-#ticket {
-	display: flex;
-	justify-content: center;
-	margin-top: 2rem;
-	flex-wrap: wrap;
-}
-
-#ticket-container {
+.ticket {
 	width: 90%;
+	max-width: 3000px;
+	margin: 0 auto;
+	padding: 2em 0;
+	margin-bottom: 0;
 	display: flex;
 	justify-content: space-between;
 }
 
-#item-panel {
-	width: 35%;
-	display: flex;
-	justify-content: center;
-}
-
-#message-panel {
-	width: 60%;
+@media (max-width: 1075px) {
+	.ticket {
+		flex-direction: column;
+		border: 1px solid red;
+		row-gap: 2em;
+	}
 }

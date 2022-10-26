@@ -2,22 +2,25 @@ import React from "react";
 import "./Message.css";
 
 function Message({ message, activeUser }) {
+	
+	let mode;
 
-	let key;
+	let formattedMessage = message.text
 
 	if (message.automated) {
-		key = "automated";
+		mode = "automated";
+		formattedMessage = `Automated Message: ${message.text}`
 	} else if (message.sender_id === activeUser.id) {
-		key = "sender";
+		mode = "sender";
 	} else {
-		key = "receiver";
+		mode = "receiver";
 	}
 	
 	return (
 		<div
-			className={`message ${key}`}
+			className={`message ${mode}`}
 		>
-			<p>{message.text}</p>
+			{formattedMessage}
 		</div>
 	);
 }

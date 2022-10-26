@@ -1,20 +1,28 @@
-#message-form {
-	background-color: var(--bright-red);
-	padding: 1rem;
+.message-form form {
 	display: flex;
+	flex-grow: 1;
+	padding-bottom: 0.3em;
 }
 
-#message-form input {
+.message-form input {
 	flex-grow: 1;
 	padding: 0.5rem;
 	border: none;
+	border-radius: 999px 0 0 999px;
+	color: black;
 }
 
-#message-form button {
+.message-form input:focus {
+	outline: none;
+}
+
+.message-form button {
 	border: none;
-	padding: 0.5rem;
+	background-color: var(--maximum-red);
+	padding: 0.5em 1em;
+	border-radius: 0 999px 999px 0;
 }
 
-#message-form button:hover {
+.message-form button:hover {
 	cursor: pointer;
 }

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Controls from "./Controls";
 import { useNavigate } from "react-router-dom";
-import "./CommandCenter.css"
+import "./ItemPanel.css"
 
-function CommandCenter({ ticket, setTicket, isOwner, activeUser, messages, setMessages }) {
+function ItemPanel({ ticket, setTicket, isOwner, activeUser, messages, setMessages }) {
 	const [date, setDate] = useState(ticket.return_date);
 	const [item, setItem] = useState(null);
 
@@ -139,29 +139,23 @@ function CommandCenter({ ticket, setTicket, isOwner, activeUser, messages, setMe
 	}
 
 	return (
-		<div id="command">
-			<h2>{item.name}</h2>
-			<div id="command-header">
-				<img src={item.image} alt={item.name} />
+		<div className="item-panel">
+			<p className="item-panel-header">{item.name}</p>
+			<img src={item.image} alt={item.name} />
 
-				<div className="tag-display">
-					{item.tags.map((tag) => (
-						<div className="tag-card" key={tag}>
-							{tag}
-						</div>
-					))}
-				</div>
-			
-				<p>"{item.description}"</p>
+			<div className="item-panel-body">
 
-				<div id="command-info">
-					<p>Owner: {isOwner ? "You" : owner.first_name}</p>
-					<p>Return Date: {return_date ? formattedDate : "None"}</p>
-					
-				</div>
+				<div className="line"><div>Owner:</div><p>{isOwner ? "You" : owner.first_name}</p></div>
 
-				{ticket.overdue ? <p>This Item is Overdue!!!</p> : null}
-				
+				<div className="line"><div>Description:</div><p>{item.description}</p></div>
+
+				<div className="line"><div>Tags:</div><p>{item.tags.join(", ")}</p></div>
+
+			</div>
+
+			<div className="return-date">
+				<p>Return Date: {return_date ? formattedDate : "--"}</p>
+				{ticket.overdue ? <span>Overdue</span> : null}
 			</div>
 
 			<Controls 
@@ -178,68 +172,4 @@ function CommandCenter({ ticket, setTicket, isOwner, activeUser, messages, setMe
 	);
 }
 
-export default CommandCenter;
-
-// ----------------------------------------
-
-	// // ---------- Owner Offers to Gift Item to Borrower ----------
-
-	// function handleOfferGift() {
-	// 	fetch(`/tickets/offer/${ticket.id}`, {
-	// 		method: "PATCH",
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 		},
-	// 	})
-	// 		.then((res => {
-	// 			if (res.ok) {
-	// 				res.json().then((payload) => {
-	// 					setTicket(payload.ticket);
-	// 					setMessages([payload.message, ...messages])
-	// 				});
-	// 			} else {
-	// 				res.json().then((data) => console.log(data));
-	// 			}
-	// 		}));
-	// }
-
-	// // ---------- Decline Gift ----------
-
-	// function handleDeclineGift() {
-	// 	fetch(`/tickets/decline_gift/${ticket.id}`, {
-	// 		method: "PATCH",
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 		},
-	// 	})
-	// 		.then((res => {
-	// 			if (res.ok) {
-	// 				res.json().then((payload) => {
-	// 					setTicket(payload.ticket);
-	// 					setMessages([payload.message, ...messages])
-	// 				});
-	// 			} else {
-	// 				res.json().then((data) => console.log(data));
-	// 			}
-	// 		}));
-	// }
-
-	// // ---------- Accept Gift ----------
-
-	// function handleAcceptGift() {
-	// 	fetch(`/tickets/accept_gift/${ticket.id}`, {
-	// 		method: "PATCH",
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 		},
-	// 	})
-	// 		.then((res => {
-	// 			if (res.ok) {
-	// 				res.json().then((data) => {
-	// 					navigate(`/user/${activeUser.id}`)
-	// 				});
-	// 			} else {
-	// 				res.json().then((data) => console.log(data));
-	// 			}
-	// 		}));
-	// }
+export default ItemPanel;

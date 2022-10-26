@@ -1,5 +1,74 @@
-#controls {
-	/* background-color: var(--light-gray); */
+.controls {
+	margin-top: 0.5em;
+	border: 2px solid var(--cultured-darkest);
+	width: 100%;
+	border-radius: 5px;
+	background-color: white;;
+}
+
+.controls .controls-header {
+	background-color: var(--cultured-darkest);
+	color: white;
+	padding: 0.5em 1em;
+	text-align: center;
+	line-height: 1.5em;
+}
+
+.controls .control-btns {
+	padding: 1em;
+	display: flex;
+	flex-direction: column;
+	row-gap: 0.7em;
+}
+
+.controls .control-btns button {
+	font-weight: bolder;
+	background-color: var(--maximum-green-yellow);
+	color: var(--speed-cadet);
+	border: 2px solid var(--speed-cadet);
+	border-radius: 5px;
+	padding: 0.5em 1em;
+}
+
+.controls .date-form {
+	display: flex;
+}
+
+.controls .date-form button {
+	flex-grow: 1;
+	border-radius: 5px 0 0 5px;
+}
+
+.controls .date-form input {
+	padding: 0.5em 0.5em 0.5em 0.7em;
+	color: black;
+	border-radius: 0 5px 5px 0;
+	border: 2px solid var(--speed-cadet);
+	border-left: none;
+}
+
+.controls .date-form input:hover {
+	cursor: pointer;
+}
+
+.controls .date-form input:focus {
+	outline: none;
+}
+
+.controls .date-form .date-change-true {
+	background-color: var(--maximum-red);
+	color: white;
+}
+
+.controls .date-form button:disabled:hover {
+	cursor: default
+}
+
+/* .controls .date-form .date-change-true:hover {
+	cursor: pointer;
+} */
+
+/* #controls {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
@@ -30,10 +99,6 @@
 	display: flex;
 }
 
-/* #controls #date-form button {
-	flex-grow: 1;
-} */
-
 #controls #set-date {
 	background-color: var(--dark-gray);
 }
@@ -53,4 +118,4 @@
 
 #controls p {
 	color: var(--bright-red);
-}
+} */

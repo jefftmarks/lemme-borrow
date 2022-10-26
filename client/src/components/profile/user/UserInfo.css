@@ -35,7 +35,7 @@
 	height: 230px;
 	object-fit: cover;
 	border-radius: 50%;
-	border: 2px solid var(--cultured-dark);
+	border: 4px solid var(--cultured-dark);
 	background: linear-gradient(to right, #beeafc 20%, #7cbdff 100%);
 }
 

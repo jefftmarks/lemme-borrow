@@ -1,25 +1,29 @@
 .message {
 	padding: 0.5rem 1.5rem;
-	border-radius: 20px;;
+	border-radius: 999px;
+	line-height: 1.5rem;
 }
 
 .message.automated {
 	align-self: flex-start;
-	background-color: var(--light-blue);
-	color: white;
+	background: linear-gradient(to right, #e7e7e7 20%, #cacaca 100%);
+	border: 2px solid #cacaca;
+	color: black;
 	width: 100%;
 }
 
 .message.sender {
 	align-self: flex-start;
-	background-color: var(--primary-red);
-	color: white;
+	background: linear-gradient(to right, #ffe8e8 20%, #FFCACA 100%);
+	border: 2px solid #FFCACA;
+	color: black;
 	width: 40%;
 }
 
 .message.receiver {
 	color: black;
 	align-self: flex-end;
-	background-color: var(--light-red);
+	background: linear-gradient(to right, #eff2a6 20%, #e4e943 100%);
+	border: 2px solid #e4e943;
 	width: 40%;
 }

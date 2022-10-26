@@ -77,7 +77,7 @@ class ItemsController < ApplicationController
 	end
 
 	def recently_uploaded
-		items = [];
+		items = []
 
 		@user.friends.map do |friend|
 			friend.belongings.map do |item|

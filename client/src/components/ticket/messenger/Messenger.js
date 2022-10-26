@@ -21,40 +21,46 @@ function Messenger({ ticket, messages, setMessages, isOwner, activeUser, channel
 	}, [ticket, isOwner]);
 
 	return (
-		<div id="messenger">
-			<div id="messenger-header">
-				<div className="ticket-avatar">
-					<img
-						src={left.avatar}
-						alt="avatar"
-						onClick={() => navigate(`/user/${left.id}`)}
-					/>
-					{left.first_name}
+		<div className="messenger-container">
+			<div className="messenger">
+				<div className="messenger-header">
+					<div>
+						<img
+							className="user-pic"
+							src={left.avatar}
+							alt="avatar"
+							onClick={() => navigate(`/user/${left.id}`)}
+						/>
+						<p>{left.first_name}</p>
+					</div>
+					<p className="logo">lemmeBorrow</p>
+					<div>
+					<p>{right.first_name}</p>
+						<img
+							className="user-pic"
+							src={right.avatar}
+							alt="avatar"
+							onClick={() => navigate(`/user/${right.id}`)}
+						/>
+					</div>
 				</div>
-				<div className="ticket-avatar">
-					<img
-						src={right.avatar}
-						alt="avatar"
-						onClick={() => navigate(`/user/${right.id}`)}
-					/>
-					{right.first_name}
+
+				<div className="message-list">
+					{messages.map((message) => (
+						<Message
+							key={message.id}
+							message={message}
+							activeUser={activeUser}
+						/>
+					))}
 				</div>
+				<MessageForm
+					sender={left}
+					receiver={right}
+					ticket={ticket}
+					channel={channel}
+				/>
 			</div>
-			<div id="message-list">
-				{messages.map((message) => (
-					<Message
-						key={message.id}
-						message={message}
-						activeUser={activeUser}
-					/>
-				))}
-			</div>
-			<MessageForm
-				sender={left}
-				receiver={right}
-				ticket={ticket}
-				channel={channel}
-			/>
 		</div>
 	);
 }

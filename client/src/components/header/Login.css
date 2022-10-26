@@ -11,6 +11,7 @@
 	flex-wrap: wrap;
 	column-gap: 1em;
 	row-gap: 1em;
+	justify-content: center;
 }
 
 .login input, .login button {
@@ -43,6 +44,10 @@
 }
 
 @media (max-width: 759px) {
+	.login {
+		justify-content: center;
+	}
+
 	.login span {
 		border: none;
 	}
