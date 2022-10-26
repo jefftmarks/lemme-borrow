@@ -1,46 +1,30 @@
 .welcome {
 	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
-	width: 90%;
-	max-width: 1040px;
-	margin: 3em auto;
+	height: calc(100vh - 83px);
+	width: 100%;
+	padding: 0 3em;
 }
 
-.welcome div {
-	width: 58%;
+.welcome-card {
+	display: flex;
+	align-items: center;
+	column-gap: 3em;
+	height: 30%;
 }
 
 .welcome img {
-	width: 37%;
+	height: 100%;
 }
 
-.welcome h1 {
+.welcome-text h1 {
 	font-size: 4rem;
 	color: var(--speed-cadet);
 }
 
-.welcome p {
+.welcome-text p {
 	font-size: 2rem;
 	color: var(--dark-red);
-	margin-top: 0.2em;
-	line-height: 2.5rem;
-}
-
-@media (max-width: 1155px) {
-	.welcome {
-		flex-direction: column;
-		row-gap: 2em;
-		text-align: center;
-		margin-top: 3em;
-	}
-
-	.welcome div {
-		width: 100%;
-	}
-
-	.welcome img {
-		width: 70%;
-	}
+	line-height: 2.8rem;
 }

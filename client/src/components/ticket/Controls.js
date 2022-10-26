@@ -4,7 +4,7 @@ import "./Controls.css";
 // Grab current date and reformat to match date input
 const today = new Date().toISOString().slice(0, 10);
 
-function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprove, onClickReceive, onSetReturnDate, onClickGift, onClickDeclineGift, onClickAcceptGift }) {
+function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprove, onClickReceive, onSetReturnDate }) {
 	const [dateIsChanged, setDateIsChanged] = useState(false);
 
 	const { owner, borrower, return_date, status } = ticket;
@@ -32,7 +32,7 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 		return () => {
 			clearTimeout(resetDateForm);
 		}
-	}, [dateIsChanged] );
+	}, [dateIsChanged, ticket] );
 
 	// ---------- Render Control Buttons ----------
 
@@ -50,8 +50,8 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 
 				return (
 					<>
-						This ticket has been waitlisted!
-						<div id="control-buttons">
+						<p className="controls-header">This ticket has been waitlisted . . .</p>
+						<div className="control-btns">
 							<button onClick={onClickDelete}>
 								Cancel Your Pending Request
 							</button>
@@ -69,8 +69,8 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 
 				return (
 					<>
-						Waiting for {owner.first_name} to respond to your request . . .
-						<div id="control-buttons">
+						<p className="controls-header">Waiting for {owner.first_name} to respond . . .</p>
+						<div className="control-btns">
 							<button onClick={onClickDelete}>
 								Cancel Your Pending Request
 							</button>
@@ -86,8 +86,8 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 
 				return (
 					<>
-						Let us know when you've received the item!
-						<div id="control-buttons">
+						<p className="controls-header">Let {owner.first_name} know when you've received the item . . .</p>
+						<div className="control-btns">
 							<button onClick={onClickReceive}>
 									Item Received
 							</button>
@@ -105,9 +105,9 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 				// No actions
 
 				return (
-					<div id="control-buttons">
-						You're currently borrowing this item from {owner.first_name}. The ticket cannot be deleted until the item has been returned.
-					</div>
+					<>
+						<p className="controls-header">You're currently borrowing this item from {owner.first_name}. The ticket cannot be deleted until the item has been returned.</p>
+					</>
 				);
 		
 			} 
@@ -124,8 +124,8 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 
 				return (
 					<>
-						This ticket has been waitlisted!
-						<div id="control-buttons">
+						<p className="controls-header">This ticket has been waitlisted!</p>
+						<div className="control-btns">
 							<button onClick={onClickDelete}>
 								Decline Request
 							</button>
@@ -143,8 +143,8 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 
 				return (
 					<>
-						Please respond to {borrower.first_name}'s request
-						<div id="control-buttons">
+						<p className="controls-header">Respond to {borrower.first_name}'s request . . .</p>
+						<div className="control-btns">
 							<button onClick={onClickApprove}>
 								Approve Request
 							</button>
@@ -163,12 +163,12 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 
 				return (
 					<>
-					Waiting for {borrower.first_name} to receive the item . . .
-					<div id="control-buttons">
-						<button onClick={onClickDelete}>
-								Delete Ticket
-						</button>
-					</div>
+						<p className="controls-header">Waiting for {borrower.first_name} to receive the item . . .</p>
+						<div className="control-btns">
+							<button onClick={onClickDelete}>
+									Delete Ticket
+							</button>
+						</div>
 					</>
 				);
 
@@ -179,15 +179,16 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 				// You can either 1) set or reset a return date or 2) mark when the item has been returned
 
 				return (
-					<div id="control-buttons">
-						Let us know when you get your item back!
-						<form id="date-form" onSubmit={handleSubmitDate}>
+					<>
+						<p className="controls-header">Let us know when you get your item back!</p>
+						<div className="control-btns">
+							<form className="date-form" onSubmit={handleSubmitDate}>
 								{dateIsChanged ? (
-									<button>
+									<button className={`date-change-${dateIsChanged}`}>
 										Submit
 									</button>
 								) : (
-									<button id="set-date" disabled>Set Desired Return Date</button>
+									<button disabled>Set Desired Return Date</button>
 								)}
 								<input
 									required
@@ -197,42 +198,23 @@ function Controls({ ticket, isOwner, date, setDate, onClickDelete, onClickApprov
 									value={date}
 									onChange={onChangeDate}
 								/>
-						</form>
-						<button onClick={onClickDelete}>
-							Item Returned! Close Ticket
-						</button>
-					</div>
+							</form>
+							
+							<button onClick={onClickDelete}>
+								Item Returned! Close Ticket
+							</button>
+						</div>
+					</>
 				);
 			}
 		}
 	}
 
 	return (
-		<div id="controls">
+		<div className="controls">
 			{renderButtons()}
 		</div>
 	);
 }
 
 export default Controls;
-
-// ---------------------------------------
-
-// 3b (OPTIONAL) - OWNER WOULD LIKE TO GIFT TO YOU
-// You can either 1) Accept gift or 2) Decline the gift
-// else if (ticket.status === "gifting") {
-// 	return (
-// 		<>
-// 			<button onClick={onClickAcceptGift}>
-// 					Accept Gift
-// 			</button>
-// 			<button onClick={onClickDeclineGift}>
-// 					Decline Gift
-// 			</button>
-// 		</>
-// 	);
-// }
-
-/* <button onClick={onClickGift}>
-	Gift Item to {ticket.borrower.first_name}
-</button> */

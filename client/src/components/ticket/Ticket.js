@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"
-import CommandCenter from "./CommandCenter";
+import ItemPanel from "./ItemPanel";
 import Messenger from "./messenger/Messenger";
 import "./Ticket.css";
 
@@ -88,29 +88,23 @@ function Ticket({ activeUser }) {
 	}
 
 	return (
-		<div id="ticket">
-			<div id="ticket-container">
-				<div id="item-panel">
-					<CommandCenter
-						ticket={ticket}
-						setTicket={setTicket}
-						activeUser={activeUser}
-						isOwner={isOwner}
-						messages={messages}
-						setMessages={setMessages}
-					/>
-				</div>
-				<div id="message-panel">
-					<Messenger
-						messages={messages}
-						setMessages={setMessages}
-						ticket={ticket}
-						isOwner={isOwner}
-						activeUser={activeUser}
-						channel={channel}
-					/>
-				</div>
-			</div>
+		<div className="ticket">
+			<ItemPanel
+				ticket={ticket}
+				setTicket={setTicket}
+				activeUser={activeUser}
+				isOwner={isOwner}
+				messages={messages}
+				setMessages={setMessages}
+			/>
+			<Messenger
+				messages={messages}
+				setMessages={setMessages}
+				ticket={ticket}
+				isOwner={isOwner}
+				activeUser={activeUser}
+				channel={channel}
+		/>
 		</div>
 	);
 }
