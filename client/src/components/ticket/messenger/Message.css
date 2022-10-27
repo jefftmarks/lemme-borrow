@@ -6,16 +6,14 @@
 
 .message.automated {
 	align-self: flex-start;
-	background: linear-gradient(to right, #e7e7e7 20%, #cacaca 100%);
-	border: 2px solid #cacaca;
+	background-color: white;
 	color: black;
 	width: 100%;
 }
 
 .message.sender {
 	align-self: flex-start;
-	background: linear-gradient(to right, #ffe8e8 20%, #FFCACA 100%);
-	border: 2px solid #FFCACA;
+	background-color: #f2f752;
 	color: black;
 	width: 40%;
 }
@@ -23,7 +21,6 @@
 .message.receiver {
 	color: black;
 	align-self: flex-end;
-	background: linear-gradient(to right, #eff2a6 20%, #e4e943 100%);
-	border: 2px solid #e4e943;
+	background-color: #b6d9ff;
 	width: 40%;
 }

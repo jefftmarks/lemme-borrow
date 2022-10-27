@@ -145,11 +145,11 @@ function ItemPanel({ ticket, setTicket, isOwner, activeUser, messages, setMessag
 
 			<div className="item-panel-body">
 
-				<div className="line"><div>Owner:</div><p>{isOwner ? "You" : owner.first_name}</p></div>
+				<p><span>Owner:</span> {isOwner ? "You" : owner.first_name}</p>
 
-				<div className="line"><div>Description:</div><p>{item.description}</p></div>
+				<p><span>Description:</span> {item.description}</p>
 
-				<div className="line"><div>Tags:</div><p>{item.tags.join(", ")}</p></div>
+				<p><span>Tags:</span> {item.tags.join(", ")}</p>
 
 			</div>
 

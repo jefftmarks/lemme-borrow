@@ -7,7 +7,8 @@
 
 .messenger {
 	width: 800px;
-	background: linear-gradient(to top, var(--speed-cadet) 0%, #92adfa 100%);
+	background: white;
+	border: 2px solid var(--cultured-dark);
 	border-radius: 50px 50px 20px 20px;
 	padding: 0.7em;
 	display: flex;
@@ -28,6 +29,11 @@
 	column-gap: 1em;
 }
 
+.messenger-header div p {
+	color: var(--speed-cadet);
+	padding-bottom: 0.1em;
+}
+
 .messenger-header .user-pic {
 	width: 70px;
 	height: 70px;
@@ -35,16 +41,16 @@
 	object-fit: cover;
 	object-position: center;
 	background: linear-gradient(to right, #beeafc 20%, #7cbdff 100%);
-	border: 2px solid white;
 }
 
 .messenger-header .logo {
 	font-size: 2rem;
 	margin-top: 0.5em;
+	color: var(--maximum-red);
 }
 
 .message-list {
-	background-color: white;
+	background: linear-gradient(to bottom, #ffffff  0%, #ddedfe  100%);
 	border-radius: 20px;
 	padding: 1rem;
 	height: 400px;

@@ -11,7 +11,6 @@
 @media (max-width: 1075px) {
 	.ticket {
 		flex-direction: column;
-		border: 1px solid red;
 		row-gap: 2em;
 	}
 }
