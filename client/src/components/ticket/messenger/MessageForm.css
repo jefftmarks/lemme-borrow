@@ -6,10 +6,12 @@
 
 .message-form input {
 	flex-grow: 1;
-	padding: 0.5rem;
+	padding: 1em;
 	border: none;
 	border-radius: 999px 0 0 999px;
 	color: black;
+	border: 1px solid var(--dark-red);
+	border-right: none;
 }
 
 .message-form input:focus {
@@ -21,6 +23,8 @@
 	background-color: var(--maximum-red);
 	padding: 0.5em 1em;
 	border-radius: 0 999px 999px 0;
+	border: 1px solid var(--dark-red);
+	border-left: none;
 }
 
 .message-form button:hover {
