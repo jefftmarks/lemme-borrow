@@ -32,7 +32,7 @@ function CreateItem({ setShowItem, activeUser }) {
 		if (activeUser) {
 			const newChannel = consumer.subscriptions.create({ channel: "FeedChannel", user_id: activeUser.id }, {
 				received(item) {
-					setShowItem({item: item, mode: ""});
+					setShowItem({item: null, mode: ""});
 					setFormData(initialState);
 				} 
 			});

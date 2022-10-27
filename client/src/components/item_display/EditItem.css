@@ -81,6 +81,7 @@
 	margin-top: 0.2em;
 	display: flex;
 	justify-content: flex-end;
+	row-gap: 0.5em;
 }
 
 .edit-item .tag-display p {

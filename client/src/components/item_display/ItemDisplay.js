@@ -19,8 +19,9 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 	// ---------- Does Item Belong to a Friend? ----------
 
 	useEffect(() => {
-		if (activeUser && item && activeUser.id !== item.owner.id && mode !== "add") {
-			fetch(`/friend_statuses/user/${activeUser.id}/friend/${item.owner.id}`)
+		if (activeUser && item && mode !== "add") {
+			if (activeUser.id !== item.owner.id) {
+				fetch(`/friend_statuses/user/${activeUser.id}/friend/${item.owner.id}`)
 				.then((res) => {
 					if (res.ok) {
 						res.json().then(data => setFriendStatus(data.status.mode));
@@ -28,6 +29,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 						res.json().then(data => console.log(data));
 					}
 				})
+			}
 		}
 	}, [activeUser, item, mode]);
 
