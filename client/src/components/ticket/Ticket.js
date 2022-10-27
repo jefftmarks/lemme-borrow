@@ -29,15 +29,16 @@ function Ticket({ activeUser }) {
 	// ---------- Action Cable: Create Subscription ----------
 
 	useEffect(() => {
-		if (ticket) {
-			const newChannel = consumer.subscriptions.create({ channel: "TicketChannel", ticket_id: ticket.id }, {
+		console.log("TICKET", params.ticket_id)
+		if (params) {
+			const newChannel = consumer.subscriptions.create({ channel: "TicketChannel", ticket_id: params.ticket_id }, {
 				received(message) {
 					setMessages(messages => [message, ...messages]);
 				} 
 			});
 			setChannel(newChannel);
 		} 
-	}, [ticket]);
+	}, []);
 
 	// ---------- Render Ticket ----------
 
@@ -65,7 +66,7 @@ function Ticket({ activeUser }) {
 	// ---------- Render Messages ----------
 
 	useEffect(() => {
-		if(ticket) {
+		if (ticket) {
 			fetch(`/messages/ticket/${ticket.id}`)
 			.then((res) => {
 				if (res.ok) {

@@ -5,7 +5,7 @@ import "./ItemInfo.css";
 function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 	const [isDeleting, setIsDeleting] = useState(false);
 
-	const { id, name, description, image, status, tags, owner, borrower} = item;
+	const { id, description, status, tags, owner, borrower} = item;
 
 	// ---------- If Your Belonging, Render CRUD Options ----------
 
@@ -91,9 +91,7 @@ function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 				);
 			} else {
 				return (
-					<div className="delete-item">
-						<p className="delete-item-1">You Cannot Edit or Delete Item with Pending Tickets</p>
-					</div>
+					<p className="delete-item delete-1">You Cannot Edit or Delete Item with Pending Tickets</p>
 				);
 			}
 		}
@@ -109,14 +107,6 @@ function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 				className="item-image"
 			>
 			</div>
-			{/* <img src={image} alt={name} /> */}
-
-			{/* <div className="item-image-container">
-				<img className="item-front-image" src={image} alt={name} />
-				<div className="item-image-blur" style={{backgroundImage: `url("${image}")`}}>
-					<img src={image} alt={name} />
-				</div>
-			</div> */}
 
 			<p className="description">{description}</p>
 
