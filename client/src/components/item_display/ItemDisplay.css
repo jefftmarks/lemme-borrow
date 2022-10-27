@@ -47,3 +47,12 @@
 	border-radius: 5px;
 	font-size: 1rem;
 }
+
+.neutral-borrow-btn {
+	background-color: var(--cultured-darkest);
+	border: 2px solid var(--speed-cadet);
+	padding: 0.5em 1.25em;
+	border-radius: 5px;
+	font-size: 1rem;
+	width: 100%;
+}
