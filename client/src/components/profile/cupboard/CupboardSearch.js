@@ -16,12 +16,17 @@ function CupboardSearch({ total, count, setCount, sort, setSort, setQuery, searc
 		setSearchInput("");
 	}
 
+	console.log(total)
+	console.log(count);
+
 	return (
 		<div className="cupboard-nav">
 
-			<div className={`cupboard-pagination hide-${count + itemsLength === total}`}>
-				<p>{count + 1}-{count + itemsLength} of {total}</p>
-				{count + itemsLength === total ? null : (
+			<div className={`cupboard-pagination hide-${total <= 20}`}>
+				{itemsLength === 0 ? "No Items" : (
+					<p>{count + 1}-{count + itemsLength} of {total}</p>
+				)}
+				{total <= 20 ? null : (
 					<div>
 						<button
 							onClick={() => setCount(count => count - 20)}
@@ -31,7 +36,7 @@ function CupboardSearch({ total, count, setCount, sort, setSort, setQuery, searc
 						</button>
 						<button
 							onClick={() => setCount(count => count + 20)}
-							disabled={itemsLength < 20}
+							disabled={itemsLength < 20 || count + itemsLength === total}
 						>
 							Next
 						</button>
