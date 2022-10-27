@@ -17,7 +17,7 @@ jeff= User.create!(
 	last_name: "Marks",
 	password: "1111",
 	email: "jeff@jeff.com",
-	avatar: Faker::Avatar.image
+	avatar: "https://www.treehugger.com/thmb/3mxO05gtnKsv4rWz3f9Oy-_j4PQ=/2121x1193/smart/filters:no_upscale()/GettyImages-1347289943-f3893070c6d5402e8af818fa93945d0b.jpg"
 )
 
 mischa = User.create!(

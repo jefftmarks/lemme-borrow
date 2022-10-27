@@ -16,9 +16,6 @@ function CupboardSearch({ total, count, setCount, sort, setSort, setQuery, searc
 		setSearchInput("");
 	}
 
-	console.log(total)
-	console.log(count);
-
 	return (
 		<div className="cupboard-nav">
 

@@ -43,6 +43,10 @@
 	background: linear-gradient(to right, #beeafc 20%, #7cbdff 100%);
 }
 
+.messenger-header .user-pic:hover {
+	cursor: pointer;
+}
+
 .messenger-header .logo {
 	font-size: 2rem;
 	margin-top: 0.5em;

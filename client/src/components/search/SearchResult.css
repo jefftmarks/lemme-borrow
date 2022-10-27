@@ -7,6 +7,10 @@
 	font-weight: bolder;
 }
 
+.search-result:hover {
+	cursor: pointer;
+}
+
 .search-result.user-card {
 	background: linear-gradient(to right, #beeafc 20%, #7cbdff 100%);
 	border: 2px solid #7cbdff;
