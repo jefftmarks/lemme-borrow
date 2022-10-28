@@ -140,6 +140,8 @@ class TicketsController < ApplicationController
 					id: ticket.id,
 					image: ticket.item.image,
 					message: "#{ticket.borrower.first_name} is borrowing your item: #{ticket.item.name}. Return Date: #{ticket.formatted_return_date}.",
+
+					message: ticket.return_date == "" ? "#{ticket.borrower.first_name} is borrowing your item: #{ticket.item.name}." : "#{ticket.borrower.first_name} is borrowing your item: #{ticket.item.name}. Return Date: #{ticket.formatted_return_date}.",
 					overdue: ticket.overdue,
 					return_date: ticket.return_date,
 					status: "active"
@@ -183,7 +185,7 @@ class TicketsController < ApplicationController
 				{
 					id: ticket.id,
 					image: ticket.item.image,
-					message: "#{ticket.owner.first_name}'s item: #{ticket.item.name}. Return Date: #{ticket.formatted_return_date}.",
+					message: ticket.return_date == "" ? "#{ticket.owner.first_name}'s item: #{ticket.item.name}." : "#{ticket.owner.first_name}'s item: #{ticket.item.name}. Return Date: #{ticket.formatted_return_date}.",
 					overdue: ticket.overdue,
 					return_date: ticket.return_date,
 					status: "active"
