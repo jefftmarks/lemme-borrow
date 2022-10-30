@@ -29,6 +29,7 @@ function Ticket({ activeUser }) {
 	// ---------- Action Cable: Create Subscription ----------
 
 	useEffect(() => {
+		console.log("TICKET", params.ticket_id)
 		if (params) {
 			const newChannel = consumer.subscriptions.create({ channel: "TicketChannel", ticket_id: params.ticket_id }, {
 				received(message) {
