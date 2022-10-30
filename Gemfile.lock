@@ -106,8 +106,6 @@ GEM
       racc (~> 1.4)
     nokogiri (1.11.7-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.11.7-x86_64-linux)
-      racc (~> 1.4)
     pg (1.2.3)
     pry (0.14.1)
       coderay (~> 1.1)
@@ -188,7 +186,6 @@ GEM
 PLATFORMS
   ruby
   x86_64-darwin-19
-  x86_64-linux
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.12)
