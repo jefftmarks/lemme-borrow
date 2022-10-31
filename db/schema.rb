@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_19_194909) do
+ActiveRecord::Schema.define(version: 2022_10_31_001042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,7 +63,6 @@ ActiveRecord::Schema.define(version: 2022_10_19_194909) do
     t.bigint "borrower_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "category"
     t.string "status"
     t.index ["borrower_id"], name: "index_items_on_borrower_id"
     t.index ["owner_id"], name: "index_items_on_owner_id"
