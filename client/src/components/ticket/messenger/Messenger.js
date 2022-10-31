@@ -10,6 +10,8 @@ function Messenger({ ticket, messages, setMessages, isOwner, activeUser, channel
 
 	const navigate = useNavigate();
 
+	// ---------- Orient Messenger Orientation Based on Active user
+
 	useEffect(() => {
 		if (isOwner) {
 			setLeft(ticket.owner);
@@ -44,7 +46,6 @@ function Messenger({ ticket, messages, setMessages, isOwner, activeUser, channel
 						/>
 					</div>
 				</div>
-
 				<div className="message-list">
 					{messages.map((message) => (
 						<Message

@@ -8,8 +8,9 @@ import "./Ticket.css";
 
 import { createConsumer } from "@rails/actioncable";
 
+// Validate consumer is active user via JWT token
 function getWebSocketURL() {
-	const token = sessionStorage.getItem("jwt");
+	const token = localStorage.getItem("jwt");
 	return `http://localhost:3000/cable?token=${token}`
 }
 
@@ -28,8 +29,8 @@ function Ticket({ activeUser }) {
 
 	// ---------- Action Cable: Create Subscription ----------
 
+	// Connect consumer to "chat room" unique to ticket ID
 	useEffect(() => {
-		console.log("TICKET", params.ticket_id)
 		if (params) {
 			const newChannel = consumer.subscriptions.create({ channel: "TicketChannel", ticket_id: params.ticket_id }, {
 				received(message) {
@@ -49,6 +50,7 @@ function Ticket({ activeUser }) {
 				if (res.ok) {
 					res.json().then((ticket) => {
 						setTicket(ticket);
+						// Determine whether active user is owner or borrower
 						if (ticket.owner.id === activeUser.id) {
 							setIsAuthorized(true);
 							setIsOwner(true);
@@ -81,11 +83,11 @@ function Ticket({ activeUser }) {
 	// ---------- Authorization and Page Rendering ----------
 
 	if (!isAuthorized) {
-		return <h1>Page Not Found</h1>
+		return <p className="ticket-not-found">Ticket Not Found or No Longer Exists</p>
 	}
 
 	if (!ticket) {
-		return <h1>Loading . . .</h1>
+		return <p className="ticket-not-found">Loading . . .</p>
 	}
 
 	return (

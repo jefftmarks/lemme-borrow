@@ -16,10 +16,12 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 
 	const navigate = useNavigate();
 
-	// ---------- Does Item Belong to a Friend? ----------
+	// ---------- Request Friend Status Between Active User & Item Owner ----------
 
 	useEffect(() => {
+		// Don't need to request friend status if adding new item
 		if (activeUser && item && mode !== "add") {
+			// Don't need to request friend status if your own item
 			if (activeUser.id !== item.owner.id) {
 				fetch(`/friend_statuses/user/${activeUser.id}/friend/${item.owner.id}`)
 				.then((res) => {
@@ -38,6 +40,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 	useEffect(() => {
 		setTickets([]);
 		setIsLoading(true);
+		// Don't need to request pending tickets if adding new item
 		if (activeUser && item && mode !== "add") {
 			fetch(`/pending_tickets/item/${item.id}/user/${activeUser.id}}`)
 			.then((res) => {
@@ -54,7 +57,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 	
 	}, [activeUser, item, mode])
 
-	// ---------- Create New Ticket upon Borrow Request ----------
+	// ---------- Create New Ticket Upon Borrow Request ----------
 
 	function handleCreateTicketRequest() {
 		fetch("/tickets", {
@@ -71,6 +74,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 			.then((res => {
 				if (res.ok) {
 					res.json().then((ticket) => {
+						// Navigate to ticket page and hide modal
 						navigate(`/ticket/${ticket.id}`);
 						setShowItem({item: null, mode: ""});
 					});
@@ -80,7 +84,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 			}))
 	}
 
-	// ---------- Conditionally Render Display ----------
+	// ---------- Conditionally Render Display Mode ----------
 
 	function renderDisplay() {
 		switch (mode) {
@@ -114,8 +118,10 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 	// ---------- Conditionally Render Associated Tickets ----------
 
 	function renderBorrowActions() {
+		// No associated tickets if creating a new item
 		if (mode === "add") {
 			return null;
+			// If item has active or pending tickets associated with active user (as owner or borrower)
 		} else if (tickets.length > 0) {
 			return (
 				<ItemTickets
@@ -124,7 +130,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 					setShowItem={setShowItem}
 				/>
 			);
-			// If not your item and not pending tickets
+			// If item is not yours and has no tickets associated with active user
 		} else if (activeUser.id !== item.owner.id) {
 				// If you're friends with item owner
 				if (friendStatus === "Friends") {
@@ -136,6 +142,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 							lemme borrow !
 						</button>
 					);
+				// If you're not friends with item owner
 				} else if (friendStatus === "Not Friends") {
 					return (
 						<Link to={`user/${item.owner.id}`}>
@@ -147,6 +154,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 							</button>
 						</Link>
 					);
+				// If item owner has yet to respond to your friend request
 				} else if (friendStatus === "Pending Response") {
 					return (
 						<Link to={`user/${item.owner.id}`}>
@@ -158,6 +166,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 							</button>
 						</Link>
 					);
+				// If active user has yet to respond to item owner's friend request
 				} else if (friendStatus === "Pending Action") {
 					return (
 						<Link to={`user/${item.owner.id}`}>
@@ -176,6 +185,7 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 	// ---------- Trigger Search When Tag Clicked ----------
 
 	function handleClickTag(tag) {
+		// Hide item display and trigger search display modal
 		setShowItem({item: null, mode: ""});
 		setQuery(tag);
 		setShowSearch({ show: true, mode: "items"});

@@ -9,6 +9,7 @@ function EditItem({ item, setShowItem }) {
 		name: item.name,
 		image: item.image,
 		description: item.description,
+		// Reformat tags for proper display
 		tags: item.tags.join("; ") + ";"
 	}
 
@@ -20,19 +21,19 @@ function EditItem({ item, setShowItem }) {
 		setFormData({...formData, [name]: value});
 	}
 
-	// ---------- Render Tag Cards to Confirm Correct Format ----------
+	// ---------- Format Tag Cards ----------
 
 	useEffect(() => {
 		// Use setTimeout so there isn't "typewriter" effect
 		const updateTagCards = setTimeout(() => {
-		// remove semi-colons
+		// Remove semi-colons
 		const arr = formData.tags.split(/\s*;\s*/gm);
-		// filter out empty elements and grab first five
+		// Filter out empty elements and grab first five
 		const filteredArr = arr.filter((el) => el !== "").splice(0, 5);
-		// add (lowercase) tags to a set to account for uniqueness
+		// Add lowercase tags to a set to account for uniqueness
 		const set = new Set();
 		filteredArr.forEach((el) => set.add(el.toLowerCase()));
-		// render tag cards
+		// Render tag cards
 		setTagCards(Array.from(set));
 		}, 300);
 
@@ -41,16 +42,14 @@ function EditItem({ item, setShowItem }) {
 		}
 	}, [formData.tags]);
 
-	// ---------- Submit ----------
+	// ---------- Submit Edited Item ----------
 
 	function handleSubmit(e) {
 		e.preventDefault();
-
 		// If image left blank, use most current image
 		if (formData.image === "") {
 			setFormData({...formData, image: item.image});
 		}
-
 		fetch(`/items/${item.id}`, {
 			method: "PATCH",
 			headers: {
@@ -64,6 +63,7 @@ function EditItem({ item, setShowItem }) {
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((item) => {
+						// Hide modal
 						setShowItem({item: item, mode: ""});
 						setFormData(initialState);
 					})
@@ -73,23 +73,15 @@ function EditItem({ item, setShowItem }) {
 			});
 	}
 
-	// ---------- Prevent Refresh ----------
-
-	function onClickBack(e) {
-		e.preventDefault();
-		setShowItem({item: item, mode: ""});
-	}
 
 	return (
 		<div className="edit-item">
-
 			<div className="edit-item-header">
 				<p>Edit Item</p>
-				<button onClick={onClickBack}>
+				<button onClick={() => setShowItem({item: item, mode: ""})}>
 					Back
 				</button>
 			</div>
-
 			<form onSubmit={handleSubmit}>
 				<label><p>Item Name:</p>
 					<input
@@ -124,7 +116,6 @@ function EditItem({ item, setShowItem }) {
 							<p>tags must be unique</p>
 							<p>book; sci-fi; used;</p>
 						</div>
-
 						<textarea
 						name="tags"
 						rows="2"
@@ -132,7 +123,6 @@ function EditItem({ item, setShowItem }) {
 						value={formData.tags}
 						>
 						</textarea>
-
 						<div className="tag-display">
 							{tagCards.map((tag) => (
 								<p key={tag}>{tag}</p>
@@ -140,7 +130,6 @@ function EditItem({ item, setShowItem }) {
 						</div>
 					</div>
 				</label>
-
 				<button className="update-item-btn">Update Item</button>
 			</form>
 		</div>

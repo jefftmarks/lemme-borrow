@@ -3,9 +3,13 @@ import "./Login.css";
 
 const initialState = { username: "", password: "" };
 
+// ---------- Nav Bar: No Active User ----------
+
 function Login({ setUser, setShowSignup }) {
 	const [formData, setFormData] = useState(initialState);
 	const [error, setError] = useState(null);
+
+	// ---------- Login Form Submission ----------
 
 	function handleChange(e) {
 		const { name, value } = e.target;
@@ -24,8 +28,9 @@ function Login({ setUser, setShowSignup }) {
 			.then((res) => {
 				setFormData(initialState);
 				if (res.ok) {
+					// Handle JWT token
 					res.json().then((data) => {
-						sessionStorage.setItem("jwt", data.token);
+						localStorage.setItem("jwt", data.token);
 						setUser(data.user);
 					});
 				} else {
@@ -36,7 +41,8 @@ function Login({ setUser, setShowSignup }) {
 
 	return (
 		<div className="login">
-			{error ? <p>{error}</p> : null}
+			{/* Render error if incorrect login */}
+			{error ? <p className="error">{error}</p> : null}
 			<form onSubmit={handleSubmit}>
 				<input
 					type="text"

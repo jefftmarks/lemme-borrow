@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import "./Nav.css";
 
+// ---------- Nav Bar: User Logged In ----------
+
 function Nav({ user, setUser, onSearch }) {
 	const [searchInput, setSearchInput] = useState("");
 
@@ -11,11 +13,15 @@ function Nav({ user, setUser, onSearch }) {
 	const navigate = useNavigate();
 
 	function handleLogout() {
-		sessionStorage.clear();
+		// Clear JWT token
+		localStorage.clear();
 		setUser(null);
 		navigate("/");
 	}
 
+	// ---------- Search ----------
+
+	// Trigger search modal
 	function handleSubmit(e) {
 		e.preventDefault();
 		onSearch(searchInput);
@@ -24,12 +30,10 @@ function Nav({ user, setUser, onSearch }) {
 
 	return (
 		<div className="nav">
-
 			<div className="nav-links">
 				<Link to={"/"}>Dashboard</Link>
 				<Link to={`/user/${user.id}`}>Cupboard</Link>
 			</div>
-
 			<form onSubmit={handleSubmit}>
 				<input
 					id="nav-search-input"
@@ -40,7 +44,6 @@ function Nav({ user, setUser, onSearch }) {
 				/>
 				<button><AiOutlineSearch/></button>
 			</form>
-
 			<button className="signout" onClick={handleLogout}>Sign Out</button>
 		</div>
 	);

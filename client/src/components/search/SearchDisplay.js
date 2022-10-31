@@ -10,17 +10,20 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 	const [users, setUsers] = useState([]);
 	const [items, setItems] = useState([]);
 
-	// ---------- Perform Search Based on Users or Items ----------
+	// ---------- Form Handling ----------
 
 	function handleSubmit(e) {
 		e.preventDefault();
 		setQuery(searchInput);
 	}
 
+	// Perform search based on category: users or items
 	useEffect(() => {
 		if (showSearch.show) {
 			setSearchInput(query)
+			// Focus on search display form input (and blur search input in nav bar)
 			document.getElementById("search-display-input").focus();
+			// Request search results based on category
 			fetch(`/${showSearch.mode === "users" ? "users" : "items"}/search/${activeUser.id}`, {
 				method: "POST",
 				headers: {
@@ -46,7 +49,7 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 		}
 	}, [query, activeUser, showSearch]);
 
-	// ---------- Delayed Search on Input Change ----------
+	// ---------- Debouncing: Delayed Search on Input Change ----------
 
 	useEffect(() => {
 		const delayedSearch = setTimeout(() => {
@@ -61,6 +64,7 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 	// ---------- Render Search Results ----------
 
 	function renderSearchResults() {
+		// Search by user
 		if (showSearch.mode === "users" && users.length > 0) {
 			return (
 				users.map((user) => (
@@ -76,6 +80,7 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 					</Link>
 				))
 			)
+		// Search by item
 		} else if (showSearch.mode === "items" && items.length > 0) {
 			return (
 				items.map((item) => (
@@ -105,6 +110,7 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 	
 	function handleClickResult(id) {
 		onClickEx();
+		// Trigger item display modal
 		onClickItem(id);
 	}
 
@@ -122,7 +128,6 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 						size="27"
 					/>
 				</div>
-
 				<div className="search-body">
 					<div className="search-bar">
 						<form onSubmit={handleSubmit}>
@@ -137,7 +142,6 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 								<AiOutlineSearch/>
 							</button>
 						</form>
-
 						<div className="filter">
 							<div className="filter-btns">
 								<button
@@ -155,9 +159,7 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 							</div>
 							<div className="filter-bottom"></div>
 						</div>
-
 					</div>
-					
 					<div className="search-results">
 						{renderSearchResults()}
 					</div>

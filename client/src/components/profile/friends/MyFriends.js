@@ -6,7 +6,8 @@ import "./MyFriends.css";
 
 function MyFriends({ friends, showFriends, setShowFriends, profile }) {
 
-	// Conditionally render edit profile modal
+	// ---------- Conditionally Render Friends Modal ----------
+
 	if (!showFriends) {
 		return null;
 	}
@@ -21,7 +22,6 @@ function MyFriends({ friends, showFriends, setShowFriends, profile }) {
 						size="27"
 					/>
 				</div>
-
 				<div className="friends-list">
 					{friends.map((friend) => (
 						<Link
@@ -33,7 +33,6 @@ function MyFriends({ friends, showFriends, setShowFriends, profile }) {
 						</Link>
 					))}
 				</div>
-
 			</div>
 		</div>
 	);

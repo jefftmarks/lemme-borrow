@@ -7,12 +7,12 @@ function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 
 	const { id, description, status, tags, owner, borrower} = item;
 
-	// ---------- If Your Belonging, Render CRUD Options ----------
+	// ---------- Render Item Status and Edit Item Button ----------
 
 	function renderStatusBar() {
-		// Item is yours
+		// If item belongs to active user
 		if (activeUser.id === owner.id) {
-			// Item has no active tickets associated with you
+			// Item has no active or pending tickets
 			if (tickets.length < 1) {
 				return (
 					<div className="item-status-bar">
@@ -24,7 +24,7 @@ function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 						</button>
 					</div>
 				)
-			// Item has active tickets associated with you
+			// If item has active tickets, it cannot be edited
 			} else {
 				const message = status === "home" ? "in Your Cupboard" : `Being Borrowed by ${borrower.first_name}`
 				return (
@@ -33,7 +33,7 @@ function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 					</div>
 				);
 			}
-		// Item is not yours
+		// If item does not belong to active user
 		} else {
 			return (
 				<Link to={`/user/${owner.id}`}>
@@ -66,15 +66,17 @@ function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 				}
 			})
 	}
-	// ---------- Only Render Delete Button if Your Own Item ----------
+
+	// ---------- Only Render Delete Button if Item Belongs to Active user ----------
 
 	function renderDeleteButton() {
-		// Item is yours and no pending tickets
+		// Item belongs to active user
 		if (activeUser.id === owner.id) {
-			// And no active tikets
+			// And has no active tikets
 			if (tickets.length < 1) {
 				return (
 					<>
+						{/* Warn user before permanently deleting */}
 						{isDeleting ? (
 							<button className="delete-item delete-2" onClick={handleDelete}>
 								Confirm Delete
@@ -99,17 +101,13 @@ function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 
 	return (
 		<div className="item-info">
-
 			{renderStatusBar()}
-			
 			<div
 				style={{backgroundImage: `url(${item.image})` }}
 				className="item-image"
 			>
 			</div>
-
 			<p className="description">{description}</p>
-
 			<div className="tag-display">
 				{tags.map((tag) => (
 					<button
@@ -120,7 +118,6 @@ function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
 					</button>
 				))}
 			</div>
-
 			{renderDeleteButton()}
 		</div>
 	);

@@ -11,7 +11,7 @@ function Cupboard({ profile, onClickItem }) {
 	const [searchInput, setSearchInput] = useState("");
 	const [query, setQuery] = useState("");
 
-	// ---------- Delayed Search on Input Change ----------
+	// ---------- Debouncing: Delayed Search on Input Change ----------
 
 	useEffect(() => {
 		const delayedSearch = setTimeout(() => {
@@ -33,6 +33,7 @@ function Cupboard({ profile, onClickItem }) {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
+				// Pass along search conditions to back end
 				count: count,
 				sort: sort,
 				query: query,
@@ -64,7 +65,6 @@ function Cupboard({ profile, onClickItem }) {
 				total={total}
 			/>
 			<div className="items-container">
-
 			{items.map((item) => (
 				<CupboardCard
 					key={item.id}
@@ -73,7 +73,6 @@ function Cupboard({ profile, onClickItem }) {
 				/>
 			))}
 			</div>
-	
 		</div>
 	);
 }

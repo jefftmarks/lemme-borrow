@@ -5,8 +5,9 @@ import "./CreateItem.css";
 
 import { createConsumer } from "@rails/actioncable";
 
+// Validate consumer is active user via JWT token
 function getWebSocketURL() {
-	const token = sessionStorage.getItem("jwt");
+	const token = localStorage.getItem("jwt");
 	return `http://localhost:3000/cable?token=${token}`
 }
 
@@ -28,6 +29,7 @@ function CreateItem({ setShowItem, activeUser }) {
 
 	// ---------- Action Cable: Create Subscription ----------
 
+	// When new item created, send data to FeedChannel, where new item will be broadcast to feeds of active user's friends
 	useEffect(() => {
 		if (activeUser) {
 			const newChannel = consumer.subscriptions.create({ channel: "FeedChannel", user_id: activeUser.id }, {
@@ -46,14 +48,14 @@ function CreateItem({ setShowItem, activeUser }) {
 	useEffect(() => {
 		// Use setTimeout so there isn't "typewriter" effect
 		const updateTagCards = setTimeout(() => {
-		// remove semi-colons
+		// Remove semi-colons
 		const arr = formData.tags.split(/\s*;\s*/gm);
-		// filter out empty elements and grab first five
+		// Filter out empty elements and grab first five
 		const filteredArr = arr.filter((el) => el !== "").splice(0, 5);
-		// add (lowercase) tags to a set to account for uniqueness
+		// Add lowercase tags to a set to account for uniqueness
 		const set = new Set();
 		filteredArr.forEach((el) => set.add(el.toLowerCase()));
-		// render tag cards
+		// Render tag cards
 		setTagCards(Array.from(set));
 		}, 300);
 
@@ -62,7 +64,7 @@ function CreateItem({ setShowItem, activeUser }) {
 		}
 	}, [formData.tags]);
 
-	// ---------- Submit ----------
+	// ---------- Submit New Item ----------
 
 	function handleChange(e) {
 		const { value, name } = e.target;
@@ -71,7 +73,6 @@ function CreateItem({ setShowItem, activeUser }) {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-
 		const newItem = {
 			name: formData.name,
 			image: formData.image,
@@ -79,13 +80,12 @@ function CreateItem({ setShowItem, activeUser }) {
 			owner_id: activeUser.id,
 			status: "home"
 		}
-
+		// Send new item to FeedChanel
 		channel.send({item: newItem, tags: tagCards});
 	}
 
 	return (
 		<div className="edit-item">
-	
 			<form onSubmit={handleSubmit}>
 				<label><p>Item Name:</p>
 					<input
@@ -121,7 +121,6 @@ function CreateItem({ setShowItem, activeUser }) {
 							<p>tags must be unique</p>
 							<p>book; sci-fi; used;</p>
 						</div>
-
 						<textarea
 						name="tags"
 						rows="2"
@@ -129,7 +128,6 @@ function CreateItem({ setShowItem, activeUser }) {
 						value={formData.tags}
 						>
 						</textarea>
-
 						<div className="tag-display">
 							{tagCards.map((tag) => (
 								<p key={tag}>{tag}</p>

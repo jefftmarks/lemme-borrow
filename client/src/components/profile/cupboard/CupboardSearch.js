@@ -4,6 +4,8 @@ import "./CupboardSearch.css";
 
 function CupboardSearch({ total, count, setCount, sort, setSort, setQuery, searchInput, setSearchInput, itemsLength}) {
 
+	// ---------- Form Handling ----------
+
 	function handleSubmit(e) {
 		e.preventDefault();
 		setSort("newest");
@@ -18,7 +20,6 @@ function CupboardSearch({ total, count, setCount, sort, setSort, setQuery, searc
 
 	return (
 		<div className="cupboard-nav">
-
 			<div className={`cupboard-pagination hide-${total <= 20}`}>
 				{itemsLength === 0 ? "No Items" : (
 					<p>{count + 1}-{count + itemsLength} of {total}</p>
@@ -40,7 +41,6 @@ function CupboardSearch({ total, count, setCount, sort, setSort, setQuery, searc
 					</div>
 				)}
 			</div>
-
 			<div className="cupboard-search">
 				<form onSubmit={handleSubmit}>
 					<input
@@ -57,7 +57,6 @@ function CupboardSearch({ total, count, setCount, sort, setSort, setQuery, searc
 						Clear Search
 				</button>
 			</div>
-
 			<select
 				className="cupboard-sort"
 				name="sort"
@@ -67,7 +66,6 @@ function CupboardSearch({ total, count, setCount, sort, setSort, setQuery, searc
 				<option value="newest">Newest to Oldest</option>
 				<option value="oldest">Oldest to Newest</option>
 			</select>
-
 		</div>
 	);
 }

@@ -6,8 +6,9 @@ import "./Feed.css";
 
 import { createConsumer } from "@rails/actioncable";
 
+// Validate consumer is active user via JWT token
 function getWebSocketURL() {
-	const token = sessionStorage.getItem("jwt");
+	const token = localStorage.getItem("jwt");
 	return `http://localhost:3000/cable?token=${token}`
 }
 
@@ -22,6 +23,7 @@ function Feed({ activeUser, onClickItem }) {
 
 	// ---------- Action Cable: Create Subscription ----------
 
+	// When new item is created by one of user's friends, data is sent to FeedChannel, where new item is broadcast to each friend of item owner
 	useEffect(() => {
 		if (activeUser) {
 			const newChannel = consumer.subscriptions.create({ channel: "FeedChannel", user_id: activeUser.id }, {
@@ -34,7 +36,7 @@ function Feed({ activeUser, onClickItem }) {
 	}, [activeUser]);
 
 
-	// ---------- Grab 10 Most Recent Items ----------
+	// ---------- Request 10 Most Recent Items ----------
 
 	useEffect(() => {
 		fetch(`/items/recent/${activeUser.id}/count/${count}`)
@@ -56,14 +58,12 @@ function Feed({ activeUser, onClickItem }) {
 	return (
 		<div className="feed">
 			<div className="feed-container">
-				{/* {showHeader ? <p className="feed-header">New Items From Your Friends</p> : null } */}
 				<div className="feed-list">
 					{items.map((item) => (
 						<FeedCard
 							key={item.id}
 							item={item}
 							onClickItem={onClickItem}
-							
 						/>
 					))}
 					{items.length < 1 || items.length % 10 !== 0 ? null : (

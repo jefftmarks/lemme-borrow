@@ -11,17 +11,19 @@ import Ticket from "./components/ticket/Ticket";
 
 function App() {
 	const [user, setUser] = useState(null);
+	const [isLoading, setIsLoading] = useState(true);
+
+	// Modals
 	const [showSignup, setShowSignup] = useState(false);
 	const [showItem, setShowItem] = useState(false);
-	const [showSearch, setShowSearch] = useState({show: false, mode: ""});
+	const [showSearch, setShowSearch] = useState(false);
 	const [query, setQuery] = useState("");
-	const [isLoading, setIsLoading] = useState(true);
 
 	// ---------- Render Active User on Reload ----------
 
 	// Grab active user via JWT token stored in local storage
 	useEffect(() => {
-		const token = sessionStorage.getItem("jwt");
+		const token = localStorage.getItem("jwt");
 		if (token && !user) {
 			fetch("/profile", {
 				headers: {
@@ -44,7 +46,7 @@ function App() {
 		}
 	}, [user]);
 
-	// Render home dashboard if active user, otherwise load welcome page
+	// If active user, render home dashboard. Otherwise, load welcome page with login/signup.
 	function renderElement() {
 		return user ? (
 			<Home
@@ -56,15 +58,18 @@ function App() {
 
 	// ---------- Render Item Display ----------
 
+	// When item clicked (on feed or on cupboard page), fetch item and display item modal.
 	function handleClickItem(id) {
 		setShowItem(true);
 		fetch(`/items/${id}`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((item) => {
+						// showItem state stores payload of item and mode. Mode determines display (show, edit, add)
 						setShowItem({item: item, mode: ""});
 					});
 				} else {
+					// User clicks on item but owner may have deleted
 					res.json().then((data) => alert(data.error));
 				}
 			});
@@ -74,11 +79,15 @@ function App() {
 
 	function handleSearch(searchInput) {
 		if (searchInput !== "") {
+			// showSearch state stores payload of boolean to display modal and mode, which determines whether default search category will be "users" or "items"
 			setShowSearch({show: true, mode: "users"});
 			setQuery(searchInput);
+			// Blur nav search input (and focus on input in SearchDisplay modal)
 			document.getElementById("nav-search-input").blur();
 		}
 	}
+
+	// ---------- Render App ----------
 
 	if (isLoading) {
 		return null;
@@ -86,6 +95,9 @@ function App() {
 
   return (
     <div className="App">
+
+			 {/* ---------- Modals ========== */}
+
 			<ItemDisplay
 				setShowItem={setShowItem}
 				showItem={showItem}
@@ -106,12 +118,18 @@ function App() {
 				setShowSignup={setShowSignup}
 				setUser={setUser}
 			/>
+
+			{/* ---------- Nav ========== */}
+
 			<Header
 				user={user}
 				setUser={setUser}
 				setShowSignup={setShowSignup}
 				onSearch={handleSearch}
 			/>
+
+			{/* ---------- Routes ========== */}
+
 			<Routes>
 				<Route
 					path="/user/:user_id"

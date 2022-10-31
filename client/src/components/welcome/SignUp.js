@@ -16,6 +16,8 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 	const [formData, setFormData] = useState(initialState);
 	const [errors, setErrors] = useState([]);
 
+	// ---------- Form Handling ----------
+
 	function handleChange(e) {
 		const { name, value } = e.target;
 		setFormData({...formData, [name]: value});
@@ -23,7 +25,6 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 
 	function handleSubmit(event) {
 		event.preventDefault();
-
 		fetch("/users", {
 			method: "POST",
 			headers: {
@@ -34,7 +35,8 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((data) => {
-						sessionStorage.setItem("jwt", data.token);
+						// Store JWT token
+						localStorage.setItem("jwt", data.token);
 						setShowSignup(false);
 						setUser(data.user);
 					});
@@ -44,7 +46,8 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 			})
 	}
 
-	// Conditionally render signup modal
+	// ---------- Conditionally Render Signup Modal ----------
+	
 	if (!showSignup) {
 		return null;
 	}

@@ -7,6 +7,8 @@ function Message({ message, activeUser }) {
 
 	let formattedMessage = message.text
 
+	// ---------- Conditional Styling of Messages ---------
+	
 	if (message.automated) {
 		mode = "automated";
 		formattedMessage = `Automated Message: ${message.text}`

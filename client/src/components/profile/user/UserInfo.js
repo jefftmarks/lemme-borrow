@@ -7,7 +7,7 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 	const [showEditProfile, setShowEditProfile] = useState(false);
 	const [showFriends, setShowFriends] = useState(false);
 
-	// ---------- Render Friends ----------
+	// ---------- Trigger Friends Modal and Request Friends ----------
 
 	function onClickShowFriends() {
 		fetch(`/friendships/user/${profile.user.id}`)
@@ -24,8 +24,9 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 
 	// ---------- Friendings, Unfriending & Accepting Friend Requests ----------
 
+	// Unfriend
 	function handleUnfriend() {
-		// Delete request to ID of friendship instance
+		// Include ID of friendship instance
 		fetch(`/friendships/${profile.friend_status.id}`, {
 			method: "DELETE",
 		})
@@ -44,6 +45,7 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 			});
 	}
 
+	// Send friend request
 	function handleSendFriendRequest() {
 		fetch("/friend_requests", {
 			method: "POST",
@@ -67,6 +69,7 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 			})
 	}
 
+	// Accept friend request
 	function handleAcceptFriendRequest() {
 		fetch("/friendships", {
 			method: "POST",
@@ -90,6 +93,7 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 			})
 	}
 
+	// Decline friend request
 	function handleDeclineFriendRequest() {
 		fetch(`/friend_requests/${profile.friend_status.id}`, {
 			method: "DELETE",
@@ -109,6 +113,7 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 	// ---------- Render Buttons Based on Friend Status ----------
 
 	function renderButtons() {
+		// On active user's page
 		if (profile.is_active) {
 			return (
 				<div className="user-actions">
@@ -125,6 +130,7 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 			)
 		} else {
 			switch (profile.friend_status.mode) {
+				// Active user is friends with profile user
 				case "Friends":
 					return (
 						<div className="user-actions">
@@ -148,6 +154,7 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 							</button>
 						</div>
 					);
+				// Profile user has yet to respond to active user's friend request
 				case "Pending Response":
 					return (
 						<div className="user-actions">
@@ -156,6 +163,7 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 							</button>
 						</div>
 					);
+				// Active user has yet to respond to profile user's friend request
 				case "Pending Action":
 					return (
 						<div className="user-actions">
@@ -167,6 +175,7 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 							</button>
 						</div>
 					);
+				// Default: not friends
 				default:
 					return (
 						<div className="user-actions">
@@ -181,6 +190,8 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 
 	return (
 		<>
+			{/* ---------- Modals ---------- */}
+
 			<EditProfile
 				showEditProfile={showEditProfile}
 				setShowEditProfile={setShowEditProfile}
@@ -193,6 +204,8 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 				showFriends={showFriends}
 				setShowFriends={setShowFriends}
 			/>
+
+			{/* ---------- */}
 
 			<div className="user-info">
 				<div className="user-info-top">

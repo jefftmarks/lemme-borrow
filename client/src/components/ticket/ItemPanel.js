@@ -7,6 +7,12 @@ function ItemPanel({ ticket, setTicket, isOwner, activeUser, messages, setMessag
 	const [date, setDate] = useState(ticket.return_date);
 	const [item, setItem] = useState(null);
 
+	const { owner, return_date, id } = ticket;
+
+	const navigate = useNavigate();
+
+	// ---------- Render Item Info ----------
+
 	useEffect(() => {
 		if (ticket) {
 			fetch(`/items/${ticket.item.id}`)
@@ -20,16 +26,11 @@ function ItemPanel({ ticket, setTicket, isOwner, activeUser, messages, setMessag
 		}
 	}, [ticket])
 
-	const { owner, return_date, id } = ticket;
-
-	const navigate = useNavigate();
-
 	// ---------- Reformat Date ----------
 
 	let formattedDate;
 
 	if (return_date !== "") {
-		// reformat date
 		let str = return_date;
 		let dd;
 		let mm;
@@ -50,8 +51,9 @@ function ItemPanel({ ticket, setTicket, isOwner, activeUser, messages, setMessag
 		formattedDate = `${mm}/${dd}/${yyyy}`;
 	}
 
-	// ---------- Undo or Decline Request ----------
+	// ---------- Ticket CRUD ----------
 
+	// Undo or decline request
 	function handleDeleteTicket() {
 		fetch(`/tickets/close/${id}/user/${activeUser.id}`, {
 			method: "PATCH",
@@ -70,8 +72,7 @@ function ItemPanel({ ticket, setTicket, isOwner, activeUser, messages, setMessag
 			}));
 	}
 
-	// ---------- Approve Request ----------
-
+	// Approve request
 	function handleApproveTicket() {
 		fetch(`/tickets/approve/${id}`, {
 			method: "PATCH",
@@ -83,6 +84,7 @@ function ItemPanel({ ticket, setTicket, isOwner, activeUser, messages, setMessag
 				if (res.ok) {
 					res.json().then((payload) => {
 						setTicket(payload.ticket);
+						// Render automated message
 						setMessages([payload.message, ...messages])
 					});
 				} else {
@@ -91,8 +93,7 @@ function ItemPanel({ ticket, setTicket, isOwner, activeUser, messages, setMessag
 			}));
 	}
 
-	// ---------- Receive Item ----------
-
+	// Borrower marks item as received
 	function handleReceiveItem() {
 		fetch(`/tickets/receive/${id}`, {
 			method: "PATCH",
@@ -104,6 +105,7 @@ function ItemPanel({ ticket, setTicket, isOwner, activeUser, messages, setMessag
 				if (res.ok) {
 					res.json().then((payload) => {
 						setTicket(payload.ticket);
+						// Render automated message
 						setMessages([payload.message, ...messages])
 					});
 				} else {
@@ -112,8 +114,7 @@ function ItemPanel({ ticket, setTicket, isOwner, activeUser, messages, setMessag
 			}));
 	}
 
-	// ---------- Set Return Date ----------
-
+	// Owner sets/updates desired return date
 	function handleSetReturnDate() {
 		fetch(`/tickets/date/${id}`, {
 			method: "PATCH",
@@ -126,6 +127,7 @@ function ItemPanel({ ticket, setTicket, isOwner, activeUser, messages, setMessag
 				if (res.ok) {
 					res.json().then((payload) => {
 						setTicket(payload.ticket);
+						// Render automated message
 						setMessages([payload.message, ...messages])
 					});
 				} else {
@@ -133,6 +135,8 @@ function ItemPanel({ ticket, setTicket, isOwner, activeUser, messages, setMessag
 				}
 			}));
 	}
+
+	// ---------- Conditionally Render Page ----------
 
 	if (!item) {
 		return null;
@@ -142,22 +146,15 @@ function ItemPanel({ ticket, setTicket, isOwner, activeUser, messages, setMessag
 		<div className="item-panel">
 			<p className="item-panel-header">{item.name}</p>
 			<img src={item.image} alt={item.name} />
-
 			<div className="item-panel-body">
-
 				<p><span>Owner:</span> {isOwner ? "You" : owner.first_name}</p>
-
 				<p><span>Description:</span> {item.description}</p>
-
 				<p><span>Tags:</span> {item.tags.join(", ")}</p>
-
 			</div>
-
 			<div className="return-date">
 				<p>Return Date: {return_date ? formattedDate : "--"}</p>
 				{ticket.overdue ? <span>Overdue</span> : null}
 			</div>
-
 			<Controls 
 				ticket={ticket}
 				isOwner={isOwner}

@@ -17,6 +17,8 @@ function EditProfile({ showEditProfile, setShowEditProfile, activeUser, setActiv
 	const [formData, setFormData] = useState(initialState);
 	const [showUpdatePassword, setShowUpdatePassword] = useState(false);
 
+	// ---------- Form Handling ----------
+
 	function handleChange(e) {
 		const { name, value } = e.target;
 		setFormData({...formData, [name]: value});
@@ -24,12 +26,10 @@ function EditProfile({ showEditProfile, setShowEditProfile, activeUser, setActiv
 
 	function handleSubmit(event) {
 		event.preventDefault();
-
 		// If user didn't provide avatar, keep avatar the same
 		if (formData.avatar === "") {
 			setFormData({...formData, avatar: activeUser.avatar});
 		}
-
 		fetch(`/users/${activeUser.id}`, {
 			method: "PATCH",
 			headers: {
@@ -37,7 +37,7 @@ function EditProfile({ showEditProfile, setShowEditProfile, activeUser, setActiv
 			},
 			body: JSON.stringify({
 				...formData,
-				// include boolean value to let backend know whether user is updating password
+				// Include boolean value to let backend know whether user is updating their password
 				new_password: showUpdatePassword
 			}),
 		})
@@ -53,21 +53,21 @@ function EditProfile({ showEditProfile, setShowEditProfile, activeUser, setActiv
 			})
 	}
 
+	// ---------- Conditionally Render Edit Profile Modal ----------
+
+	if (!showEditProfile) {
+		return null;
+	}
+
 	function onClickEx() {
 		setFormData(activeUser);
 		setShowUpdatePassword(false);
 		setShowEditProfile(false);
 	}
 
-	// Conditionally render edit profile modal
-	if (!showEditProfile) {
-		return null;
-	}
-
 	return (
 		<div className="signup">
 			<div className="signup-container">
-
 				<div className="signup-header">
 					<p>Edit My Profile</p>
 					<MdCancel
@@ -75,7 +75,6 @@ function EditProfile({ showEditProfile, setShowEditProfile, activeUser, setActiv
 						size="27"
 					/>
 				</div>
-
 				<form onSubmit={handleSubmit}>
 					<label><p>First Name:</p>
 							<input
@@ -122,16 +121,16 @@ function EditProfile({ showEditProfile, setShowEditProfile, activeUser, setActiv
 							/>
 						</label>
 
+						{/* ---------- Update Password ========== */}
+						
 						{showUpdatePassword ? (
 							<div className="new-password">
-
 								<div className="update-password-header">
 									<p>Update Password</p>
 									<button onClick={() => setShowUpdatePassword(false)}>
 										Never Mind
 									</button>
 								</div>
-
 								<label><p>New Password:</p>
 									<input
 									required
@@ -159,7 +158,6 @@ function EditProfile({ showEditProfile, setShowEditProfile, activeUser, setActiv
 								Update Password?
 							</span>
 						)}
-
 						<button>Update Profile</button>
 				</form>
 			</div>	

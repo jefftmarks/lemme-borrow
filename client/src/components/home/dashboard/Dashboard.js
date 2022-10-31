@@ -9,19 +9,20 @@ import { MdNotifications } from "react-icons/md";
 import "./Dashboard.css";
 
 function Dashboard({ activeUser }) {
+	// Friend Requests
 	const [friendRequests, setFriendRequests] = useState([]);
 	const [showFriendRequests, setShowFriendRequests] = useState(false);
-
+	// Items You're Borrowing
 	const [borrows, setBorrows] = useState([]);
 	const [showBorrows, setShowBorrows] = useState(false);
-
+	// Items You've Loaned
 	const [loans, setLoans] = useState([]);
 	const [showLoans, setShowLoans] = useState(false);
-
+	// Pending Requests
 	const [pendingTickets, setPendingTickets] = useState([]);
 	const [showPendingTickets, setShowPendingTickets] = useState(false);
 
-	// ---------- Grab Friend Requests ----------
+	// ---------- Load Friend Requests ----------
 
 	useEffect(() => {
 		fetch(`/friend_requests/user/${activeUser.id}`)
@@ -36,7 +37,7 @@ function Dashboard({ activeUser }) {
 			});
 	}, [activeUser]);
 
-	// ---------- Grab Pending Tickets ----------
+	// ---------- Load Pending Tickets ----------
 
 	useEffect(() => {
 		fetch(`/tickets/requests/${activeUser.id}`)
@@ -51,7 +52,7 @@ function Dashboard({ activeUser }) {
 			})
 	}, [activeUser]);
 
-	// ---------- Grab Active Borrows ----------
+	// ---------- Load Active Borrows ----------
 
 	useEffect(() => {
 		fetch(`/tickets/borrows/${activeUser.id}`)
@@ -66,7 +67,7 @@ function Dashboard({ activeUser }) {
 			})
 	}, [activeUser]);
 
-	// ---------- Grab Active Loans ----------
+	// ---------- Load Active Loans ----------
 
 	useEffect(() => {;
 		fetch(`/tickets/loans/${activeUser.id}`)
@@ -83,11 +84,8 @@ function Dashboard({ activeUser }) {
 
 	return (
 		<div className="dashboard">
-
 			<p className="dashboard-header">Dashboard</p>
-
 			<div className="notifications">
-
 				<div className={`notifications-header ${showFriendRequests}`}>
 					<div className={friendRequests.length === 0 ? "zero" : null}>
 						<MdNotifications />{friendRequests.length}
@@ -99,7 +97,6 @@ function Dashboard({ activeUser }) {
 						<GoTriangleUp className="arrow" onClick={() => setShowFriendRequests(true)} />
 					)}
 				</div>
-
 				{showFriendRequests ? (
 					<div className="notifications-list">
 						<FriendRequests
@@ -108,7 +105,6 @@ function Dashboard({ activeUser }) {
 					</div>
 				) : null}
 			</div>
-
 			<div className="notifications">
 			<div className={`notifications-header ${showPendingTickets}`}>
 				<div className={pendingTickets.length === 0 ? "zero" : null}>
@@ -121,7 +117,6 @@ function Dashboard({ activeUser }) {
 						<GoTriangleUp className="arrow" onClick={() => setShowPendingTickets(true)} />
 					)}
 				</div>
-
 				{showPendingTickets ? (
 					<div className="notifications-list">
 						<PendingTickets
@@ -130,7 +125,6 @@ function Dashboard({ activeUser }) {
 					</div>
 				) : null}
 			</div>
-
 			<div className="notifications">
 			<div className={`notifications-header ${showBorrows}`}>
 					<div className={borrows.length === 0 ? "zero" : null}>
@@ -143,7 +137,6 @@ function Dashboard({ activeUser }) {
 						<GoTriangleUp className="arrow" onClick={() => setShowBorrows(true)} />
 					)}
 				</div>
-
 					{showBorrows ? (
 						<div className="notifications-list">
 							<ActiveBorrows
@@ -152,7 +145,6 @@ function Dashboard({ activeUser }) {
 						</div>
 					) : null}
 			</div>
-
 			<div className="notifications">
 			<div className={`notifications-header ${showLoans}`}>
 					<div className={loans.length === 0 ? "zero" : null}>
@@ -165,7 +157,6 @@ function Dashboard({ activeUser }) {
 						<GoTriangleUp className="arrow" onClick={() => setShowLoans(true)} />
 					)}
 				</div>
-				
 					{showLoans ? (
 						<div className="notifications-list">
 							<ActiveLoans

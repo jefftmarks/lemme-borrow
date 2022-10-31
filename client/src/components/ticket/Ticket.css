@@ -8,6 +8,13 @@
 	justify-content: space-between;
 }
 
+.ticket-not-found {
+	color: black;
+	font-size: 1.2rem;
+	margin-top: 1em;
+	margin-left: 1em;
+}
+
 @media (max-width: 1075px) {
 	.ticket {
 		flex-direction: column;

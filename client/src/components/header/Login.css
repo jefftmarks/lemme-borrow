@@ -43,6 +43,11 @@
 	text-decoration: underline;
 }
 
+.login .error {
+	color: var(--maximum-green-yellow);
+	text-decoration: underline;
+}
+
 @media (max-width: 759px) {
 	.login {
 		justify-content: center;
