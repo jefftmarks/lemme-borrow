@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { ActiveUserContext } from "../../context/active_user";
+import { useSelector, useDispatch } from "react-redux";
+import { messageAdded, fetchMessages } from "../../slices/messagesSlice";
 import ItemPanel from "./ItemPanel";
 import Messenger from "./messenger/Messenger";
 import "./Ticket.css";
@@ -24,10 +26,13 @@ function Ticket() {
 	const [isAuthorized, setIsAuthorized] = useState(false);
 	const [ticket, setTicket] = useState(null);
 	const [isOwner, setIsOwner] = useState(false);
-	const [messages, setMessages] = useState([]);
 	const [channel, setChannel] = useState(null);
 
+	const messages = useSelector((state) => state.messages.entities);
+
 	const params = useParams();
+
+	const dispatch = useDispatch();
 
 	// ---------- Action Cable: Create Subscription ----------
 
@@ -36,7 +41,7 @@ function Ticket() {
 		if (params) {
 			const newChannel = consumer.subscriptions.create({ channel: "TicketChannel", ticket_id: params.ticket_id }, {
 				received(message) {
-					setMessages(messages => [message, ...messages]);
+					dispatch(messageAdded(message));
 				} 
 			});
 			setChannel(newChannel);
@@ -71,16 +76,9 @@ function Ticket() {
 
 	useEffect(() => {
 		if (ticket) {
-			fetch(`/messages/ticket/${ticket.id}`)
-			.then((res) => {
-				if (res.ok) {
-					res.json().then((messages) => setMessages(messages));
-				} else {
-					res.json().then((data) => console.log(data));
-				}
-			})
+			dispatch(fetchMessages(ticket.id));
 		}
-	}, [ticket]);
+	}, [ticket, dispatch]);
 
 	// ---------- Authorization and Page Rendering ----------
 
@@ -98,8 +96,6 @@ function Ticket() {
 				ticket={ticket}
 				setTicket={setTicket}
 				isOwner={isOwner}
-				messages={messages}
-				setMessages={setMessages}
 			/>
 			<Messenger
 				messages={messages}
