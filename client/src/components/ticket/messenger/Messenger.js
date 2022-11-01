@@ -1,14 +1,57 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { messageAdded, fetchMessages } from "../../../slices/messagesSlice";
 import MessageForm from "./MessageForm";
 import Message from "./Message";
 import "./Messenger.css";
 
-function Messenger({ ticket, messages, isOwner, channel }) {
+// ---------- Action Cable: Create Consumer ----------
+
+import { createConsumer } from "@rails/actioncable";
+
+// Validate consumer is active user via JWT token
+function getWebSocketURL() {
+	const token = localStorage.getItem("jwt");
+	return `http://localhost:3000/cable?token=${token}`
+}
+
+const consumer = createConsumer(getWebSocketURL);
+
+// --------------------
+
+function Messenger({ ticket, isOwner, params }) {
 	const [left, setLeft] = useState({});
 	const [right, setRight] = useState({});
+	const [channel, setChannel] = useState(null);
+
+	const messages = useSelector((state) => state.messages.entities);
 
 	const navigate = useNavigate();
+
+	const dispatch = useDispatch();
+
+	// ---------- Render Messages ----------
+
+	useEffect(() => {
+		if (ticket) {
+			dispatch(fetchMessages(ticket.id));
+		}
+	}, [ticket, dispatch]);
+
+		// ---------- Action Cable: Create Subscription ----------
+
+	// Connect consumer to "chat room" unique to ticket ID
+	useEffect(() => {
+		if (params) {
+			const newChannel = consumer.subscriptions.create({ channel: "TicketChannel", ticket_id: params.ticket_id }, {
+				received(message) {
+					dispatch(messageAdded(message));
+				} 
+			});
+			setChannel(newChannel);
+		} 
+	}, []);
 
 	// ---------- Orient Messenger Orientation Based on Active user
 

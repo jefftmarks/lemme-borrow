@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { ActiveUserContext } from "../../context/active_user";
+import { useDispatch } from "react-redux";
+import { messageAdded } from "../../slices/messagesSlice";
 import Controls from "./Controls";
 import { useNavigate } from "react-router-dom";
 import "./ItemPanel.css"
 
-function ItemPanel({ ticket, setTicket, isOwner, messages, setMessages }) {
+function ItemPanel({ ticket, setTicket, isOwner }) {
 	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [date, setDate] = useState(ticket.return_date);
 	const [item, setItem] = useState(null);
@@ -12,6 +14,8 @@ function ItemPanel({ ticket, setTicket, isOwner, messages, setMessages }) {
 	const { owner, return_date, id } = ticket;
 
 	const navigate = useNavigate();
+
+	const dispatch = useDispatch();
 
 	// ---------- Render Item Info ----------
 
@@ -87,7 +91,7 @@ function ItemPanel({ ticket, setTicket, isOwner, messages, setMessages }) {
 					res.json().then((payload) => {
 						setTicket(payload.ticket);
 						// Render automated message
-						setMessages([payload.message, ...messages])
+						dispatch(messageAdded(payload.message));
 					});
 				} else {
 					res.json().then((data) => console.log(data));
@@ -108,7 +112,7 @@ function ItemPanel({ ticket, setTicket, isOwner, messages, setMessages }) {
 					res.json().then((payload) => {
 						setTicket(payload.ticket);
 						// Render automated message
-						setMessages([payload.message, ...messages])
+						dispatch(messageAdded(payload.message));
 					});
 				} else {
 					res.json().then((data) => console.log(data));
@@ -130,7 +134,7 @@ function ItemPanel({ ticket, setTicket, isOwner, messages, setMessages }) {
 					res.json().then((payload) => {
 						setTicket(payload.ticket);
 						// Render automated message
-						setMessages([payload.message, ...messages])
+						dispatch(messageAdded(payload.message));
 					});
 				} else {
 					res.json().then((data) => console.log(data));
