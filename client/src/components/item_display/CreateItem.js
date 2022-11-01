@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { ActiveUserContext } from "../../context/active_user";
 import "./CreateItem.css";
 
 // ---------- Action Cable: Create Consumer ----------
@@ -22,7 +23,8 @@ const initialState = {
 	tags: "",
 }
 
-function CreateItem({ setShowItem, activeUser }) {
+function CreateItem({ setShowItem }) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [formData, setFormData] = useState(initialState);
 	const [tagCards, setTagCards] = useState([]);
 	const [channel, setChannel] = useState(null);

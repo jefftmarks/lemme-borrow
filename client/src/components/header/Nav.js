@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ActiveUserContext } from "../../context/active_user";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import "./Nav.css";
 
 // ---------- Nav Bar: User Logged In ----------
 
-function Nav({ user, setUser, onSearch }) {
+function Nav({ onSearch }) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [searchInput, setSearchInput] = useState("");
 
 	// ---------- Logout ----------
@@ -15,7 +17,7 @@ function Nav({ user, setUser, onSearch }) {
 	function handleLogout() {
 		// Clear JWT token
 		localStorage.clear();
-		setUser(null);
+		setActiveUser(null);
 		navigate("/");
 	}
 
@@ -32,7 +34,7 @@ function Nav({ user, setUser, onSearch }) {
 		<div className="nav">
 			<div className="nav-links">
 				<Link to={"/"}>Dashboard</Link>
-				<Link to={`/user/${user.id}`}>Cupboard</Link>
+				<Link to={`/user/${activeUser.id}`}>Cupboard</Link>
 			</div>
 			<form onSubmit={handleSubmit}>
 				<input

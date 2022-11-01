@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ActiveUserContext } from "../../../context/active_user";
 import { MdCancel } from "react-icons/md";
 import "./EditProfile.css";
 
-function EditProfile({ showEditProfile, setShowEditProfile, activeUser, setActiveUser }) {
+function EditProfile({ showEditProfile, setShowEditProfile}) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	
 	const initialState = {
 		first_name: activeUser.first_name,

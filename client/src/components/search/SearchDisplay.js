@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { ActiveUserContext } from "../../context/active_user";
 import SearchResult from "./SearchResult";
 import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { MdCancel } from "react-icons/md";
 import "./SearchDisplay.css";
 
-function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem, activeUser }) {
+function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem }) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [searchInput, setSearchInput] = useState("");
 	const [users, setUsers] = useState([]);
 	const [items, setItems] = useState([]);

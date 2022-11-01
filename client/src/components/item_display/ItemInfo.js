@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { ActiveUserContext } from "../../context/active_user";
 import "./ItemInfo.css";
 
-function ItemInfo({ item, setShowItem, activeUser, tickets, handleClickTag }) {
+function ItemInfo({ item, setShowItem, tickets, handleClickTag }) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	const { id, description, status, tags, owner, borrower} = item;

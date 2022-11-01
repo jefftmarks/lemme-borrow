@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ActiveUserContext } from "../../context/active_user";
 import "./Login.css";
 
 const initialState = { username: "", password: "" };
 
 // ---------- Nav Bar: No Active User ----------
 
-function Login({ setUser, setShowSignup }) {
+function Login({ setShowSignup }) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [formData, setFormData] = useState(initialState);
 	const [error, setError] = useState(null);
 
@@ -31,7 +33,7 @@ function Login({ setUser, setShowSignup }) {
 					// Handle JWT token
 					res.json().then((data) => {
 						localStorage.setItem("jwt", data.token);
-						setUser(data.user);
+						setActiveUser(data.user);
 					});
 				} else {
 					res.json().then((data) => setError(data.error));

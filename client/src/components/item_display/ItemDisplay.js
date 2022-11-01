@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { ActiveUserContext } from "../../context/active_user";
 import ItemInfo from "./ItemInfo";
 import EditItem from "./EditItem";
 import CreateItem from "./CreateItem";
@@ -7,7 +8,8 @@ import ItemTickets from "./ItemTickets";
 import { MdCancel } from "react-icons/md";
 import "./ItemDisplay.css";
 
-function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuery }) {
+function ItemDisplay({ showItem, setShowItem, setShowSearch, setQuery }) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [isLoading, setIsLoading] = useState(true)
 	const [tickets, setTickets] = useState([]);
 	const [friendStatus, setFriendStatus] = useState(null);
@@ -98,7 +100,6 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 			case "add":
 				return (
 					<CreateItem
-						activeUser={activeUser}
 						setShowItem={setShowItem}
 					/>
 				);
@@ -107,7 +108,6 @@ function ItemDisplay({ showItem, setShowItem, activeUser, setShowSearch, setQuer
 					<ItemInfo
 						item={item}
 						setShowItem={setShowItem}
-						activeUser={activeUser}
 						tickets={tickets}
 						handleClickTag={handleClickTag}
 					/>

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext} from "react";
+import { ActiveUserContext } from "../../../context/active_user";
 import "./Message.css";
 
-function Message({ message, activeUser }) {
-	
+function Message({ message }) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
+
 	let mode;
 
 	let formattedMessage = message.text

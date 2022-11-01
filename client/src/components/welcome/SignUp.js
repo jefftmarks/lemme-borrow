@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ActiveUserContext } from "../../context/active_user";
 import { MdCancel } from "react-icons/md";
 import "./SignUp.css";
 
@@ -12,7 +13,8 @@ const initialState = {
 	password_confirmation: ""
 }
 
-function SignUp({ showSignup, setShowSignup, setUser }) {
+function SignUp({ showSignup, setShowSignup }) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [formData, setFormData] = useState(initialState);
 	const [errors, setErrors] = useState([]);
 
@@ -38,7 +40,7 @@ function SignUp({ showSignup, setShowSignup, setUser }) {
 						// Store JWT token
 						localStorage.setItem("jwt", data.token);
 						setShowSignup(false);
-						setUser(data.user);
+						setActiveUser(data.user);
 					});
 				} else {
 					res.json().then((data) => setErrors(data.errors));

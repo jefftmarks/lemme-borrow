@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { ActiveUserContext } from "../../context/active_user";
 import UserInfo from "./user/UserInfo";
 import Cupboard from "./cupboard/Cupboard";
 import "./Profile.css";
 
-function Profile({ activeUser, setActiveUser, onClickItem, onClickAddItem }) {
+function Profile({ onClickItem, onClickAddItem }) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [profile, setProfile ] = useState(null);
 	const [friends, setFriends] = useState([]);
 	const [isUnfriending, setIsUnfriending] = useState(false);
@@ -52,8 +54,6 @@ function Profile({ activeUser, setActiveUser, onClickItem, onClickAddItem }) {
 			<UserInfo
 				profile={profile}
 				setProfile={setProfile}
-				activeUser={activeUser}
-				setActiveUser={setActiveUser}
 				isUnfriending={isUnfriending}
 				setIsUnfriending={setIsUnfriending}
 				friends={friends}

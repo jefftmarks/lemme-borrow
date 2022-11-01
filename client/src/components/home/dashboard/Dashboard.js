@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { ActiveUserContext } from "../../../context/active_user";
 import FriendRequests from "./FriendRequests";
 import ActiveBorrows from "./ActiveBorrows";
 import ActiveLoans from	"./ActiveLoans";
@@ -8,7 +9,8 @@ import { GoTriangleDown} from "react-icons/go";
 import { MdNotifications } from "react-icons/md";
 import "./Dashboard.css";
 
-function Dashboard({ activeUser }) {
+function Dashboard( ) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	// Friend Requests
 	const [friendRequests, setFriendRequests] = useState([]);
 	const [showFriendRequests, setShowFriendRequests] = useState(false);

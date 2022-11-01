@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+import { ActiveUserContext } from "../../context/active_user";
 import ItemPanel from "./ItemPanel";
 import Messenger from "./messenger/Messenger";
 import "./Ticket.css";
@@ -18,7 +19,8 @@ const consumer = createConsumer(getWebSocketURL);
 
 // --------------------
 
-function Ticket({ activeUser }) {
+function Ticket() {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [isAuthorized, setIsAuthorized] = useState(false);
 	const [ticket, setTicket] = useState(null);
 	const [isOwner, setIsOwner] = useState(false);
@@ -95,17 +97,14 @@ function Ticket({ activeUser }) {
 			<ItemPanel
 				ticket={ticket}
 				setTicket={setTicket}
-				activeUser={activeUser}
 				isOwner={isOwner}
 				messages={messages}
 				setMessages={setMessages}
 			/>
 			<Messenger
 				messages={messages}
-				setMessages={setMessages}
 				ticket={ticket}
 				isOwner={isOwner}
-				activeUser={activeUser}
 				channel={channel}
 		/>
 		</div>

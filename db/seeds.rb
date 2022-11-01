@@ -302,7 +302,7 @@ tags = ["book",
   image: "https://m.media-amazon.com/images/I/41oF1RS94qL._AC_SY780_.jpg",
   owner: jeff,
 	status: "home",
-	tags: [Tag.find_by(name: "sci-fi"), Tag.find_by(name: "book"), Tag.find_by(name: "asimov")]
+	tags: [Tag.find_by(name: "china"), Tag.find_by(name: "book")]
  )
 
  Item.create!(
@@ -311,7 +311,7 @@ tags = ["book",
   image: "https://cdn.thewirecutter.com/wp-content/uploads/2018/08/immersionblenders-lowres-0700.jpg",
   owner: jeff,
 	status: "home",
-	tags: [Tag.find_by(name: "china"), Tag.find_by(name: "book")]
+	tags: [Tag.find_by(name: "kitchen"), Tag.find_by(name: "blender")]
  )
 
  Item.create!(

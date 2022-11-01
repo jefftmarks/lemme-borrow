@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { ActiveUserContext } from "../../context/active_user";
 import Controls from "./Controls";
 import { useNavigate } from "react-router-dom";
 import "./ItemPanel.css"
 
-function ItemPanel({ ticket, setTicket, isOwner, activeUser, messages, setMessages }) {
+function ItemPanel({ ticket, setTicket, isOwner, messages, setMessages }) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [date, setDate] = useState(ticket.return_date);
 	const [item, setItem] = useState(null);
 

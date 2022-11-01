@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext} from "react";
+import { ActiveUserContext } from "../../context/active_user";
 import { Link } from "react-router-dom";
 import "./TicketCard.css"
 
-function TicketCard({ ticket, activeUser, setItem }) {
+function TicketCard({ ticket, setItem }) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 
 	const { borrower, owner, return_date, overdue, status } = ticket;
 

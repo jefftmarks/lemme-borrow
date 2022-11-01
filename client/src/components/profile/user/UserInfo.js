@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ActiveUserContext } from "../../../context/active_user";
 import EditProfile from "./EditProfile";
 import MyFriends from "../friends/MyFriends";
 import "./UserInfo.css";
 
-function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriending, setIsUnfriending, friends, setFriends, onClickAddItem }) {
+function UserInfo({ profile, setProfile, isUnfriending, setIsUnfriending, friends, setFriends, onClickAddItem }) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [showEditProfile, setShowEditProfile] = useState(false);
 	const [showFriends, setShowFriends] = useState(false);
 
@@ -195,8 +197,6 @@ function UserInfo({ profile, setProfile, activeUser, setActiveUser, isUnfriendin
 			<EditProfile
 				showEditProfile={showEditProfile}
 				setShowEditProfile={setShowEditProfile}
-				activeUser={activeUser}
-				setActiveUser={setActiveUser}
 			/>
 			<MyFriends
 				profile={profile}

@@ -4,7 +4,7 @@ import MessageForm from "./MessageForm";
 import Message from "./Message";
 import "./Messenger.css";
 
-function Messenger({ ticket, messages, setMessages, isOwner, activeUser, channel }) {
+function Messenger({ ticket, messages, isOwner, channel }) {
 	const [left, setLeft] = useState({});
 	const [right, setRight] = useState({});
 
@@ -51,7 +51,6 @@ function Messenger({ ticket, messages, setMessages, isOwner, activeUser, channel
 						<Message
 							key={message.id}
 							message={message}
-							activeUser={activeUser}
 						/>
 					))}
 				</div>

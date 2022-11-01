@@ -1,29 +1,27 @@
-import React from "react";
+import React, { useContext} from "react";
+import { ActiveUserContext } from "../../context/active_user";
 import { Link } from "react-router-dom";
-
 import Login from "./Login";
 import Nav from "./Nav";
 import "./Header.css";
 import Logo from "./borrow-logo.png";
 
-function Header({ user, setUser, onSearch, setShowSignup }) {
+function Header({ onSearch, setShowSignup }) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 
 	// ---------- Render Header ----------
 
 	// Render navigation depending on whether user logged in or not
 	function renderNavbar() {
-		if (user) {
+		if (activeUser) {
 			return (
 				<Nav
-					user={user}
-					setUser={setUser}
 					onSearch={onSearch}
 				/>
 			)
 		} else {
 			return (
 				<Login
-					setUser={setUser}
 					setShowSignup={setShowSignup}
 				/>
 			)

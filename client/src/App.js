@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
+import { ActiveUserContext } from "./context/active_user";
 import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import Welcome from "./components/welcome/Welcome";
@@ -10,7 +11,7 @@ import Profile from "./components/profile/Profile";
 import Ticket from "./components/ticket/Ticket";
 
 function App() {
-	const [user, setUser] = useState(null);
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [isLoading, setIsLoading] = useState(true);
 
 	// Modals
@@ -24,7 +25,7 @@ function App() {
 	// Grab active user via JWT token stored in local storage
 	useEffect(() => {
 		const token = localStorage.getItem("jwt");
-		if (token && !user) {
+		if (token && !activeUser) {
 			fetch("/profile", {
 				headers: {
 					token: token,
@@ -33,8 +34,8 @@ function App() {
 			})
 			.then((res) => {
 				if (res.ok) {
-					res.json().then((user) => {
-						setUser(user);
+					res.json().then((activeUser) => {
+						setActiveUser(activeUser);
 						setIsLoading(false);
 					});
 				} else {
@@ -44,13 +45,12 @@ function App() {
 		} else {
 			setIsLoading(false);
 		}
-	}, [user]);
+	}, [activeUser]);
 
 	// If active user, render home dashboard. Otherwise, load welcome page with login/signup.
 	function renderElement() {
-		return user ? (
+		return activeUser ? (
 			<Home
-				user={user}
 				onClickItem={handleClickItem}
 			/>
 		) : <Welcome />;
@@ -101,7 +101,6 @@ function App() {
 			<ItemDisplay
 				setShowItem={setShowItem}
 				showItem={showItem}
-				activeUser={user}
 				setShowSearch={setShowSearch}
 				setQuery={setQuery}
 			/>
@@ -110,20 +109,16 @@ function App() {
 				setShowSearch={setShowSearch}
 				query={query}
 				setQuery={setQuery}
-				activeUser={user}
 				onClickItem={handleClickItem}
 			/>
 			<SignUp
 				showSignup={showSignup}
 				setShowSignup={setShowSignup}
-				setUser={setUser}
 			/>
 
 			{/* ---------- Nav ========== */}
 
 			<Header
-				user={user}
-				setUser={setUser}
 				setShowSignup={setShowSignup}
 				onSearch={handleSearch}
 			/>
@@ -133,10 +128,8 @@ function App() {
 			<Routes>
 				<Route
 					path="/user/:user_id"
-					element={user ? (
+					element={activeUser ? (
 						<Profile
-							activeUser={user}
-							setActiveUser={setUser}
 							onClickItem={handleClickItem}
 							onClickAddItem={() => setShowItem({item: true, mode: "add"})}
 						/>
@@ -145,9 +138,7 @@ function App() {
 				<Route
 					path="/ticket/:ticket_id"
 					element={
-						<Ticket
-							activeUser={user}
-						/>
+						<Ticket/>
 					}
 				/>
 				<Route exact path="/" element={renderElement()}

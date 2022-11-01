@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { ActiveUserContext } from "../../../context/active_user";
 import FeedCard from "./FeedCard";
 import "./Feed.css";
 
@@ -16,7 +17,8 @@ const consumer = createConsumer(getWebSocketURL);
 
 // --------------------
 
-function Feed({ activeUser, onClickItem }) {
+function Feed({ onClickItem }) {
+	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [items, setItems] = useState([]);
 	const [count, setCount] = useState(9);
 	const [channel, setChannel] = useState(null);
