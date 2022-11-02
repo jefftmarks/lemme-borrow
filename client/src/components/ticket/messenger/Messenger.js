@@ -42,7 +42,22 @@ function Messenger({ ticket, isOwner, params }) {
 	// ---------- Submit New Message ----------
 
 	function handleSubmitMessage(message) {
-		dispatch(messageAdded(message));
+		fetch("/messages", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(message),
+		})
+			.then((res) => {
+				if (res.ok) {
+					res.json().then((message) => {
+						dispatch(messageAdded(message));
+					});
+				} else {
+					res.json().then((data) => console.log(data));
+				}
+			})
 	}
 
 	// ---------- Orient Messenger Orientation Based on Active user

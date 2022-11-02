@@ -16,6 +16,7 @@ function MessageForm({ sender, receiver, ticket, handleSubmitMessage}) {
 			automated: false
 		}
 		handleSubmitMessage(newMessage);
+		setText("");
 	}
 
 	return (
