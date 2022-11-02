@@ -9,6 +9,7 @@ import ItemDisplay from "./components/item_display/ItemDisplay";
 import SearchDisplay from "./components/search/SearchDisplay";
 import Profile from "./components/profile/Profile";
 import Ticket from "./components/ticket/Ticket";
+import About from "./components/welcome/About";
 
 function App() {
 	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
@@ -126,6 +127,7 @@ function App() {
 			{/* ---------- Routes ========== */}
 
 			<Routes>
+				<Route path="/about" element={<About/>} />
 				<Route
 					path="/user/:user_id"
 					element={activeUser ? (

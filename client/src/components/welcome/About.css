@@ -1,0 +1,20 @@
+.about {
+	padding: 2em;
+}
+
+.about-text h1, .about-text p {
+	color: var(--speed-cadet);
+}
+
+.about-text h1 {
+	margin-bottom: 1rem;
+}
+
+.about-text p {
+	margin-bottom: 1rem;
+	line-height: 2rem;
+}
+
+.about-text a {
+	color: var(--speed-cadet);
+}

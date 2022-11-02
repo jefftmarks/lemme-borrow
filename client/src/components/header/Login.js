@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { ActiveUserContext } from "../../context/active_user";
+import { Link } from "react-router-dom";
 import "./Login.css";
 
 const initialState = { username: "", password: "" };
@@ -64,7 +65,14 @@ function Login({ setShowSignup }) {
 				/>
 				<button>Sign In</button>
 			</form>
-			<span onClick={() => setShowSignup(true)}>Create Account</span>
+			<div>
+				<span
+					className="create-account"
+					onClick={() => setShowSignup(true)}>
+						Create Account
+				</span>
+				<Link to="/about"><span>About</span></Link>
+			</div>
 		</div>
 	);
 }

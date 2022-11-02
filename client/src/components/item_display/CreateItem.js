@@ -14,6 +14,11 @@ function CreateItem({ setShowItem }) {
 	const [formData, setFormData] = useState(initialState);
 	const [tagCards, setTagCards] = useState([]);	
 
+	// Focus on input field
+	useEffect(() => {
+		document.getElementById("add-item-name").focus();
+	}, []);
+
 	// ---------- Render Tag Cards to Confirm Correct Format ----------
 
 	useEffect(() => {
@@ -76,6 +81,7 @@ function CreateItem({ setShowItem }) {
 			<form onSubmit={handleSubmit}>
 				<label><p>Item Name:</p>
 					<input
+					id="add-item-name"
 					required
 					type="text"
 					name="name"
