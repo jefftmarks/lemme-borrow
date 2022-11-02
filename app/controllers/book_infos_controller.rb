@@ -1,3 +1,0 @@
-class BookInfosController < ApplicationController
-	
-end

@@ -1,327 +1,85 @@
-# Project Template: React/Rails API
+# lemmeBorrow
 
-## Description
+## an app for giving, getting back, and keeping track of your belongings
 
-This project is scaffolded so that you can build a React frontend and Rails
-backend together, and easily deploy them to Heroku.
+From the proverbial cup of sugar, to . . .
 
-## Requirements
+- The books on your bookshelf
 
-- Ruby 2.7.4
-- NodeJS (v16), and npm
-- Heroku CLI
-- Postgresql
+- The clothes in your closet
 
-See Environment Setup below for instructions on installing these tools if you
-don't already have them.
+- The tools in your garage
 
-## Setup
+And more . . .
 
-Start by **cloning** (not forking) the project template repository and removing
-the remote:
+![Welcome Page](/screenshots/welcome.png)
 
-```console
-$ git clone git@github.com:learn-co-curriculum/project-template-react-rails-api.git your-project-name
-$ cd your-project-name
-$ git remote rm origin
-```
+lemmeBorrow creates a virtual lending library – or [“Library of Things”](https://en.wikipedia.org/wiki/Library_of_Things) – among your in-person and online network of friends.
 
-Then, [create a new remote repository][create repo] on GitHub. Head to
-[github.com](https://github.com) and click the **+** icon in the top-right
-corner and follow the steps to create a new repository. **Important**: don't
-check any of the options such as 'Add a README file', 'Add a .gitignore file',
-etc — since you're importing an existing repository, creating any of those files
-on GitHub will cause issues.
+Items of all shapes and sizes – from a kitchen blender to a last-minute Halloween costume – make themselves available to browse through, borrow, and loan.
 
-[create repo]: https://docs.github.com/en/github/importing-your-projects-to-github/importing-source-code-to-github/adding-an-existing-project-to-github-using-the-command-line#adding-a-project-to-github-without-github-cli
+lemmeBorrow encourages users to share with members of their community, all while keeping track of who has what and when it's time to give it back.
 
-If you're working with a partner,
-[add them as a collaborator][add collaborator] on GitHub. From your repo on
-GitHub, go to Settings > Manage Access > Invite a collaborator and enter your
-partner's username. Once your partner has access, they should git **clone** (not
-fork) the repository.
+### Background
 
-[add collaborator]: https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-user-account/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository
+This app was created in October 2022 by Jeff Marks as part of a project to practice full-stack web development.
 
-Finally, connect the GitHub remote repository to your local repository and push
-up your code:
+The frontend is built on Javascript and React.
 
-```console
-$ git remote add origin git@github.com:your-username/your-project-name.git
-$ git push -u origin main
-```
+The backend API is built on Ruby on Rails with a PostgreSQL database.
 
-When you're ready to start building your project, run:
+### Model Associations
 
-```sh
-bundle install
-rails db:create
-npm install --prefix client
-```
+![Database Associations](/db/assocations.png)
 
-You can use the following commands to run the application:
+### New Technologies & Goals Met
 
-- `rails s`: run the backend on [http://localhost:3000](http://localhost:3000)
-- `npm start --prefix client`: run the frontend on
-  [http://localhost:4000](http://localhost:4000)
+- Integrated WebSockets through Action Cable to allow for instant messaging and live feed updates
+- Streamlined access to state in React components by applying Redux Toolkit and useContext hook
+- Described self-referential relationships between models by defining multiple aliases for users and items
+- Achieved responsive CSS design by implementing a style guide and developing brand identity
 
-Make sure to also update this README to include documentation about
-your project. Here's a list of some [awesome readmes][] for inspiration.
 
-[awesome readmes]: https://github.com/matiassingers/awesome-readme
+### Features
 
-## Deploying
+In its current form, the lemmeBorrow app showcases the following features:
 
-This application has all the starter code needed to help you deploy your
-application to Heroku. It's recommended to deploy your project early and push up
-changes often to ensure that your code works equally well in production and
-development environments.
+#### Friends
 
-If you've already set up your environment to deploy to Heroku, you can run the
-commands below to deploy your application. If not, make sure to check out the
-Environment Setup section below.
+![Friends](/screenshots/search%20friend.png)
 
-To deploy, first log in to your Heroku account using the Heroku CLI:
+Users can search for and send friend requests to other users on lemmeBorrow, building out their network of neighbors to borrow from and items to choose.
 
-```sh
-heroku login
-```
+#### Cupboards
 
-Create the new Heroku app:
+![Cupboard](/screenshots/cupboard.png)
 
-```sh
-heroku create my-app-name
-```
+Users can upload items to their "Cupboard," a collection of belongings through which the user's friends can browse.
 
-Add the buildpacks for Heroku to build the React app on Node and run the Rails
-app on Ruby:
+#### Tickets
 
-```sh
-heroku buildpacks:add heroku/nodejs --index 1
-heroku buildpacks:add heroku/ruby --index 2
-```
+![Ticket](/screenshots/ticket.png)
 
-To deploy, commit your code and push the changes to Heroku:
+When a user requests to borrow an item, a ticket is created. The ticket-based system keeps track of:
+1. When the item has been promised
+2. When the item has been exchanged
+3. When the item is due back
+4. When the item has been returned
 
-```sh
-git add .
-git commit -m 'Commit message'
-git push heroku main
-```
+Each ticket also features an instant messenger through which the owner and borrower can converse throughout the duration of the exchange.
 
-> Note: depending on your Git configuration, your default branch might be named
-> `master` or `main`. You can verify which by running
-> `git branch --show-current`. If it's `master`, you'll need to run
-> `git push heroku master` instead.
+#### Dashboard
 
-Any time you have changes to deploy, just make sure your changes are committed
-on the main branch of your repo, and push those changes to Heroku to deploy
-them.
+The dashboard keeps track of all of a user's active tickets – both for items they're currently borrowing and for items of theirs that are currently out on loan. Not to mention, the dashboard tracks when the items are due back and if they're overdue.
 
-You can view your deployed app with:
+#### Feed
 
-```sh
-heroku open
-```
+Users can browse a live feed of recently uploaded items from their friends.
 
-## Environment Setup
+#### Search
 
-### Install the Latest Ruby Version
+Through a tag-based system, users can search within and outside of their network for other users and items.
 
-Verify which version of Ruby you're running by entering this in the terminal:
+Need something to read? A keyword search for "sci-fi" might return a collection of science fiction books available to borrow.
 
-```sh
-ruby -v
-```
-
-Make sure that the Ruby version you're running is listed in the [supported
-runtimes][] by Heroku. At the time of writing, supported versions are 2.6.8,
-2.7.4, or 3.0.2. Our recommendation is 2.7.4, but make sure to check the site
-for the latest supported versions.
-
-If it's not, you can use `rvm` to install a newer version of Ruby:
-
-```sh
-rvm install 2.7.4 --default
-```
-
-You should also install the latest versions of `bundler` and `rails`:
-
-```sh
-gem install bundler
-gem install rails
-```
-
-[supported runtimes]: https://devcenter.heroku.com/articles/ruby-support#supported-runtimes
-
-### Install NodeJS
-
-Verify you are running a recent version of Node with:
-
-```sh
-node -v
-```
-
-If your Node version is not 16.x.x, install it and set it as the current and
-default version with:
-
-```sh
-nvm install 16
-nvm use 16
-nvm alias default 16
-```
-
-You can also update your npm version with:
-
-```sh
-npm i -g npm
-```
-
-### Sign Up for a [Heroku Account][heroku signup]
-
-You can sign up at for a free account at
-[https://signup.heroku.com/devcenter][heroku signup].
-
-### Download the [Heroku CLI][heroku cli] Application
-
-Download the Heroku CLI. For OSX users, you can use Homebrew:
-
-```sh
-brew tap heroku/brew && brew install heroku
-```
-
-For WSL users, run this command in the Ubuntu terminal:
-
-```sh
-curl https://cli-assets.heroku.com/install.sh | sh
-```
-
-If you run into issues installing, check out the [Heroku CLI][heroku cli]
-downloads page for more options.
-
-After downloading, you can login via the CLI in the terminal:
-
-```sh
-heroku login
-```
-
-This will open a browser window to log you into your Heroku account. After
-logging in, close the browser window and return to the terminal. You can run
-`heroku whoami` in the terminal to verify that you have logged in successfully.
-
-[heroku signup]: https://signup.heroku.com/devcenter
-[heroku cli]: https://devcenter.heroku.com/articles/heroku-cli#download-and-install
-
-### Install Postgresql
-
-Heroku requires that you use PostgreSQL for your database instead of SQLite.
-PostgreSQL (or just Postgres for short) is an advanced database management
-system with more features than SQLite. If you don't already have it installed,
-you'll need to set it up.
-
-#### PostgreSQL Installation for WSL
-
-To install Postgres for WSL, run the following commands from your Ubuntu terminal:
-
-```sh
-sudo apt update
-sudo apt install postgresql postgresql-contrib libpq-dev
-```
-
-Then confirm that Postgres was installed successfully:
-
-```sh
-psql --version
-```
-
-Run this command to start the Postgres service:
-
-```sh
-sudo service postgresql start
-```
-
-Finally, you'll also need to create a database user so that you are able to
-connect to the database from Rails. First, check what your operating system
-username is:
-
-```sh
-whoami
-```
-
-If your username is "ian", for example, you'd need to create a Postgres user
-with that same name. To do so, run this command to open the Postgres CLI:
-
-```sh
-sudo -u postgres -i
-```
-
-From the Postgres CLI, run this command (replacing "ian" with your username):
-
-```sh
-createuser -sr ian
-```
-
-Then enter `control + d` or type `logout` to exit.
-
-[This guide][postgresql wsl] has more info on setting up Postgres on WSL if you
-get stuck.
-
-[postgresql wsl]: https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-postgresql
-
-#### Postgresql Installation for OSX
-
-To install Postgres for OSX, you can use Homebrew:
-
-```sh
-brew install postgresql
-```
-
-Once Postgres has been installed, run this command to start the Postgres
-service:
-
-```sh
-brew services start postgresql
-```
-
-## Troubleshooting
-
-If you ran into any errors along the way, here are some things you can try to
-troubleshoot:
-
-- If you're on a Mac and got a server connection error when you tried to run
-  `rails db:create`, one option for solving this problem for Mac users is to
-  install the Postgres app. To do this, first uninstall `postgresql` by running
-  `brew remove postgresql`. Next, download the app from the
-  [Postgres downloads page][postgres downloads page] and install it. Launch the
-  app and click "Initialize" to create a new server. You should now be able to
-  run `rails db:create`.
-
-- If you're using WSL and got the following error running `rails db:create`:
-
-  ```txt
-  PG::ConnectionBad: FATAL:  role "yourusername" does not exist
-  ```
-
-  The issue is that you did not create a role in Postgres for the default user
-  account. Check [this video](https://www.youtube.com/watch?v=bQC5izDzOgE) for
-  one possible fix.
-
-- If your app failed to deploy at the build stage, make sure your local
-  environment is set up correctly by following the steps at the beginning of
-  this lesson. Check that you have the latest versions of Ruby and Bundler, and
-  ensure that Postgresql was installed successfully.
-
-- If you deployed successfully, but you ran into issues when you visited the
-  site, make sure you migrated and seeded the database. Also, make sure that
-  your application works locally and try to debug any issues on your local
-  machine before re-deploying. You can also check the logs on the server by
-  running `heroku logs`.
-
-For additional support, check out these guides on Heroku:
-
-- [Deploying a Rails 6 App to Heroku][heroku rails deploying guide]
-- [Rails Troubleshooting on Heroku][troubleshooting guide on heroku]
-
-[postgres downloads page]: https://postgresapp.com/downloads.html
-[heroku rails deploying guide]: https://devcenter.heroku.com/articles/getting-started-with-rails6
-[troubleshooting guide on heroku]: https://devcenter.heroku.com/articles/getting-started-with-rails6#troubleshooting
+First date and nothing to wear? A keyword search for "red" or "dress" or "large" might return the exact item of clothing you're looking for. And who knew? It belongs to your friend down the street.
