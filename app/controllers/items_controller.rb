@@ -13,7 +13,7 @@ class ItemsController < ApplicationController
 	end
 
 	def create
-		item = Item.create!(**item_params, status: "home")
+		item = Item.create!(item_params)
 		
 		tags = tags_params[:tags]
 		

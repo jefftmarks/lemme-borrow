@@ -1,5 +1,10 @@
 class MessagesController < ApplicationController
-	before_action :set_ticket, only: [:create, :ticket_messages]
+	before_action :set_ticket, only: [:ticket_messages]
+
+	def create
+		message = Message.create!(message_params)
+		render json: message, status: :created
+	end
 
 	def ticket_messages
 		render json: @ticket.messages.order(created_at: :desc)
@@ -8,7 +13,7 @@ class MessagesController < ApplicationController
 	private
 
 	def message_params
-		params.permit(:text, :ticket_id, :sender_id, :receiver_id)
+		params.permit(:text, :ticket_id, :sender_id, :receiver_id, :automated)
 	end
 
 	def set_ticket
