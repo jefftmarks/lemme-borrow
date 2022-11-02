@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { ActiveUserContext } from "../../context/active_user";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const initialState = { username: "", password: "" };
@@ -11,6 +11,8 @@ function Login({ setShowSignup }) {
 	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [formData, setFormData] = useState(initialState);
 	const [error, setError] = useState(null);
+
+	const navigate = useNavigate();
 
 	// ---------- Login Form Submission ----------
 
@@ -35,6 +37,7 @@ function Login({ setShowSignup }) {
 					res.json().then((data) => {
 						localStorage.setItem("jwt", data.token);
 						setActiveUser(data.user);
+						navigate("/");
 					});
 				} else {
 					res.json().then((data) => setError(data.error));
