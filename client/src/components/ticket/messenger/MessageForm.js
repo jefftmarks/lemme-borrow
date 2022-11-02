@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./MessageForm.css";
 
-function MessageForm({ sender, receiver, ticket, channel}) {
+function MessageForm({ sender, receiver, ticket, handleSubmitMessage}) {
 	const [text, setText] = useState("");
 
 	// ---------- Form Handling ----------
@@ -15,9 +15,7 @@ function MessageForm({ sender, receiver, ticket, channel}) {
 			text: text,
 			automated: false
 		}
-		// Action Cable: broadcast message to ticket channel
-		channel.send(newMessage);
-		setText("");
+		handleSubmitMessage(newMessage);
 	}
 
 	return (

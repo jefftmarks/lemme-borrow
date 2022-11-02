@@ -39,19 +39,11 @@ function Messenger({ ticket, isOwner, params }) {
 		}
 	}, [ticket, dispatch]);
 
-		// ---------- Action Cable: Create Subscription ----------
+	// ---------- Submit New Message ----------
 
-	// Connect consumer to "chat room" unique to ticket ID
-	useEffect(() => {
-		if (params) {
-			const newChannel = consumer.subscriptions.create({ channel: "TicketChannel", ticket_id: params.ticket_id }, {
-				received(message) {
-					dispatch(messageAdded(message));
-				} 
-			});
-			setChannel(newChannel);
-		} 
-	}, []);
+	function handleSubmitMessage(message) {
+		dispatch(messageAdded(message));
+	}
 
 	// ---------- Orient Messenger Orientation Based on Active user
 
@@ -101,7 +93,7 @@ function Messenger({ ticket, isOwner, params }) {
 					sender={left}
 					receiver={right}
 					ticket={ticket}
-					channel={channel}
+					handleSubmitMessage={handleSubmitMessage}
 				/>
 			</div>
 		</div>
