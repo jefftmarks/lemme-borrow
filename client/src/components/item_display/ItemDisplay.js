@@ -25,7 +25,7 @@ function ItemDisplay({ showItem, setShowItem, setShowSearch, setQuery }) {
 		if (activeUser && item && mode !== "add") {
 			// Don't need to request friend status if your own item
 			if (activeUser.id !== item.owner.id) {
-				fetch(`/friend_statuses/user/${activeUser.id}/friend/${item.owner.id}`)
+				fetch(`/api/friend_statuses/user/${activeUser.id}/friend/${item.owner.id}`)
 				.then((res) => {
 					if (res.ok) {
 						res.json().then(data => setFriendStatus(data.status.mode));
@@ -44,7 +44,7 @@ function ItemDisplay({ showItem, setShowItem, setShowSearch, setQuery }) {
 		setIsLoading(true);
 		// Don't need to request pending tickets if adding new item
 		if (activeUser && item && mode !== "add") {
-			fetch(`/pending_tickets/item/${item.id}/user/${activeUser.id}}`)
+			fetch(`/api/pending_tickets/item/${item.id}/user/${activeUser.id}}`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((tickets) => {
@@ -62,7 +62,7 @@ function ItemDisplay({ showItem, setShowItem, setShowSearch, setQuery }) {
 	// ---------- Create New Ticket Upon Borrow Request ----------
 
 	function handleCreateTicketRequest() {
-		fetch("/tickets", {
+		fetch("/api/tickets", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

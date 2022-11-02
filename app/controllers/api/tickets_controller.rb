@@ -1,4 +1,4 @@
-class TicketsController < ApplicationController
+class Api::TicketsController < ApplicationController
 	before_action :set_ticket, only: [:show, :set_return_date, :decline, :approve, :receive_item, :close]
 	before_action :set_user, only: [:my_requests, :active_loans, :active_borrows, :close]
 	before_action :set_owner_borrower_item, only: [:set_return_date, :approve, :receive_item, :close ]

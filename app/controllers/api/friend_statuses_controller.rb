@@ -1,4 +1,4 @@
-class FriendStatusesController < ApplicationController
+class Api::FriendStatusesController < ApplicationController
 
 	# Check whether or not friends. Send back message depending on whether 1. they haven't responded to your friend request or 2. you haven't responded to them
 

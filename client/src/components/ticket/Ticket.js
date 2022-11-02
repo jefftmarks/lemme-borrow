@@ -17,7 +17,7 @@ function Ticket() {
 
 	useEffect(() => {
 		if (activeUser) {
-			fetch(`/tickets/${params.ticket_id}`)
+			fetch(`/api/tickets/${params.ticket_id}`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((ticket) => {

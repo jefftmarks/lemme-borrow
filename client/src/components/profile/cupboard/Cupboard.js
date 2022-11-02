@@ -27,7 +27,7 @@ function Cupboard({ profile, onClickItem }) {
 	// ---------- Grab 20 Items at a Time Per Search Conditions ----------
 
 	useEffect(() => {
-		fetch(`/items/belongings/${profile.user.id}`, {
+		fetch(`/api/items/belongings/${profile.user.id}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

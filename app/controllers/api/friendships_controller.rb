@@ -1,4 +1,4 @@
-class FriendshipsController < ApplicationController
+class Api::FriendshipsController < ApplicationController
 	before_action :set_friendship, only: [:destroy]
 
 	# For when a user clicks ACCEPT on a friend request, create new friendship

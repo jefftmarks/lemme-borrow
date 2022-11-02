@@ -55,7 +55,7 @@ function ItemInfo({ item, setShowItem, tickets, handleClickTag }) {
 	// ---------- Delete Item ----------
 
 	function handleDelete() {
-		fetch(`/items/${id}`, {
+		fetch(`/api/items/${id}`, {
 			method: "DELETE",
 		})
 			.then((res) => {

@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchMessages = createAsyncThunk("messages/fetchMessage", (ticket_id) => {
-	return fetch(`/messages/ticket/${ticket_id}`)
+	return fetch(`/api/messages/ticket/${ticket_id}`)
 		.then((res) => res.json())
 		.then((messages) => messages);
 });
 
 export const messageAdded = createAsyncThunk("messages/messageAdded", (message) => {
-	return fetch("/messages/", {
+	return fetch("/api/messages/", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

@@ -1,2 +1,2 @@
-class ItemTagsController < ApplicationController
+class Api::ItemTagsController < ApplicationController
 end

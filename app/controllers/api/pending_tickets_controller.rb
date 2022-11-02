@@ -1,4 +1,4 @@
-class PendingTicketsController < ApplicationController
+class Api::PendingTicketsController < ApplicationController
 	before_action :set_item, only: [:show]
 	before_action :set_user, only: [:show]
 

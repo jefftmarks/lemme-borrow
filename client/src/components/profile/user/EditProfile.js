@@ -32,7 +32,7 @@ function EditProfile({ showEditProfile, setShowEditProfile}) {
 		if (formData.avatar === "") {
 			setFormData({...formData, avatar: activeUser.avatar});
 		}
-		fetch(`/users/${activeUser.id}`, {
+		fetch(`/api/users/${activeUser.id}`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",

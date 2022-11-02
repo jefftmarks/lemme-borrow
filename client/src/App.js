@@ -26,7 +26,7 @@ function App() {
 	useEffect(() => {
 		const token = localStorage.getItem("jwt");
 		if (token && !activeUser) {
-			fetch("/profile", {
+			fetch("/api/profile", {
 				headers: {
 					token: token,
 					"Content-Type": "application/json"
@@ -61,7 +61,7 @@ function App() {
 	// When item clicked (on feed or on cupboard page), fetch item and display item modal.
 	function handleClickItem(id) {
 		setShowItem(true);
-		fetch(`/items/${id}`)
+		fetch(`/api/items/${id}`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((item) => {

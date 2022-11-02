@@ -1,4 +1,4 @@
-class ItemsController < ApplicationController
+class Api::ItemsController < ApplicationController
 	before_action :set_item, only: [:show, :status, :update, :destroy, :gift_item]
 	before_action :set_user, only: [:status, :recently_uploaded, :gift_item]
 	before_action :validate_tags, only: [:create, :update]

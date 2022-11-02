@@ -21,7 +21,7 @@ function ItemPanel({ ticket, setTicket, isOwner }) {
 
 	useEffect(() => {
 		if (ticket) {
-			fetch(`/items/${ticket.item.id}`)
+			fetch(`/api/items/${ticket.item.id}`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((item) => setItem(item));
@@ -61,7 +61,7 @@ function ItemPanel({ ticket, setTicket, isOwner }) {
 
 	// Undo or decline request
 	function handleDeleteTicket() {
-		fetch(`/tickets/close/${id}/user/${activeUser.id}`, {
+		fetch(`/api/tickets/close/${id}/user/${activeUser.id}`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
@@ -80,7 +80,7 @@ function ItemPanel({ ticket, setTicket, isOwner }) {
 
 	// Approve request
 	function handleApproveTicket() {
-		fetch(`/tickets/approve/${id}`, {
+		fetch(`/api/tickets/approve/${id}`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
@@ -101,7 +101,7 @@ function ItemPanel({ ticket, setTicket, isOwner }) {
 
 	// Borrower marks item as received
 	function handleReceiveItem() {
-		fetch(`/tickets/receive/${id}`, {
+		fetch(`/api/tickets/receive/${id}`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
@@ -122,7 +122,7 @@ function ItemPanel({ ticket, setTicket, isOwner }) {
 
 	// Owner sets/updates desired return date
 	function handleSetReturnDate() {
-		fetch(`/tickets/date/${id}`, {
+		fetch(`/api/tickets/date/${id}`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
