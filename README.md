@@ -1,6 +1,6 @@
 # lemmeBorrow
 
-###an app for giving, getting back, and keeping track of your belongings
+### an app for giving, getting back, and keeping track of your belongings
 
 From the proverbial cup of sugar, to . . .
 
