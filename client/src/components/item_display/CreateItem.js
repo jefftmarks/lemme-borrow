@@ -49,6 +49,7 @@ function CreateItem({ setShowItem }) {
 			image: formData.image,
 			description: formData.description,
 			owner_id: activeUser.id,
+			tags: tagCards,
 			status: "home"
 		}
 		fetch("/items", {
