@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
 	rescue_from JWT::DecodeError, with: :render_unauthorized_response
 
 	def get_secret_key
-		Rails.application.secrets.jwt_secret
+		ENV["JWT_SECRET"]
 	end
 
 	def generate_token(user_id)

@@ -32,4 +32,4 @@
 node_modules
 
 # Ignore secret key for JWT tokens
-/config/secrets.yml
+/config/local_env.yml
