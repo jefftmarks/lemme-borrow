@@ -6,7 +6,6 @@ class TicketChannel < ApplicationCable::Channel
 
   def receive(data)
     message = Message.create!(data)
-		puts "BINGO"
     ActionCable.server.broadcast("ticket_#{params[:ticket_id]}", message)
   end
 

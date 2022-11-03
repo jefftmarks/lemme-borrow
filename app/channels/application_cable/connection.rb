@@ -9,7 +9,7 @@ module ApplicationCable
     private
 
 		def get_secret_key
-			"hotdog"
+			"hot dog"
 		end
 
 		def decode_token(token)
