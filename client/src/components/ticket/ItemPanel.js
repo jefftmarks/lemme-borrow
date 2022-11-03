@@ -90,8 +90,6 @@ function ItemPanel({ ticket, setTicket, isOwner }) {
 				if (res.ok) {
 					res.json().then((payload) => {
 						setTicket(payload.ticket);
-						// Render automated message
-						dispatch(messageAdded(payload.message));
 					});
 				} else {
 					res.json().then((data) => console.log(data));
@@ -111,8 +109,6 @@ function ItemPanel({ ticket, setTicket, isOwner }) {
 				if (res.ok) {
 					res.json().then((payload) => {
 						setTicket(payload.ticket);
-						// Render automated message
-						dispatch(messageAdded(payload.message));
 					});
 				} else {
 					res.json().then((data) => console.log(data));
@@ -132,9 +128,8 @@ function ItemPanel({ ticket, setTicket, isOwner }) {
 			.then((res => {
 				if (res.ok) {
 					res.json().then((payload) => {
-						setTicket(payload.ticket);
-						// Render automated message
-						dispatch(messageAdded(payload.message));
+						// setTicket(payload.ticket);
+						console.log(payload);
 					});
 				} else {
 					res.json().then((data) => console.log(data));
