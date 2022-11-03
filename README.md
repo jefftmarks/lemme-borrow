@@ -98,7 +98,7 @@ In addition to the current features listed above, the app could grow to include 
 
 ### Running the App
 
-A demo version of the application has been deployed through Render.com at (https://lemme-borrow.onrender.com/)[https://lemme-borrow.onrender.com/]. WebSockets have been disabled for deployment purposes but can be demonstrated on the "action-cable-demo" branch.
+A demo version of the application has been deployed through Render.com at [https://lemme-borrow.onrender.com/](https://lemme-borrow.onrender.com/). WebSockets have been disabled for deployment purposes but can be demonstrated on the "action-cable-demo" branch.
 
 To run the app locally on your machine, clone the repository and navigate into the root directory.
 
