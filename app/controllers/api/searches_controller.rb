@@ -23,9 +23,11 @@ class Api::SearchesController < ApplicationController
 	def search_users
 		query = search_params[:query]
 
-		users = User.where.not(id: @user.id).where("first_name ilike ? or last_name ilike ? or username ilike ?", "%#{query}%", "%#{query}%", "%#{query}%")
+		users = User.where.not(id: @user.id).where("first_name ilike ? or last_name ilike ?", "%#{query}%", "%#{query}%").to_a
 
-		render json: users.order(:last_name)
+		users.concat(User.all.select { |user| user.full_name.downcase.include?(query.downcase) })
+
+		render json: users.uniq.sort { |a, b| a.last_name <=> b.last_name }
 	end
 
 	def search_items

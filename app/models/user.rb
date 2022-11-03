@@ -1,6 +1,10 @@
 class User < ApplicationRecord
 	has_secure_password
 
+	def full_name
+		self.first_name + " " + self.last_name
+	end
+
 	# Friending
 	has_many :friendships, dependent: :destroy
 	has_many :friends, through: :friendships
