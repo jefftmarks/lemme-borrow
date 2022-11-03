@@ -51,6 +51,15 @@ class TicketsController < ApplicationController
 	def close
 		@item.update!(borrower: nil, status: "home")
 		@ticket.destroy
+
+		if @item.tickets.length > 0
+			ticket = @item.tickets.order(:created_at)[0]
+			
+			ticket.update!(status: "requested")
+
+			Message.create!(ticket: ticket, automated: true, text: "#{ticket.borrower.first_name} is no longer on the waitling list! #{ticket.owner.first_name} can either approve or decline the request. Use the messenger to discuss!")	
+		end
+
 		render json: @ticket
 	end
  
@@ -89,7 +98,7 @@ class TicketsController < ApplicationController
 	def my_requests
 		payload = []
 
-		tickets_requested = @user.lending_tickets.where("status = ? or status = ?", "requested", "waitlisted")
+		tickets_requested = @user.lending_tickets.where(status: "requested")
 
 		tickets_requested.each do |ticket|
 			payload.push(
@@ -103,7 +112,21 @@ class TicketsController < ApplicationController
 			)
 		end
 
-		tickets_requesting = @user.borrowing_tickets.where("status = ? or status =?", "requested", "waitlisted")
+		tickets_requested_waitlist = @user.lending_tickets.where(status: "waitlisted")
+
+		tickets_requested_waitlist.each do |ticket|
+			payload.push(
+				{
+					id: ticket.id,
+					image: ticket.item.image,
+					message: "#{ticket.borrower.first_name} has been waitlisted to borrow your item: #{ticket.item.name}",
+					return_date: "",
+					status: "pending"
+				}
+			)
+		end
+
+		tickets_requesting = @user.borrowing_tickets.where(status: "requested")
 
 		tickets_requesting.each do |ticket|
 			payload.push(
@@ -111,6 +134,20 @@ class TicketsController < ApplicationController
 					id: ticket.id,
 					image: ticket.item.image,
 					message: "You've requested to borrow #{ticket.owner.first_name}'s item: #{ticket.item.name}",
+					return_date: "",
+					status: "pending"
+				}
+			)
+		end
+
+		tickets_requesting_waitlist = @user.borrowing_tickets.where(status: "waitlisted")
+
+		tickets_requesting_waitlist.each do |ticket|
+			payload.push(
+				{
+					id: ticket.id,
+					image: ticket.item.image,
+					message: "You've been waitlisted to borrow #{ticket.owner.first_name}'s item: #{ticket.item.name}",
 					return_date: "",
 					status: "pending"
 				}
@@ -139,8 +176,6 @@ class TicketsController < ApplicationController
 				{
 					id: ticket.id,
 					image: ticket.item.image,
-					message: "#{ticket.borrower.first_name} is borrowing your item: #{ticket.item.name}. Return Date: #{ticket.formatted_return_date}.",
-
 					message: ticket.return_date == "" ? "#{ticket.borrower.first_name} is borrowing your item: #{ticket.item.name}." : "#{ticket.borrower.first_name} is borrowing your item: #{ticket.item.name}. Return Date: #{ticket.formatted_return_date}.",
 					overdue: ticket.overdue,
 					return_date: ticket.return_date,
