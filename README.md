@@ -98,7 +98,9 @@ In addition to the current features listed above, the app could grow to include 
 
 ### Running the App
 
-To run the app locally on your machine, navigate into the root directory.
+A demo version of the application has been deployed through Render.com at (https://lemme-borrow.onrender.com/)[https://lemme-borrow.onrender.com/]. WebSockets have been disabled for deployment purposes but can be demonstrated on the "action-cable-demo" branch.
+
+To run the app locally on your machine, clone the repository and navigate into the root directory.
 
 Run `bundle install` and `npm install --prefix client` to install the necessary frontend and backend dependencies.
 
