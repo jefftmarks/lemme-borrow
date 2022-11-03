@@ -28,3 +28,52 @@
 	color: var(--dark-red);
 	line-height: 2.8rem;
 }
+
+@media (max-width: 989px) {
+	.welcome {
+		display: block;
+	}
+
+	.welcome-card {
+		flex-direction: column;
+		row-gap: 2em;
+		margin-top: 5em;
+	}
+
+	.welcome-text h1 {
+		text-align: center;
+	}
+	
+	.welcome-text p {
+		font-size: 1.5rem;
+		color: var(--dark-red);
+		line-height: 2.8rem;
+		text-align: center;
+	}
+}
+
+@media (max-width: 631px) {
+	.welcome-text h1 {
+		font-size: 3rem;
+	}
+	
+	.welcome-text p {
+		font-size: 1.5rem;
+		color: var(--dark-red);
+		line-height: 2.8rem;
+	}
+}
+
+@media (max-width: 488px) {
+	.welcome img {
+		display: none;
+	}
+
+	.welcome-text h1 {
+		display: none;
+	}
+	
+	.welcome-text p {
+		display: none;
+	}
+}
