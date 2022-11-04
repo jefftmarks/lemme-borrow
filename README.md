@@ -41,7 +41,11 @@ The backend API is built on Ruby on Rails with a PostgreSQL database.
 
 ### Features
 
-View a video walkthrough of the app [here](https://www.youtube.com/watch?v=iGXqGhgbPz8).
+View a video walkthrough of lemmeBorrow and its features [here](https://www.youtube.com/watch?v=iGXqGhgbPz8).
+
+A demo version of the application has been deployed through Render.com at [https://lemme-borrow.onrender.com/](https://lemme-borrow.onrender.com/). WebSockets have been disabled for deployment purposes but can be demonstrated on the "action-cable-demo" branch.
+
+See below for instructions to run the app locally on your machine.
 
 In its current form, the lemmeBorrow app showcases the following features:
 
@@ -99,8 +103,6 @@ In addition to the current features listed above, the app could grow to include 
 
 
 ### Running the App
-
-A demo version of the application has been deployed through Render.com at [https://lemme-borrow.onrender.com/](https://lemme-borrow.onrender.com/). WebSockets have been disabled for deployment purposes but can be demonstrated on the "action-cable-demo" branch.
 
 To run the app locally on your machine, clone the repository and navigate into the root directory.
 
