@@ -5,8 +5,6 @@ function NotificationCard({ ticket }) {
 
 	const { image, overdue, message, status } = ticket
 
-	console.log(ticket);
-
 	return (
 		<div className={`notification-card overdue-${overdue} ${status}`}>
 			<div className="img-div"><img src={image} alt="item"/></div>

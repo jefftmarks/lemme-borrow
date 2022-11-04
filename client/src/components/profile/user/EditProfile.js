@@ -48,6 +48,7 @@ function EditProfile({ showEditProfile, setShowEditProfile}) {
 					res.json().then((user) => {
 						setShowEditProfile(false);
 						setActiveUser(user);
+						setFormData(initialState);
 					});
 				} else {
 					res.json().then((data) => console.log(data));
