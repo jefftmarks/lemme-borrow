@@ -41,6 +41,8 @@ The backend API is built on Ruby on Rails with a PostgreSQL database.
 
 ### Features
 
+View a video walkthrough of the app [here](https://www.youtube.com/watch?v=iGXqGhgbPz8).
+
 In its current form, the lemmeBorrow app showcases the following features:
 
 #### Friends
