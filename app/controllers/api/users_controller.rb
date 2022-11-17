@@ -41,6 +41,11 @@ class Api::UsersController < ApplicationController
 	def create
 		user = User.create!(**user_params, avatar: Faker::Avatar.image)
 		token = generate_token(user.id)
+
+		# For demo purposes, create automatic friend request from Jeff (me)
+		jeff = User.find_by(username: "jeffsworld")
+		FriendRequest.create(requester: jeff, receiver: user)
+
 		render json: { user: UserSerializer.new(user), token: token }, status: :created
 	end
 
