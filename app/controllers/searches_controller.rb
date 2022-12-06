@@ -32,7 +32,7 @@ class SearchesController < ApplicationController
 		query = search_params[:query] ? search_params[:query].downcase : ""
 	
 		items = Item.all.order(:name).select do |item|
-			item[:name].downcase.include?(query) || item.tags_array.include?(query)
+			item.belongs_to_friend(@user) && (item[:name].downcase.include?(query) || item.tags_array.include?(query))
 		end
 
 		render json: items
