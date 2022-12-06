@@ -23,4 +23,8 @@ class Item < ApplicationRecord
 	def tags_array
 		self.tags.map { |tag| tag[:name] }
 	end
+
+	def belongs_to_friend(user)
+		friends = user.friends.include?(self.owner)
+	end
 end
