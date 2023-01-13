@@ -25,6 +25,6 @@ class Item < ApplicationRecord
 	end
 
 	def belongs_to_friend(user)
-		friends = user.friends.include?(self.owner)
+		user.friends.include?(self.owner)
 	end
 end

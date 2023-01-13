@@ -33,11 +33,11 @@ class Api::SearchesController < ApplicationController
 	def search_items
 		query = search_params[:query] ? search_params[:query].downcase : ""
 	
-		items = Item.all.order(:name).select do |item|
-			item.belongs_to_friend(@user) && (item[:name].downcase.include?(query) || item.tags_array.include?(query))
+		items = Item.all.select do |item|
+			(item.owner == @user || item.belongs_to_friend(@user)) && (item[:name].downcase.include?(query) || item.tags_array.include?(query))
 		end
 
-		render json: items
+		render json: items.sort { |a, b| a.name <=> b.name }
 	end
 
 	private
