@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { ActiveUserContext } from "../../context/active_user";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const initialState = { username: "", password: "" };
@@ -11,6 +12,8 @@ function Login({ setShowSignup }) {
 	const [formData, setFormData] = useState(initialState);
 	const [error, setError] = useState(null);
 
+	const navigate = useNavigate();
+
 	// ---------- Login Form Submission ----------
 
 	function handleChange(e) {
@@ -20,7 +23,7 @@ function Login({ setShowSignup }) {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		fetch("/login", {
+		fetch("/api/login", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -34,6 +37,7 @@ function Login({ setShowSignup }) {
 					res.json().then((data) => {
 						localStorage.setItem("jwt", data.token);
 						setActiveUser(data.user);
+						navigate("/");
 					});
 				} else {
 					res.json().then((data) => setError(data.error));
@@ -64,7 +68,14 @@ function Login({ setShowSignup }) {
 				/>
 				<button>Sign In</button>
 			</form>
-			<span onClick={() => setShowSignup(true)}>Create Account</span>
+			<div>
+				<span
+					className="create-account"
+					onClick={() => setShowSignup(true)}>
+						Create Account
+				</span>
+				<Link to="/about"><span>About</span></Link>
+			</div>
 		</div>
 	);
 }

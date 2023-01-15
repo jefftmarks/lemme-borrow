@@ -27,7 +27,7 @@ function Dashboard( ) {
 	// ---------- Load Friend Requests ----------
 
 	useEffect(() => {
-		fetch(`/friend_requests/user/${activeUser.id}`)
+		fetch(`/api/friend_requests/user/${activeUser.id}`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((requests) => {
@@ -42,7 +42,7 @@ function Dashboard( ) {
 	// ---------- Load Pending Tickets ----------
 
 	useEffect(() => {
-		fetch(`/tickets/requests/${activeUser.id}`)
+		fetch(`/api/tickets/requests/${activeUser.id}`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((tickets) => {
@@ -57,7 +57,7 @@ function Dashboard( ) {
 	// ---------- Load Active Borrows ----------
 
 	useEffect(() => {
-		fetch(`/tickets/borrows/${activeUser.id}`)
+		fetch(`/api/tickets/borrows/${activeUser.id}`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((tickets) => {
@@ -72,7 +72,7 @@ function Dashboard( ) {
 	// ---------- Load Active Loans ----------
 
 	useEffect(() => {;
-		fetch(`/tickets/loans/${activeUser.id}`)
+		fetch(`/api/tickets/loans/${activeUser.id}`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((tickets) => {

@@ -71,3 +71,13 @@
 		width: 600px
 	}
 }
+
+@media (max-width: 640px) {
+	.messenger {
+		width: 100%;
+	}
+
+	.messenger-header {
+		display: none;
+	}
+}

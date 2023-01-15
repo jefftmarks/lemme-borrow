@@ -1,4 +1,4 @@
-class SearchesController < ApplicationController
+class Api::SearchesController < ApplicationController
 	before_action :set_user, only: [:my_belongings, :search_users, :search_items]
 
 	def my_belongings

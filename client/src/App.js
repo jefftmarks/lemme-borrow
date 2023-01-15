@@ -9,6 +9,7 @@ import ItemDisplay from "./components/item_display/ItemDisplay";
 import SearchDisplay from "./components/search/SearchDisplay";
 import Profile from "./components/profile/Profile";
 import Ticket from "./components/ticket/Ticket";
+import About from "./components/welcome/About";
 
 function App() {
 	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
@@ -26,7 +27,7 @@ function App() {
 	useEffect(() => {
 		const token = localStorage.getItem("jwt");
 		if (token && !activeUser) {
-			fetch("/profile", {
+			fetch("/api/profile", {
 				headers: {
 					token: token,
 					"Content-Type": "application/json"
@@ -61,7 +62,7 @@ function App() {
 	// When item clicked (on feed or on cupboard page), fetch item and display item modal.
 	function handleClickItem(id) {
 		setShowItem(true);
-		fetch(`/items/${id}`)
+		fetch(`/api/items/${id}`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((item) => {
@@ -126,6 +127,7 @@ function App() {
 			{/* ---------- Routes ========== */}
 
 			<Routes>
+				<Route path="/about" element={<About/>} />
 				<Route
 					path="/user/:user_id"
 					element={activeUser ? (

@@ -50,7 +50,7 @@ function EditItem({ item, setShowItem }) {
 		if (formData.image === "") {
 			setFormData({...formData, image: item.image});
 		}
-		fetch(`/items/${item.id}`, {
+		fetch(`/api/items/${item.id}`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",

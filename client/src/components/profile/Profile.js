@@ -26,7 +26,7 @@ function Profile({ onClickItem, onClickAddItem }) {
 			});
 		// If not our own page, request friend status between profile user and active user
 		} else {
-			fetch(`/friend_statuses/user/${activeUser.id}/friend/${params.user_id}`)
+			fetch(`/api/friend_statuses/user/${activeUser.id}/friend/${params.user_id}`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((data) => {

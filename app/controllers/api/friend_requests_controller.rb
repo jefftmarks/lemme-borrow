@@ -1,4 +1,4 @@
-class FriendRequestsController < ApplicationController
+class Api::FriendRequestsController < ApplicationController
 	before_action :set_friend_request, only: [:destroy]
 
 	def create

@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom"
 import { ActiveUserContext } from "../../context/active_user";
 import { MdCancel } from "react-icons/md";
 import "./SignUp.css";
@@ -18,6 +19,8 @@ function SignUp({ showSignup, setShowSignup }) {
 	const [formData, setFormData] = useState(initialState);
 	const [errors, setErrors] = useState([]);
 
+	const navigate = useNavigate();
+
 	// ---------- Form Handling ----------
 
 	function handleChange(e) {
@@ -27,7 +30,7 @@ function SignUp({ showSignup, setShowSignup }) {
 
 	function handleSubmit(event) {
 		event.preventDefault();
-		fetch("/users", {
+		fetch("/api/users", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -41,6 +44,7 @@ function SignUp({ showSignup, setShowSignup }) {
 						localStorage.setItem("jwt", data.token);
 						setShowSignup(false);
 						setActiveUser(data.user);
+						navigate("/");
 					});
 				} else {
 					res.json().then((data) => setErrors(data.errors));
@@ -65,6 +69,8 @@ function SignUp({ showSignup, setShowSignup }) {
 					/>
 				</div>
 				<form onSubmit={handleSubmit}>
+					<p className="demo-disclaimer">This app is for demo purposes only</p>
+					<p className="demo-disclaimer">Please read about page before creating account</p>
 					<label><p>First Name:</p>
 							<input
 							required

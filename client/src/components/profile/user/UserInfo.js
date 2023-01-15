@@ -12,7 +12,7 @@ function UserInfo({ profile, setProfile, isUnfriending, setIsUnfriending, friend
 	// ---------- Trigger Friends Modal and Request Friends ----------
 
 	function onClickShowFriends() {
-		fetch(`/friendships/user/${profile.user.id}`)
+		fetch(`/api/friendships/user/${profile.user.id}`)
 			.then((res) => {
 				if (res.ok) {
 					setIsUnfriending(false);
@@ -29,7 +29,7 @@ function UserInfo({ profile, setProfile, isUnfriending, setIsUnfriending, friend
 	// Unfriend
 	function handleUnfriend() {
 		// Include ID of friendship instance
-		fetch(`/friendships/${profile.friend_status.id}`, {
+		fetch(`/api/friendships/${profile.friend_status.id}`, {
 			method: "DELETE",
 		})
 			.then((res) => {
@@ -49,7 +49,7 @@ function UserInfo({ profile, setProfile, isUnfriending, setIsUnfriending, friend
 
 	// Send friend request
 	function handleSendFriendRequest() {
-		fetch("/friend_requests", {
+		fetch("/api/friend_requests", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -73,7 +73,7 @@ function UserInfo({ profile, setProfile, isUnfriending, setIsUnfriending, friend
 
 	// Accept friend request
 	function handleAcceptFriendRequest() {
-		fetch("/friendships", {
+		fetch("/api/friendships", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -97,7 +97,7 @@ function UserInfo({ profile, setProfile, isUnfriending, setIsUnfriending, friend
 
 	// Decline friend request
 	function handleDeclineFriendRequest() {
-		fetch(`/friend_requests/${profile.friend_status.id}`, {
+		fetch(`/api/friend_requests/${profile.friend_status.id}`, {
 			method: "DELETE",
 		})
 			.then((res) => {

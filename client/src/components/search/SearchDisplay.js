@@ -26,7 +26,7 @@ function SearchDisplay({ showSearch, setShowSearch, query, setQuery, onClickItem
 			// Focus on search display form input (and blur search input in nav bar)
 			document.getElementById("search-display-input").focus();
 			// Request search results based on category
-			fetch(`/${showSearch.mode === "users" ? "users" : "items"}/search/${activeUser.id}`, {
+			fetch(`/api/${showSearch.mode === "users" ? "users" : "items"}/search/${activeUser.id}`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"

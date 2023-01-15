@@ -41,7 +41,7 @@ function Feed({ onClickItem }) {
 	// ---------- Request 10 Most Recent Items ----------
 
 	useEffect(() => {
-		fetch(`/items/recent/${activeUser.id}/count/${count}`)
+		fetch(`/api/items/recent/${activeUser.id}/count/${count}`)
 			.then((res) => {
 				if (res.ok) {
 					res.json().then((items) => setItems(items));

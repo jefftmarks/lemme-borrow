@@ -24,7 +24,7 @@
 	padding: 0.5em 1.25em;
 }
 
-.login span {
+.login .create-account {
 	border-left: 1px solid white;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .login span:hover {
-	text-decoration: underline;
+	cursor: pointer;
 }
 
 .login .error {
@@ -48,12 +48,16 @@
 	text-decoration: underline;
 }
 
-@media (max-width: 759px) {
+.login a {
+	text-decoration: none;
+}
+
+@media (max-width: 850px) {
 	.login {
 		justify-content: center;
 	}
 
-	.login span {
+	.login .create-account {
 		border: none;
 	}
 }

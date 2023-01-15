@@ -1,2 +1,0 @@
-class ItemTagsController < ApplicationController
-end

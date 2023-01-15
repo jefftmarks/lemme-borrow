@@ -37,6 +37,10 @@
 	cursor: pointer;
 }
 
+.demo-disclaimer {
+	color: var(--maximum-red);
+}
+
 .signup form {
 	padding: 1em 0.5em;
 	display: flex;

@@ -1,4 +1,4 @@
-class MessagesController < ApplicationController
+class Api::MessagesController < ApplicationController
 	before_action :set_ticket, only: [:create, :ticket_messages]
 
 	def ticket_messages
