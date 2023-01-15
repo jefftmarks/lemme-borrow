@@ -6,18 +6,6 @@ export const fetchMessages = createAsyncThunk("messages/fetchMessage", (ticket_i
 		.then((messages) => messages);
 });
 
-// export const messageAdded = createAsyncThunk("messages/messageAdded", (message) => {
-// 	return fetch("/api/messages/", {
-// 		method: "POST",
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 		},
-// 		body: JSON.stringify(message),
-// 	})
-// 		.then((res) => res.json())
-// 		.then((message) => message);
-// });
-
 const messagesSlice = createSlice({
   name: "messages",
   initialState: {
