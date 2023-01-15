@@ -46,5 +46,7 @@ Rails.application.routes.draw do
 		post "/items/search/:user_id", to: "searches#search_items"
 	end
 
+	mount ActionCable.server => '/cable'
+
 	get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end
