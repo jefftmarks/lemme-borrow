@@ -9,7 +9,7 @@ module ApplicationCable
     private
 
 		def get_secret_key
-			"pizza"
+			ENV["JWT_SECRET"]
 		end
 
 		def decode_token(token)
