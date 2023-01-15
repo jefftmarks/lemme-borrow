@@ -13,7 +13,7 @@ import { createConsumer } from "@rails/actioncable";
 // Validate consumer is active user via JWT token
 function getWebSocketURL() {
 	const token = localStorage.getItem("jwt");
-	return `http://localhost:3000/cable?token=${token}`
+	return `wss://lemme-borrow.onrender.com/cable?token=${token}`
 }
 
 const consumer = createConsumer(getWebSocketURL);
