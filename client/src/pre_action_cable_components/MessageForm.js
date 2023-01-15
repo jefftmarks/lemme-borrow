@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import "./MessageForm.css";
 
-function MessageForm({ sender, receiver, ticket, channel}) {
+function MessageForm({ sender, receiver, ticket, handleSubmitMessage}) {
 	const [text, setText] = useState("");
 
 	// ---------- Form Handling ----------
 
 	function handleSubmit(e) {
-		console.log('yo')
 		e.preventDefault();
 		const newMessage = {
 			sender_id: sender.id,
@@ -16,8 +15,7 @@ function MessageForm({ sender, receiver, ticket, channel}) {
 			text: text,
 			automated: false
 		}
-		// Action Cable: broadcast message to ticket channel
-		channel.send(newMessage);
+		handleSubmitMessage(newMessage);
 		setText("");
 	}
 

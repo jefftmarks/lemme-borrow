@@ -1,10 +1,10 @@
 class Api::MessagesController < ApplicationController
 	before_action :set_ticket, only: [:ticket_messages]
 
-	def create
-		message = Message.create!(message_params)
-		render json: message, status: :created
-	end
+	# def create
+	# 	message = Message.create!(message_params)
+	# 	render json: message, status: :created
+	# end
 
 	def ticket_messages
 		render json: @ticket.messages.order(created_at: :desc)

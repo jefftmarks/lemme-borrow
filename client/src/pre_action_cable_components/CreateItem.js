@@ -2,20 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { ActiveUserContext } from "../../context/active_user";
 import "./CreateItem.css";
 
-// ---------- Action Cable: Create Consumer ----------
-
-import { createConsumer } from "@rails/actioncable";
-
-// Validate consumer is active user via JWT token
-function getWebSocketURL() {
-	const token = localStorage.getItem("jwt");
-	return `http://localhost:3000/cable?token=${token}`
-}
-
-const consumer = createConsumer(getWebSocketURL);
-
-// --------------------
-
 const initialState = {
 	name: "",
 	image: "",
@@ -26,24 +12,12 @@ const initialState = {
 function CreateItem({ setShowItem }) {
 	const [activeUser, setActiveUser] = useContext(ActiveUserContext);
 	const [formData, setFormData] = useState(initialState);
-	const [tagCards, setTagCards] = useState([]);
-	const [channel, setChannel] = useState(null);
+	const [tagCards, setTagCards] = useState([]);	
 
-	// ---------- Action Cable: Create Subscription ----------
-
-	// When new item created, send data to FeedChannel, where new item will be broadcast to feeds of active user's friends
+	// Focus on input field
 	useEffect(() => {
-		if (activeUser) {
-			const newChannel = consumer.subscriptions.create({ channel: "FeedChannel", user_id: activeUser.id }, {
-				received(item) {
-					setShowItem({item: null, mode: ""});
-					setFormData(initialState);
-				} 
-			});
-			setChannel(newChannel);
-		} 
-	}, [activeUser, setShowItem]);
-	
+		document.getElementById("add-item-name").focus();
+	}, []);
 
 	// ---------- Render Tag Cards to Confirm Correct Format ----------
 
@@ -80,10 +54,26 @@ function CreateItem({ setShowItem }) {
 			image: formData.image,
 			description: formData.description,
 			owner_id: activeUser.id,
+			tags: tagCards,
 			status: "home"
 		}
-		// Send new item to FeedChanel
-		channel.send({item: newItem, tags: tagCards});
+		fetch("/api/items", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(newItem),
+		})
+			.then((res) => {
+				if (res.ok) {
+					res.json().then((item) => {
+						setShowItem({item: null, mode: ""});
+						setFormData(initialState);
+					});
+				} else {
+					res.json().then((data) => console.log(data));
+				}
+			});
 	}
 
 	return (
@@ -91,6 +81,7 @@ function CreateItem({ setShowItem }) {
 			<form onSubmit={handleSubmit}>
 				<label><p>Item Name:</p>
 					<input
+					id="add-item-name"
 					required
 					type="text"
 					name="name"
