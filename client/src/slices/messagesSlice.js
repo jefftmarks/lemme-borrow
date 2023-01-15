@@ -6,23 +6,28 @@ export const fetchMessages = createAsyncThunk("messages/fetchMessage", (ticket_i
 		.then((messages) => messages);
 });
 
-export const messageAdded = createAsyncThunk("messages/messageAdded", (message) => {
-	return fetch("/api/messages/", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(message),
-	})
-		.then((res) => res.json())
-		.then((message) => message);
-});
+// export const messageAdded = createAsyncThunk("messages/messageAdded", (message) => {
+// 	return fetch("/api/messages/", {
+// 		method: "POST",
+// 		headers: {
+// 			"Content-Type": "application/json",
+// 		},
+// 		body: JSON.stringify(message),
+// 	})
+// 		.then((res) => res.json())
+// 		.then((message) => message);
+// });
 
 const messagesSlice = createSlice({
   name: "messages",
   initialState: {
     entities: [],
 		status: "idle",
+  },
+	reducers: {
+    messageAdded(state, action) {
+      state.entities.unshift(action.payload);
+    },
   },
 	extraReducers: {
 		[fetchMessages.pending](state) {
@@ -32,13 +37,9 @@ const messagesSlice = createSlice({
 			state.entities = action.payload;
 			state.status = "idle";
 		},
-		[messageAdded.pending](state) {
-			state.status = "loading";
-		},
-		[messageAdded.fulfilled](state, action) {
-			state.entities.unshift(action.payload);
-		},
 	}
 });
+
+export const { messageAdded } = messagesSlice.actions;
 
 export default messagesSlice.reducer;

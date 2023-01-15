@@ -7,7 +7,6 @@ function MessageForm({ sender, receiver, ticket, channel}) {
 	// ---------- Form Handling ----------
 
 	function handleSubmit(e) {
-		console.log('yo')
 		e.preventDefault();
 		const newMessage = {
 			sender_id: sender.id,
