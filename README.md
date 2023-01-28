@@ -35,7 +35,7 @@ The backend API is built on Ruby on Rails with a PostgreSQL database.
 ### New Technologies & Goals Met
 
 - Integrated WebSockets through Action Cable to allow for instant messaging and live feed updates
-- Streamlined access to state in React components by applying Redux Toolkit and useContext hook
+- Shared access to state among React components by employing Redux
 - Described self-referential relationships between models by defining multiple aliases for users and items
 - Achieved responsive CSS design by implementing a style guide and developing brand identity
 
